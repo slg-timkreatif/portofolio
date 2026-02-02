@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Komunitas Guru</title>
+    <title>Admin - Guru Berbagi</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -25,131 +25,151 @@
         }
     </script>
     <style>
-        /* Toast Animation */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        /* Animasi Slide Up untuk Notifikasi */
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .toast-show { animation: slideUp 0.3s ease-out forwards; }
     </style>
 </head>
 <body class="bg-bgLight text-slate-800 antialiased min-h-screen flex items-center justify-center p-4">
 
-    <div id="view-login" class="w-full max-w-md bg-surface p-8 rounded-3xl shadow-xl border border-slate-100">
+    <div id="view-login" class="w-full max-w-md bg-surface p-8 rounded-3xl shadow-2xl border border-slate-100">
         <div class="text-center mb-8">
-            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-16 mx-auto mb-4" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3408/3408596.png'">
-            <h1 class="text-2xl font-bold text-slate-800">Login Guru</h1>
-            <p class="text-slate-500 text-sm">Masuk untuk mengelola portofolio.</p>
+            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-20 mx-auto mb-4" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3408/3408596.png'">
+            <h1 class="text-2xl font-extrabold text-slate-800 tracking-tight">Admin Guru</h1>
+            <p class="text-slate-500 text-sm mt-1">Kelola Profil, Blog & Arsip Anda.</p>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-5">
             <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">EMAIL SEKOLAH</label>
+                <label class="block text-xs font-bold text-slate-500 mb-1 ml-1 tracking-wider">EMAIL SEKOLAH</label>
                 <div class="relative">
-                    <i data-lucide="mail" class="absolute left-3 top-3 w-5 h-5 text-slate-400"></i>
-                    <input type="email" id="loginEmail" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="nama@sekolah.sch.id">
+                    <i data-lucide="mail" class="absolute left-3 top-3.5 w-5 h-5 text-slate-400"></i>
+                    <input type="email" id="loginEmail" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition font-medium" placeholder="nama@sekolah.sch.id">
                 </div>
             </div>
             <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">PIN KEAMANAN</label>
+                <label class="block text-xs font-bold text-slate-500 mb-1 ml-1 tracking-wider">PIN KEAMANAN</label>
                 <div class="relative">
-                    <i data-lucide="lock" class="absolute left-3 top-3 w-5 h-5 text-slate-400"></i>
-                    <input type="password" id="loginPin" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="******">
+                    <i data-lucide="lock" class="absolute left-3 top-3.5 w-5 h-5 text-slate-400"></i>
+                    <input type="password" id="loginPin" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition font-medium" placeholder="******">
                 </div>
             </div>
-            <button onclick="doLogin()" id="btnLogin" class="w-full bg-primary text-white py-3 rounded-xl font-bold shadow-lg shadow-primary/30 hover:bg-primaryHover transition flex justify-center items-center gap-2">
-                <i data-lucide="log-in" class="w-5 h-5"></i> MASUK
+            <button onclick="doLogin()" id="btnLogin" class="w-full bg-primary text-white py-3.5 rounded-xl font-bold shadow-lg shadow-primary/30 hover:bg-primaryHover hover:shadow-primary/50 transition transform hover:-translate-y-0.5 flex justify-center items-center gap-2">
+                <i data-lucide="log-in" class="w-5 h-5"></i> MASUK SEKARANG
             </button>
         </div>
-        <p class="text-center text-xs text-slate-400 mt-6">&copy; Komunitas Guru Berbagi</p>
+        <div class="mt-8 text-center border-t border-slate-100 pt-4">
+            <p class="text-xs text-slate-400">&copy; Komunitas Guru Berbagi</p>
+        </div>
     </div>
 
-    <div id="view-dashboard" class="hidden w-full max-w-4xl bg-surface rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px] border border-slate-100">
+    <div id="view-dashboard" class="hidden w-full max-w-5xl bg-surface rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[650px] border border-slate-200 ring-4 ring-slate-50">
         
-        <aside class="w-full md:w-64 bg-slate-50 border-r border-slate-200 p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-8">
-                <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-8 h-8">
+        <aside class="w-full md:w-64 bg-slate-50 border-r border-slate-200 p-6 flex flex-col flex-shrink-0">
+            <div class="flex items-center gap-3 mb-10 pl-2">
+                <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-8 h-8" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3408/3408596.png'">
                 <div class="leading-tight">
-                    <h2 class="font-bold text-sm">Dashboard</h2>
-                    <p class="text-[10px] text-slate-500">Admin Area</p>
+                    <h2 class="font-bold text-sm text-slate-800">Guru Berbagi</h2>
+                    <p class="text-[10px] text-slate-500 font-medium bg-slate-200 px-1.5 rounded inline-block">ADMIN</p>
                 </div>
             </div>
 
             <nav class="space-y-2 flex-1">
-                <button onclick="switchTab('profil')" id="nav-profil" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition bg-white text-primary shadow-sm">
-                    <i data-lucide="user"></i> Profil Saya
+                <button onclick="switchTab('profil')" id="nav-profil" class="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-bold rounded-2xl transition bg-white text-primary shadow-sm ring-1 ring-slate-200">
+                    <i data-lucide="user-circle" class="w-5 h-5"></i> Profil Saya
                 </button>
-                <button onclick="switchTab('blog')" id="nav-blog" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl text-slate-500 hover:bg-white hover:shadow-sm transition">
-                    <i data-lucide="pen-tool"></i> Tulis Blog
+                <button onclick="switchTab('blog')" id="nav-blog" class="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-bold rounded-2xl text-slate-500 hover:bg-white hover:text-slate-700 hover:shadow-sm transition">
+                    <i data-lucide="pen-tool" class="w-5 h-5"></i> Tulis Blog
                 </button>
-                <button onclick="switchTab('arsip')" id="nav-arsip" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl text-slate-500 hover:bg-white hover:shadow-sm transition">
-                    <i data-lucide="folder-open"></i> Arsip Dokumen
+                <button onclick="switchTab('arsip')" id="nav-arsip" class="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-bold rounded-2xl text-slate-500 hover:bg-white hover:text-slate-700 hover:shadow-sm transition">
+                    <i data-lucide="folder-open" class="w-5 h-5"></i> Arsip Dokumen
                 </button>
             </nav>
 
             <div class="mt-auto pt-6 border-t border-slate-200">
-                <div class="flex items-center gap-3 mb-4">
+                <div class="flex items-center gap-3 mb-4 bg-white p-3 rounded-2xl border border-slate-100 shadow-sm">
                     <div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
                         <i data-lucide="user" class="w-5 h-5"></i>
                     </div>
                     <div class="overflow-hidden">
-                        <h4 class="font-bold text-xs truncate" id="showNama">User</h4>
+                        <h4 class="font-bold text-xs truncate text-slate-800" id="showNama">User</h4>
                         <p class="text-[10px] text-slate-500 truncate" id="showSekolah">Sekolah</p>
                     </div>
                 </div>
-                <button onclick="location.reload()" class="w-full py-2 border border-red-200 text-red-500 text-xs font-bold rounded-lg hover:bg-red-50 transition">
-                    Keluar
+                <button onclick="location.reload()" class="w-full py-2.5 border border-red-100 text-red-500 text-xs font-bold rounded-xl hover:bg-red-50 hover:border-red-200 transition flex items-center justify-center gap-2">
+                    <i data-lucide="log-out" class="w-3 h-3"></i> Keluar
                 </button>
             </div>
         </aside>
 
-        <main class="flex-1 p-6 md:p-8 overflow-y-auto bg-white h-full relative">
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto bg-white h-full relative custom-scroll">
             
-            <div id="tab-profil" class="space-y-6 animate-fade-in">
-                <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="user-cog" class="text-primary"></i> Edit Profil</h2>
+            <div id="tab-profil" class="space-y-8 animate-fade-in">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">Edit Profil</h2>
+                        <p class="text-sm text-slate-500">Perbarui informasi diri dan sosial media.</p>
+                    </div>
+                    <a href="#" id="btnPreview" target="_blank" class="hidden px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-200 transition items-center gap-2">
+                        <i data-lucide="external-link" class="w-4 h-4"></i> Lihat Halaman
+                    </a>
+                </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="col-span-1 md:col-span-2">
-                        <label class="text-xs font-bold text-slate-500 ml-1">Link Foto Profil (URL)</label>
-                        <input id="inpFoto" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="https://...">
+                        <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block">FOTO PROFIL (URL)</label>
+                        <input id="inpFoto" class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition" placeholder="https://...">
                     </div>
                     <div class="col-span-1 md:col-span-2">
-                        <label class="text-xs font-bold text-slate-500 ml-1">Bio / Motto</label>
-                        <textarea id="inpBio" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition h-24" placeholder="Ceritakan tentang diri Anda..."></textarea>
+                        <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block">BIO / MOTTO</label>
+                        <textarea id="inpBio" class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition h-24 resize-none" placeholder="Ceritakan sedikit tentang filosofi mengajar Anda..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block flex items-center gap-1"><i data-lucide="phone" class="w-3 h-3"></i> WHATSAPP</label>
+                        <input id="inpWA" class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition" placeholder="628...">
                     </div>
                     <div>
-                        <label class="text-xs font-bold text-slate-500 ml-1">WhatsApp</label>
-                        <input id="inpWA" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="628...">
+                        <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block flex items-center gap-1"><i data-lucide="instagram" class="w-3 h-3"></i> INSTAGRAM</label>
+                        <input id="inpIG" class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition" placeholder="username">
                     </div>
                     <div>
-                        <label class="text-xs font-bold text-slate-500 ml-1">Instagram (Username)</label>
-                        <input id="inpIG" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="tanpa @">
+                        <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block flex items-center gap-1"><i data-lucide="facebook" class="w-3 h-3"></i> FACEBOOK (LINK)</label>
+                        <input id="inpFB" class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition" placeholder="https://facebook.com/...">
                     </div>
-                    <div class="col-span-1 md:col-span-2">
-                        <label class="text-xs font-bold text-slate-500 ml-1">LinkedIn (URL Lengkap)</label>
-                        <input id="inpLinked" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="https://linkedin.com/in/...">
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> TIKTOK (LINK)</label>
+                        <input id="inpTikTok" class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition" placeholder="https://tiktok.com/@...">
                     </div>
                 </div>
 
-                <div class="pt-4 flex gap-3">
-                    <button onclick="doSimpanProfil()" id="btnSimpan" class="flex-1 bg-primary text-white py-3 rounded-xl font-bold shadow-lg shadow-primary/20 hover:bg-primaryHover transition flex justify-center items-center gap-2">
+                <div class="pt-4 border-t border-slate-100">
+                    <button onclick="doSimpanProfil()" id="btnSimpan" class="w-full bg-primary text-white py-3.5 rounded-xl font-bold shadow-lg shadow-primary/20 hover:bg-primaryHover transition flex justify-center items-center gap-2">
                         <i data-lucide="save"></i> SIMPAN PERUBAHAN
                     </button>
-                    <a href="#" id="btnPreview" target="_blank" class="hidden px-4 py-3 border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-slate-50 transition" title="Lihat Halaman">
-                        <i data-lucide="external-link"></i>
-                    </a>
                 </div>
             </div>
 
-            <div id="tab-blog" class="hidden space-y-6 animate-fade-in">
-                <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="pen-tool" class="text-primary"></i> Tulis Artikel Baru</h2>
+            <div id="tab-blog" class="hidden space-y-8 animate-fade-in">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">Tulis Artikel</h2>
+                    <p class="text-sm text-slate-500">Bagikan praktik baik, berita, atau inovasi terbaru.</p>
+                </div>
                 
-                <div class="space-y-4">
+                <div class="space-y-5 bg-slate-50 p-6 rounded-2xl border border-slate-100">
                     <div>
-                        <label class="text-xs font-bold text-slate-500 ml-1">Judul Artikel</label>
-                        <input id="blogJudul" class="w-full p-3 bg-slate-50 rounded-xl font-bold border-transparent focus:border-primary focus:ring-0 transition" placeholder="Contoh: Kegiatan P5 Kelas 4">
+                        <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block">JUDUL ARTIKEL</label>
+                        <input id="blogJudul" class="w-full p-3 bg-white border border-slate-200 rounded-xl font-bold text-slate-800 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition" placeholder="Contoh: Kegiatan P5 Kelas 4">
                     </div>
-                    <div class="grid grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label class="text-xs font-bold text-slate-500 ml-1">Kategori</label>
-                            <select id="blogKategori" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition">
+                            <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block">KATEGORI</label>
+                            <select id="blogKategori" class="w-full p-3 bg-white border border-slate-200 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition">
                                 <option>Berita Sekolah</option>
                                 <option>Praktik Baik</option>
                                 <option>Inovasi</option>
@@ -157,15 +177,15 @@
                             </select>
                         </div>
                         <div class="col-span-2">
-                            <label class="text-xs font-bold text-slate-500 ml-1">Link Gambar Header</label>
-                            <input id="blogGambar" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="https://...">
+                            <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block">GAMBAR HEADER (URL)</label>
+                            <input id="blogGambar" class="w-full p-3 bg-white border border-slate-200 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition" placeholder="https://...">
                         </div>
                     </div>
                     <div>
-                        <label class="text-xs font-bold text-slate-500 ml-1">Isi Konten</label>
-                        <textarea id="blogKonten" class="w-full p-4 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition h-48 leading-relaxed" placeholder="Mulai menulis disini..."></textarea>
+                        <label class="text-xs font-bold text-slate-500 ml-1 mb-1 block">ISI KONTEN</label>
+                        <textarea id="blogKonten" class="w-full p-4 bg-white border border-slate-200 rounded-xl text-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition h-64 leading-relaxed" placeholder="Mulai menulis disini..."></textarea>
                     </div>
-                    <button onclick="kirimBlog()" id="btnBlog" class="w-full bg-orange-500 text-white py-3 rounded-xl font-bold shadow-lg shadow-orange-500/20 hover:bg-orange-600 transition flex justify-center items-center gap-2">
+                    <button onclick="kirimBlog()" id="btnBlog" class="w-full bg-orange-500 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-orange-500/20 hover:bg-orange-600 transition flex justify-center items-center gap-2">
                         <i data-lucide="send"></i> TERBITKAN ARTIKEL
                     </button>
                 </div>
@@ -173,16 +193,19 @@
 
             <div id="tab-arsip" class="hidden space-y-6 animate-fade-in">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="folder-open" class="text-primary"></i> Kelola Arsip</h2>
-                    <button onclick="tambahBaris()" class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-100 transition flex items-center gap-1">
-                        <i data-lucide="plus" class="w-4 h-4"></i> Tambah
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">Kelola Arsip</h2>
+                        <p class="text-sm text-slate-500">Lampirkan dokumen atau link penting.</p>
+                    </div>
+                    <button onclick="tambahBaris()" class="px-4 py-2 bg-blue-50 text-blue-600 border border-blue-100 rounded-xl text-xs font-bold hover:bg-blue-100 transition flex items-center gap-1 shadow-sm">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i> TAMBAH ITEM
                     </button>
                 </div>
 
-                <div id="wadah-link" class="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scroll">
+                <div id="wadah-link" class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
                     </div>
 
-                <button onclick="doSimpanProfil()" id="btnSimpanArsip" class="w-full bg-primary text-white py-3 rounded-xl font-bold shadow-lg shadow-primary/20 hover:bg-primaryHover transition flex justify-center items-center gap-2 mt-4">
+                <button onclick="doSimpanProfil()" id="btnSimpanArsip" class="w-full bg-primary text-white py-3.5 rounded-xl font-bold shadow-lg shadow-primary/20 hover:bg-primaryHover transition flex justify-center items-center gap-2 mt-4">
                     <i data-lucide="save"></i> SIMPAN PERUBAHAN ARSIP
                 </button>
             </div>
@@ -190,26 +213,26 @@
         </main>
     </div>
 
-    <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 text-white px-6 py-4 rounded-xl shadow-2xl translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
-        <div id="toast-icon"></div>
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 text-white px-6 py-4 rounded-xl shadow-2xl translate-y-32 opacity-0 transition-all duration-500 z-50 flex items-center gap-4">
+        <div id="toast-icon" class="flex-shrink-0"></div>
         <div>
-            <h4 class="font-bold text-sm" id="toast-title">Notifikasi</h4>
-            <p class="text-xs text-slate-300" id="toast-msg">Pesan disini.</p>
+            <h4 class="font-bold text-sm leading-tight" id="toast-title">Notifikasi</h4>
+            <p class="text-xs text-slate-300 mt-0.5" id="toast-msg">Pesan disini.</p>
         </div>
     </div>
 
     <script>
         // ===============================================
-        // ⚠️ GANTI LINK INI DENGAN LINK DEPLOY NEW VERSION ANDA ⚠️
+        // ⚠️ GANTI LINK DI BAWAH INI DENGAN URL SCRIPT BARU ANDA ⚠️
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
         // ===============================================
 
         let userSession = {};
 
-        // --- INIT ICONS ---
+        // Init Icons
         lucide.createIcons();
 
-        // --- LOGIN LOGIC ---
+        // --- 1. LOGIN SYSTEM ---
         function doLogin() {
             const em = document.getElementById('loginEmail').value;
             const pn = document.getElementById('loginPin').value;
@@ -217,7 +240,7 @@
 
             if(!em || !pn) return showToast("error", "Error", "Email dan PIN wajib diisi!");
             
-            btn.innerHTML = '<div class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div> Loading...';
+            btn.innerHTML = '<div class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div> Memeriksa...';
             btn.disabled = true;
 
             let fd = new FormData();
@@ -229,7 +252,7 @@
                 if(d.result === 'success') {
                     userSession = d.user;
                     
-                    // SAVE ID
+                    // JIKA ADA DATA LAMA -> ISI FORM
                     if(d.profil_lama) {
                         localStorage.setItem("kgb_guruID", d.profil_lama.id);
                         fillForm(d.profil_lama);
@@ -244,52 +267,58 @@
                         localStorage.removeItem("kgb_guruID");
                     }
 
-                    // UI Switch
+                    // SWITCH VIEW
                     document.getElementById('showNama').innerText = d.user.nama;
                     document.getElementById('showSekolah').innerText = d.user.sekolah;
+                    
                     document.getElementById('view-login').classList.add('hidden');
                     document.getElementById('view-dashboard').classList.remove('hidden');
                     document.getElementById('view-dashboard').classList.add('flex');
                     
-                    showToast("success", "Berhasil Masuk", `Selamat datang, ${d.user.nama}!`);
+                    showToast("success", "Login Berhasil", `Selamat datang, ${d.user.nama}!`);
                 } else {
                     showToast("error", "Gagal Masuk", d.message);
                 }
-                btn.innerHTML = '<i data-lucide="log-in" class="w-5 h-5"></i> MASUK'; btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="log-in" class="w-5 h-5"></i> MASUK SEKARANG'; btn.disabled = false;
                 lucide.createIcons();
             })
             .catch(e => {
                 showToast("error", "Koneksi Error", "Cek internet Anda.");
-                btn.innerHTML = '<i data-lucide="log-in" class="w-5 h-5"></i> MASUK'; btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="log-in" class="w-5 h-5"></i> MASUK SEKARANG'; btn.disabled = false;
                 lucide.createIcons();
             });
         }
 
-        // --- PRE-FILL DATA ---
+        // --- 2. ISI DATA KE FORM (AUTO FILL) ---
         function fillForm(data) {
             document.getElementById('inpFoto').value = data.foto || "";
             document.getElementById('inpBio').value = data.bio || "";
             document.getElementById('inpWA').value = data.wa || "";
             document.getElementById('inpIG').value = data.ig || "";
-            document.getElementById('inpLinked').value = data.linkedin || "";
+            
+            // FIELD BARU: FB & TIKTOK
+            document.getElementById('inpFB').value = data.facebook || "";
+            document.getElementById('inpTikTok').value = data.tiktok || "";
 
+            // ISI ARSIP
             try {
                 let resources = JSON.parse(data.resources);
-                document.getElementById('wadah-link').innerHTML = ""; // Clear dulu
+                document.getElementById('wadah-link').innerHTML = ""; // Bersihkan dummy
                 resources.forEach(r => tambahBaris(r.judul, r.url, r.tipe));
             } catch(e) {}
         }
 
-        // --- SAVE PROFILE & ARSIP ---
+        // --- 3. SIMPAN PROFIL & ARSIP ---
         function doSimpanProfil() {
             const btn1 = document.getElementById('btnSimpan');
             const btn2 = document.getElementById('btnSimpanArsip');
-            const txtOriginal = btn1.innerHTML;
+            const txtOriginal = '<i data-lucide="save"></i> SIMPAN PERUBAHAN';
+            const txtLoading = '<div class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div> Menyimpan...';
 
-            btn1.innerHTML = "Menyimpan..."; btn1.disabled = true;
-            btn2.innerHTML = "Menyimpan..."; btn2.disabled = true;
+            btn1.innerHTML = txtLoading; btn1.disabled = true;
+            btn2.innerHTML = txtLoading; btn2.disabled = true;
 
-            // Collect Resources
+            // KUMPULKAN DATA ARSIP
             let res = [];
             document.querySelectorAll('.resource-item').forEach(r => {
                 let j = r.querySelector('.inp-judul').value;
@@ -300,6 +329,7 @@
 
             let idLama = localStorage.getItem("kgb_guruID");
             
+            // PAKET DATA YANG DIKIRIM KE GOOGLE SCRIPT
             let data = {
                 action: "simpan_profil",
                 id_lama: idLama,
@@ -310,7 +340,8 @@
                 foto: document.getElementById('inpFoto').value,
                 wa: document.getElementById('inpWA').value,
                 ig: document.getElementById('inpIG').value,
-                linkedin: document.getElementById('inpLinked').value,
+                facebook: document.getElementById('inpFB').value,     // BARU
+                tiktok: document.getElementById('inpTikTok').value,   // BARU
                 resources: JSON.stringify(res)
             };
 
@@ -322,6 +353,7 @@
             .then(d => {
                 if(d.result === 'success') {
                     localStorage.setItem("kgb_guruID", d.id);
+                    
                     // Update tombol preview
                     const link = `portfolio.html?id=${d.id}`;
                     const btnPrev = document.getElementById('btnPreview');
@@ -334,27 +366,30 @@
                     showToast("error", "Gagal", d.message);
                 }
                 btn1.innerHTML = txtOriginal; btn1.disabled = false;
-                btn2.innerHTML = txtOriginal; btn2.disabled = false;
+                btn2.innerHTML = txtOriginal + " ARSIP"; btn2.disabled = false;
+                lucide.createIcons();
             })
             .catch(e => {
                 showToast("error", "Error", "Terjadi kesalahan jaringan.");
                 btn1.innerHTML = txtOriginal; btn1.disabled = false;
-                btn2.innerHTML = txtOriginal; btn2.disabled = false;
+                btn2.innerHTML = txtOriginal + " ARSIP"; btn2.disabled = false;
+                lucide.createIcons();
             });
         }
 
-        // --- SEND BLOG ---
+        // --- 4. KIRIM ARTIKEL BLOG ---
         function kirimBlog() {
             let savedID = localStorage.getItem("kgb_guruID");
-            if(!savedID) return showToast("error", "Perhatian", "Simpan Profil minimal sekali dulu!");
+            if(!savedID) return showToast("error", "Perhatian", "Mohon Simpan Profil minimal sekali sebelum menulis blog!");
 
             let judul = document.getElementById('blogJudul').value;
             let konten = document.getElementById('blogKonten').value;
             let btn = document.getElementById('btnBlog');
 
-            if(!judul || !konten) return showToast("error", "Data Kurang", "Judul & Isi wajib diisi.");
+            if(!judul || !konten) return showToast("error", "Data Kurang", "Judul & Isi Artikel wajib diisi.");
 
-            btn.innerHTML = "Menerbitkan..."; btn.disabled = true;
+            btn.innerHTML = '<div class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div> Menerbitkan...'; 
+            btn.disabled = true;
 
             let data = {
                 action: "simpan_blog",
@@ -383,33 +418,40 @@
             });
         }
 
-        // --- UI HELPERS ---
+        // --- 5. UI INTERACTION HELPERS ---
         function switchTab(tab) {
             ['profil', 'blog', 'arsip'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`nav-${t}`).className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl text-slate-500 hover:bg-white hover:shadow-sm transition";
+                document.getElementById(`nav-${t}`).className = "w-full flex items-center gap-3 px-4 py-3.5 text-sm font-bold rounded-2xl text-slate-500 hover:bg-white hover:text-slate-700 hover:shadow-sm transition";
             });
             
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
-            document.getElementById(`nav-${tab}`).className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition bg-white text-primary shadow-sm";
+            document.getElementById(`nav-${tab}`).className = "w-full flex items-center gap-3 px-4 py-3.5 text-sm font-bold rounded-2xl transition bg-white text-primary shadow-sm ring-1 ring-slate-200";
         }
 
         function tambahBaris(judul="", url="", tipe="dokumen") {
             const id = Date.now() + Math.random().toString(16).slice(2);
             const html = `
-            <div class="resource-item bg-slate-50 p-3 rounded-xl border border-slate-100 relative group" id="row-${id}">
-                <button onclick="document.getElementById('row-${id}').remove()" class="absolute top-2 right-2 text-slate-300 hover:text-red-500 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                <div class="mb-2 pr-8">
-                    <input class="inp-judul w-full bg-transparent text-sm font-bold placeholder-slate-400 focus:outline-none" placeholder="Judul Dokumen (Misal: RPP)" value="${judul}">
+            <div class="resource-item bg-white p-4 rounded-xl border border-slate-200 relative group shadow-sm hover:border-primary transition" id="row-${id}">
+                <button onclick="document.getElementById('row-${id}').remove()" class="absolute top-2 right-2 text-slate-300 hover:text-red-500 transition bg-slate-50 p-1.5 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                <div class="mb-3 pr-8">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Judul Dokumen</label>
+                    <input class="inp-judul w-full bg-slate-50 p-2 rounded-lg text-sm font-bold placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Misal: Modul Ajar Matematika" value="${judul}">
                 </div>
-                <div class="flex gap-2">
-                    <input class="inp-url w-2/3 bg-white p-2 rounded-lg text-xs border border-slate-200 focus:border-primary focus:outline-none" placeholder="URL (Google Drive/YouTube)" value="${url}">
-                    <select class="inp-tipe w-1/3 bg-white p-2 rounded-lg text-xs border border-slate-200 focus:border-primary focus:outline-none">
-                        <option value="dokumen" ${tipe=='dokumen'?'selected':''}>Dokumen</option>
-                        <option value="video" ${tipe=='video'?'selected':''}>Video</option>
-                        <option value="folder" ${tipe=='folder'?'selected':''}>Folder</option>
-                        <option value="link" ${tipe=='link'?'selected':''}>Link</option>
-                    </select>
+                <div class="flex gap-3">
+                    <div class="w-2/3">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">URL / Link</label>
+                        <input class="inp-url w-full bg-slate-50 p-2 rounded-lg text-xs border border-transparent focus:border-primary focus:outline-none" placeholder="https://..." value="${url}">
+                    </div>
+                    <div class="w-1/3">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Tipe</label>
+                        <select class="inp-tipe w-full bg-slate-50 p-2 rounded-lg text-xs border border-transparent focus:border-primary focus:outline-none">
+                            <option value="dokumen" ${tipe=='dokumen'?'selected':''}>Dokumen</option>
+                            <option value="video" ${tipe=='video'?'selected':''}>Video</option>
+                            <option value="folder" ${tipe=='folder'?'selected':''}>Folder</option>
+                            <option value="link" ${tipe=='link'?'selected':''}>Link</option>
+                        </select>
+                    </div>
                 </div>
             </div>`;
             document.getElementById('wadah-link').insertAdjacentHTML('beforeend', html);
@@ -419,19 +461,25 @@
         function showToast(type, title, msg) {
             const toast = document.getElementById('toast');
             const icon = document.getElementById('toast-icon');
+            const titleEl = document.getElementById('toast-title');
             
-            document.getElementById('toast-title').innerText = title;
+            titleEl.innerText = title;
             document.getElementById('toast-msg').innerText = msg;
 
-            if(type === 'success') icon.innerHTML = '<i data-lucide="check-circle" class="text-green-400"></i>';
-            else icon.innerHTML = '<i data-lucide="alert-circle" class="text-red-400"></i>';
+            if(type === 'success') {
+                icon.innerHTML = '<div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-6 h-6"></i></div>';
+                titleEl.classList.add('text-green-400');
+            } else {
+                icon.innerHTML = '<div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white"><i data-lucide="alert-triangle" class="w-6 h-6"></i></div>';
+                titleEl.classList.add('text-red-400');
+            }
             
             lucide.createIcons();
+            toast.classList.remove('translate-y-32', 'opacity-0');
             
-            toast.classList.remove('translate-y-24', 'opacity-0');
             setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
         }
     </script>
 </body>
