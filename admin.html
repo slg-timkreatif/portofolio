@@ -17,6 +17,9 @@
         .nav-pills .nav-link.active { background-color: #0d6efd; color: white; border-color: #0d6efd; box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); }
         .resource-item { background: white; border: 1px solid #f0f0f0; border-radius: 12px; padding: 15px; margin-bottom: 10px; position: relative; }
         .display-none { display: none; }
+        
+        /* Loading Overlay agar user tidak klik sembarangan */
+        .btn:disabled { cursor: not-allowed; opacity: 0.7; }
     </style>
 </head>
 <body>
@@ -66,7 +69,7 @@
                         <div class="col-md-4"><label class="small fw-bold">Instagram</label><input type="text" id="inpIG" class="form-control" placeholder="username"></div>
                         <div class="col-md-4"><label class="small fw-bold">LinkedIn</label><input type="url" id="inpLinked" class="form-control"></div>
                     </div>
-                    <button onclick="doSimpan()" class="btn btn-success w-100 mt-4 p-2 rounded-pill fw-bold">Simpan Profil</button>
+                    <button onclick="doSimpan()" id="btnSimpan" class="btn btn-success w-100 mt-4 p-2 rounded-pill fw-bold">Simpan Profil</button>
                 </div>
 
                 <div class="tab-pane fade" id="tab-blog">
@@ -83,18 +86,19 @@
                 <div class="tab-pane fade" id="tab-karya">
                     <div id="wadah-link"></div>
                     <button onclick="tambahBaris()" class="btn btn-outline-primary w-100 border-dashed mb-3"><i class="fas fa-plus"></i> Tambah Link</button>
-                    <button onclick="doSimpan()" class="btn btn-success w-100 p-2 rounded-pill fw-bold">Simpan Arsip</button>
+                    <button onclick="doSimpan()" id="btnSimpanArsip" class="btn btn-success w-100 p-2 rounded-pill fw-bold">Simpan Arsip</button>
                 </div>
             </div>
         </div>
 
         <div id="view-success" class="display-none text-center p-5">
             <h4 class="fw-bold text-success mb-3">Berhasil Disimpan!</h4>
+            <p class="text-muted small">Data telah diperbarui di database.</p>
             <input type="text" id="generatedLink" class="form-control text-center fw-bold text-primary mb-3 bg-light" readonly>
             <div class="d-grid gap-2">
                 <button onclick="navigator.clipboard.writeText(document.getElementById('generatedLink').value);alert('Disalin!')" class="btn btn-dark">Salin Link</button>
                 <a href="#" id="btnOpenLink" target="_blank" class="btn btn-primary">Lihat Halaman</a>
-                <button onclick="location.reload()" class="btn btn-link text-muted">Kembali</button>
+                <button onclick="kembaliKeEdit()" class="btn btn-outline-secondary">Edit Kembali</button>
             </div>
         </div>
     </div>
@@ -113,8 +117,11 @@
         const pn = document.getElementById('loginPin').value;
         const btn = document.getElementById('btnLogin');
 
-        if(!em || !pn) return alert("Isi Email dan PIN");
-        btn.innerHTML = "Loading..."; btn.disabled = true;
+        if(!em || !pin) return alert("Isi Email dan PIN");
+        
+        // UI LOADING
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat Data...'; 
+        btn.disabled = true;
 
         let fd = new FormData();
         fd.append('payload', JSON.stringify({ action: "login", email: em, pin: pn }));
@@ -123,27 +130,80 @@
         .then(r => r.json())
         .then(d => {
             if(d.result === 'success') {
-                userSession = d;
-                // --- SINKRONISASI ID ---
-                if (d.existing_id) localStorage.setItem("kgb_guruID", d.existing_id);
-                // -----------------------
-                document.getElementById('showNama').innerText = d.nama;
-                document.getElementById('showSekolah').innerText = d.sekolah;
+                userSession = d.user;
+                
+                // ISI PROFIL OTOMATIS (JIKA ADA DATA LAMA)
+                if(d.profil_lama) {
+                    localStorage.setItem("kgb_guruID", d.profil_lama.id); // Simpan ID
+                    
+                    // Isi Form Profil
+                    document.getElementById('inpFoto').value = d.profil_lama.foto || "";
+                    document.getElementById('inpBio').value = d.profil_lama.bio || "";
+                    document.getElementById('inpWA').value = d.profil_lama.wa || "";
+                    document.getElementById('inpIG').value = d.profil_lama.ig || "";
+                    document.getElementById('inpLinked').value = d.profil_lama.linkedin || "";
+
+                    // Isi Arsip (Render Ulang)
+                    try {
+                        let resources = JSON.parse(d.profil_lama.resources);
+                        resources.forEach(r => tambahBaris(r.judul, r.url, r.tipe));
+                    } catch(e) { console.log("Gagal parse resource lama"); }
+
+                } else {
+                    localStorage.removeItem("kgb_guruID"); // User baru
+                }
+
+                document.getElementById('showNama').innerText = d.user.nama;
+                document.getElementById('showSekolah').innerText = d.user.sekolah;
                 document.getElementById('view-login').style.display = 'none';
                 document.getElementById('view-input').style.display = 'block';
             } else { alert(d.message); }
+            
             btn.innerHTML = "MASUK"; btn.disabled = false;
         })
-        .catch(e => { alert("Error Koneksi"); btn.disabled = false; });
+        .catch(e => { alert("Error Koneksi: " + e); btn.disabled = false; btn.innerHTML = "MASUK"; });
     }
 
-    function tambahBaris() {
-        const id = Date.now();
-        const html = `<div class="resource-item" id="row-${id}"><div class="d-flex justify-content-between mb-2"><span class="badge bg-secondary">Item</span><i class="fas fa-times text-danger" onclick="document.getElementById('row-${id}').remove()" style="cursor:pointer"></i></div><input class="form-control form-control-sm mb-2 inp-judul" placeholder="Judul"><div class="row g-2"><div class="col-8"><input class="form-control form-control-sm inp-url" placeholder="URL"></div><div class="col-4"><select class="form-select form-select-sm inp-tipe"><option value="dokumen">Doc</option><option value="video">Vid</option><option value="folder">Dir</option></select></div></div></div>`;
+    function tambahBaris(judul="", url="", tipe="dokumen") {
+        const id = Date.now() + Math.random().toString(16).slice(2);
+        
+        // Select option logic
+        let selDoc = tipe=="dokumen"?"selected":"";
+        let selVid = tipe=="video"?"selected":"";
+        let selDir = tipe=="folder"?"selected":"";
+        let selLnk = tipe=="link"?"selected":"";
+
+        const html = `
+        <div class="resource-item" id="row-${id}">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="badge bg-secondary">Item</span>
+                <i class="fas fa-times text-danger" onclick="document.getElementById('row-${id}').remove()" style="cursor:pointer"></i>
+            </div>
+            <input class="form-control form-control-sm mb-2 inp-judul" placeholder="Judul" value="${judul}">
+            <div class="row g-2">
+                <div class="col-8"><input class="form-control form-control-sm inp-url" placeholder="URL" value="${url}"></div>
+                <div class="col-4">
+                    <select class="form-select form-select-sm inp-tipe">
+                        <option value="dokumen" ${selDoc}>Doc</option>
+                        <option value="video" ${selVid}>Vid</option>
+                        <option value="folder" ${selDir}>Dir</option>
+                        <option value="link" ${selLnk}>Link</option>
+                    </select>
+                </div>
+            </div>
+        </div>`;
         document.getElementById('wadah-link').insertAdjacentHTML('beforeend', html);
     }
 
     function doSimpan() {
+        // UI LOADING
+        let btn1 = document.getElementById('btnSimpan');
+        let btn2 = document.getElementById('btnSimpanArsip');
+        let txtAsli = btn1.innerHTML;
+        
+        btn1.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...'; btn1.disabled = true;
+        btn2.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...'; btn2.disabled = true;
+
         let res = [];
         document.querySelectorAll('.resource-item').forEach(r => {
             let j = r.querySelector('.inp-judul').value;
@@ -152,12 +212,11 @@
             if(j && u) res.push({judul:j, url:u, tipe:t});
         });
 
-        // AMBIL ID LAMA
         let idLama = localStorage.getItem("kgb_guruID");
 
         let data = {
             action: "simpan_profil",
-            id_lama: idLama, // Kirim ID Lama
+            id_lama: idLama,
             nama: userSession.nama,
             sekolah: userSession.sekolah,
             jabatan: userSession.jabatan,
@@ -176,13 +235,23 @@
         .then(r => r.json())
         .then(d => {
             if(d.result === 'success') {
-                localStorage.setItem("kgb_guruID", d.id); // Update ID
+                localStorage.setItem("kgb_guruID", d.id);
                 let link = location.href.replace('admin.html', 'portfolio.html') + "?id=" + d.id;
+                
                 document.getElementById('view-input').style.display = 'none';
                 document.getElementById('view-success').style.display = 'block';
                 document.getElementById('generatedLink').value = link;
                 document.getElementById('btnOpenLink').href = link;
-            } else { alert("Gagal"); }
+            } else { alert("Gagal: " + d.message); }
+            
+            // Restore buttons
+            btn1.innerHTML = txtAsli; btn1.disabled = false;
+            btn2.innerHTML = txtAsli; btn2.disabled = false;
+        })
+        .catch(e => {
+            alert("Error: " + e);
+            btn1.innerHTML = txtAsli; btn1.disabled = false;
+            btn2.innerHTML = txtAsli; btn2.disabled = false;
         });
     }
 
@@ -190,21 +259,24 @@
         let savedID = localStorage.getItem("kgb_guruID");
         if(!savedID) return alert("Simpan Profil dulu minimal sekali!");
         
-        let judul = document.getElementById('blogJudul').value;
-        let konten = document.getElementById('blogKonten').value;
         let btn = document.getElementById('btnBlog');
-
-        if(!judul || !konten) return alert("Judul & Isi wajib diisi");
-        btn.innerHTML = "Mengirim..."; btn.disabled = true;
+        let txtAsli = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menerbitkan...'; btn.disabled = true;
 
         let data = {
             action: "simpan_blog",
             id_guru: savedID,
-            judul: judul,
+            judul: document.getElementById('blogJudul').value,
             kategori: document.getElementById('blogKategori').value,
             gambar: document.getElementById('blogGambar').value || "https://source.unsplash.com/random/800x400/?school",
-            konten: konten
+            konten: document.getElementById('blogKonten').value
         };
+
+        if(!data.judul || !data.konten) {
+             alert("Judul & Isi wajib diisi");
+             btn.innerHTML = txtAsli; btn.disabled = false;
+             return;
+        }
 
         let fd = new FormData();
         fd.append('payload', JSON.stringify(data));
@@ -217,8 +289,13 @@
                 document.getElementById('blogJudul').value = "";
                 document.getElementById('blogKonten').value = "";
             } else { alert(d.message); }
-            btn.innerHTML = "Terbitkan Artikel"; btn.disabled = false;
+            btn.innerHTML = txtAsli; btn.disabled = false;
         });
+    }
+
+    function kembaliKeEdit() {
+        document.getElementById('view-success').style.display = 'none';
+        document.getElementById('view-input').style.display = 'block';
     }
 </script>
 </body>
