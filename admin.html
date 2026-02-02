@@ -3,294 +3,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Komunitas Guru Berbagi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Admin Dashboard - Komunitas Guru</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        primary: '#4f46e5',
+                        primaryHover: '#4338ca',
+                        bgLight: '#f8fafc',
+                        surface: '#ffffff'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { background-color: #f0f2f5; font-family: 'Poppins', sans-serif; }
-        .main-card { max-width: 850px; margin: 40px auto; border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; }
-        .header-brand { background: white; padding: 30px; text-align: center; border-bottom: 4px solid #0d6efd; }
-        .brand-logo { max-height: 80px; margin-bottom: 10px; }
-        .nav-pills .nav-link { border-radius: 50px; padding: 10px 25px; font-weight: 600; background: #fff; border: 1px solid #eee; margin: 5px; color: #555; }
-        .nav-pills .nav-link.active { background-color: #0d6efd; color: white; border-color: #0d6efd; box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); }
-        .resource-item { background: white; border: 1px solid #f0f0f0; border-radius: 12px; padding: 15px; margin-bottom: 10px; position: relative; }
-        .display-none { display: none; }
-        .btn:disabled { cursor: not-allowed; opacity: 0.7; }
+        /* Toast Animation */
+        @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .toast-show { animation: slideUp 0.3s ease-out forwards; }
     </style>
 </head>
-<body>
+<body class="bg-bgLight text-slate-800 antialiased min-h-screen flex items-center justify-center p-4">
 
-<div class="container pb-5">
-    <div class="main-card bg-white">
+    <div id="view-login" class="w-full max-w-md bg-surface p-8 rounded-3xl shadow-xl border border-slate-100">
+        <div class="text-center mb-8">
+            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-16 mx-auto mb-4" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3408/3408596.png'">
+            <h1 class="text-2xl font-bold text-slate-800">Login Guru</h1>
+            <p class="text-slate-500 text-sm">Masuk untuk mengelola portofolio.</p>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">EMAIL SEKOLAH</label>
+                <div class="relative">
+                    <i data-lucide="mail" class="absolute left-3 top-3 w-5 h-5 text-slate-400"></i>
+                    <input type="email" id="loginEmail" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="nama@sekolah.sch.id">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">PIN KEAMANAN</label>
+                <div class="relative">
+                    <i data-lucide="lock" class="absolute left-3 top-3 w-5 h-5 text-slate-400"></i>
+                    <input type="password" id="loginPin" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="******">
+                </div>
+            </div>
+            <button onclick="doLogin()" id="btnLogin" class="w-full bg-primary text-white py-3 rounded-xl font-bold shadow-lg shadow-primary/30 hover:bg-primaryHover transition flex justify-center items-center gap-2">
+                <i data-lucide="log-in" class="w-5 h-5"></i> MASUK
+            </button>
+        </div>
+        <p class="text-center text-xs text-slate-400 mt-6">&copy; Komunitas Guru Berbagi</p>
+    </div>
+
+    <div id="view-dashboard" class="hidden w-full max-w-4xl bg-surface rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px] border border-slate-100">
         
-        <div class="header-brand">
-            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="brand-logo">
-            <h4 class="fw-bold text-dark mb-0">Komunitas Guru Berbagi</h4>
-            <p class="text-muted small">Kolaborasi, Inovasi, dan Praktik Baik</p>
-        </div>
-
-        <div id="view-login" class="p-5 text-center">
-            <h5 class="mb-4 fw-bold text-secondary">Login Anggota</h5>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <input type="email" id="loginEmail" class="form-control mb-3 p-3 rounded-3" placeholder="Email Terdaftar">
-                    <input type="password" id="loginPin" class="form-control mb-4 p-3 rounded-3" placeholder="PIN">
-                    <button onclick="doLogin()" id="btnLogin" class="btn btn-primary w-100 p-3 rounded-pill fw-bold shadow">MASUK</button>
+        <aside class="w-full md:w-64 bg-slate-50 border-r border-slate-200 p-6 flex flex-col">
+            <div class="flex items-center gap-3 mb-8">
+                <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-8 h-8">
+                <div class="leading-tight">
+                    <h2 class="font-bold text-sm">Dashboard</h2>
+                    <p class="text-[10px] text-slate-500">Admin Area</p>
                 </div>
             </div>
-        </div>
 
-        <div id="view-input" class="p-4 display-none">
-            <div class="d-flex align-items-center mb-4 p-3 bg-light rounded-4 border">
-                <div class="bg-white p-2 rounded-circle shadow-sm me-3 text-primary"><i class="fas fa-user-circle fa-2x"></i></div>
-                <div>
-                    <h6 class="mb-0 fw-bold">Halo, <span id="showNama">...</span></h6>
-                    <small class="text-muted" id="showSekolah">...</small>
-                </div>
-                <button onclick="location.reload()" class="btn btn-sm btn-outline-danger ms-auto rounded-pill px-3">Keluar</button>
-            </div>
+            <nav class="space-y-2 flex-1">
+                <button onclick="switchTab('profil')" id="nav-profil" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition bg-white text-primary shadow-sm">
+                    <i data-lucide="user"></i> Profil Saya
+                </button>
+                <button onclick="switchTab('blog')" id="nav-blog" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl text-slate-500 hover:bg-white hover:shadow-sm transition">
+                    <i data-lucide="pen-tool"></i> Tulis Blog
+                </button>
+                <button onclick="switchTab('arsip')" id="nav-arsip" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl text-slate-500 hover:bg-white hover:shadow-sm transition">
+                    <i data-lucide="folder-open"></i> Arsip Dokumen
+                </button>
+            </nav>
 
-            <ul class="nav nav-pills mb-4 justify-content-center" id="pills-tab" role="tablist">
-                <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-profil">1. Profil</button></li>
-                <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-blog">2. Tulis Blog</button></li>
-                <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-karya">3. Arsip</button></li>
-            </ul>
-
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="tab-profil">
-                    <div class="row g-3">
-                        <div class="col-12"><label class="small fw-bold">Foto Profil (URL)</label><input type="url" id="inpFoto" class="form-control" placeholder="https://..."></div>
-                        <div class="col-12"><label class="small fw-bold">Bio / Motto</label><textarea id="inpBio" class="form-control" rows="3"></textarea></div>
-                        <div class="col-md-4"><label class="small fw-bold">WhatsApp</label><input type="number" id="inpWA" class="form-control" placeholder="628..."></div>
-                        <div class="col-md-4"><label class="small fw-bold">Instagram</label><input type="text" id="inpIG" class="form-control" placeholder="username"></div>
-                        <div class="col-md-4"><label class="small fw-bold">LinkedIn</label><input type="url" id="inpLinked" class="form-control"></div>
+            <div class="mt-auto pt-6 border-t border-slate-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
+                        <i data-lucide="user" class="w-5 h-5"></i>
                     </div>
-                    <button onclick="doSimpan()" id="btnSimpan" class="btn btn-success w-100 mt-4 p-2 rounded-pill fw-bold">Simpan Profil</button>
-                </div>
-
-                <div class="tab-pane fade" id="tab-blog">
-                    <div class="alert alert-info small border-0"><i class="fas fa-info-circle"></i> Bagikan praktik baik atau berita sekolah.</div>
-                    <input type="text" id="blogJudul" class="form-control fw-bold mb-2" placeholder="Judul Artikel...">
-                    <div class="row g-2 mb-2">
-                        <div class="col-4"><select id="blogKategori" class="form-select"><option>Praktik Baik</option><option>Berita</option><option>Inovasi</option></select></div>
-                        <div class="col-8"><input type="url" id="blogGambar" class="form-control" placeholder="Link Gambar Header..."></div>
+                    <div class="overflow-hidden">
+                        <h4 class="font-bold text-xs truncate" id="showNama">User</h4>
+                        <p class="text-[10px] text-slate-500 truncate" id="showSekolah">Sekolah</p>
                     </div>
-                    <textarea id="blogKonten" class="form-control mb-3" rows="8" placeholder="Isi artikel..."></textarea>
-                    <button onclick="kirimBlog()" id="btnBlog" class="btn btn-warning w-100 fw-bold">Terbitkan Artikel</button>
+                </div>
+                <button onclick="location.reload()" class="w-full py-2 border border-red-200 text-red-500 text-xs font-bold rounded-lg hover:bg-red-50 transition">
+                    Keluar
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-6 md:p-8 overflow-y-auto bg-white h-full relative">
+            
+            <div id="tab-profil" class="space-y-6 animate-fade-in">
+                <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="user-cog" class="text-primary"></i> Edit Profil</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="col-span-1 md:col-span-2">
+                        <label class="text-xs font-bold text-slate-500 ml-1">Link Foto Profil (URL)</label>
+                        <input id="inpFoto" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="https://...">
+                    </div>
+                    <div class="col-span-1 md:col-span-2">
+                        <label class="text-xs font-bold text-slate-500 ml-1">Bio / Motto</label>
+                        <textarea id="inpBio" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition h-24" placeholder="Ceritakan tentang diri Anda..."></textarea>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 ml-1">WhatsApp</label>
+                        <input id="inpWA" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="628...">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 ml-1">Instagram (Username)</label>
+                        <input id="inpIG" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="tanpa @">
+                    </div>
+                    <div class="col-span-1 md:col-span-2">
+                        <label class="text-xs font-bold text-slate-500 ml-1">LinkedIn (URL Lengkap)</label>
+                        <input id="inpLinked" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="https://linkedin.com/in/...">
+                    </div>
                 </div>
 
-                <div class="tab-pane fade" id="tab-karya">
-                    <div id="wadah-link"></div>
-                    <button onclick="tambahBaris()" class="btn btn-outline-primary w-100 border-dashed mb-3"><i class="fas fa-plus"></i> Tambah Link</button>
-                    <button onclick="doSimpan()" id="btnSimpanArsip" class="btn btn-success w-100 p-2 rounded-pill fw-bold">Simpan Arsip</button>
+                <div class="pt-4 flex gap-3">
+                    <button onclick="doSimpanProfil()" id="btnSimpan" class="flex-1 bg-primary text-white py-3 rounded-xl font-bold shadow-lg shadow-primary/20 hover:bg-primaryHover transition flex justify-center items-center gap-2">
+                        <i data-lucide="save"></i> SIMPAN PERUBAHAN
+                    </button>
+                    <a href="#" id="btnPreview" target="_blank" class="hidden px-4 py-3 border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-slate-50 transition" title="Lihat Halaman">
+                        <i data-lucide="external-link"></i>
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <div id="view-success" class="display-none text-center p-5">
-            <h4 class="fw-bold text-success mb-3">Berhasil Disimpan!</h4>
-            <p class="text-muted small">Data telah diperbarui di database.</p>
-            <input type="text" id="generatedLink" class="form-control text-center fw-bold text-primary mb-3 bg-light" readonly>
-            <div class="d-grid gap-2">
-                <button onclick="navigator.clipboard.writeText(document.getElementById('generatedLink').value);alert('Disalin!')" class="btn btn-dark">Salin Link</button>
-                <a href="#" id="btnOpenLink" target="_blank" class="btn btn-primary">Lihat Halaman</a>
-                <button onclick="kembaliKeEdit()" class="btn btn-outline-secondary">Edit Kembali</button>
+            <div id="tab-blog" class="hidden space-y-6 animate-fade-in">
+                <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="pen-tool" class="text-primary"></i> Tulis Artikel Baru</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 ml-1">Judul Artikel</label>
+                        <input id="blogJudul" class="w-full p-3 bg-slate-50 rounded-xl font-bold border-transparent focus:border-primary focus:ring-0 transition" placeholder="Contoh: Kegiatan P5 Kelas 4">
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="text-xs font-bold text-slate-500 ml-1">Kategori</label>
+                            <select id="blogKategori" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition">
+                                <option>Berita Sekolah</option>
+                                <option>Praktik Baik</option>
+                                <option>Inovasi</option>
+                                <option>Opini</option>
+                            </select>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="text-xs font-bold text-slate-500 ml-1">Link Gambar Header</label>
+                            <input id="blogGambar" class="w-full p-3 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition" placeholder="https://...">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-500 ml-1">Isi Konten</label>
+                        <textarea id="blogKonten" class="w-full p-4 bg-slate-50 rounded-xl text-sm border-transparent focus:border-primary focus:ring-0 transition h-48 leading-relaxed" placeholder="Mulai menulis disini..."></textarea>
+                    </div>
+                    <button onclick="kirimBlog()" id="btnBlog" class="w-full bg-orange-500 text-white py-3 rounded-xl font-bold shadow-lg shadow-orange-500/20 hover:bg-orange-600 transition flex justify-center items-center gap-2">
+                        <i data-lucide="send"></i> TERBITKAN ARTIKEL
+                    </button>
+                </div>
             </div>
+
+            <div id="tab-arsip" class="hidden space-y-6 animate-fade-in">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold flex items-center gap-2"><i data-lucide="folder-open" class="text-primary"></i> Kelola Arsip</h2>
+                    <button onclick="tambahBaris()" class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-100 transition flex items-center gap-1">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Tambah
+                    </button>
+                </div>
+
+                <div id="wadah-link" class="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scroll">
+                    </div>
+
+                <button onclick="doSimpanProfil()" id="btnSimpanArsip" class="w-full bg-primary text-white py-3 rounded-xl font-bold shadow-lg shadow-primary/20 hover:bg-primaryHover transition flex justify-center items-center gap-2 mt-4">
+                    <i data-lucide="save"></i> SIMPAN PERUBAHAN ARSIP
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 text-white px-6 py-4 rounded-xl shadow-2xl translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <div id="toast-icon"></div>
+        <div>
+            <h4 class="font-bold text-sm" id="toast-title">Notifikasi</h4>
+            <p class="text-xs text-slate-300" id="toast-msg">Pesan disini.</p>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // ===============================================
-    // JANGAN LUPA GANTI LINK INI LAGI YA
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
-    // ===============================================
+    <script>
+        // ===============================================
+        // ⚠️ GANTI LINK INI DENGAN LINK DEPLOY NEW VERSION ANDA ⚠️
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
+        // ===============================================
 
-    let userSession = {};
+        let userSession = {};
 
-    function doLogin() {
-        const em = document.getElementById('loginEmail').value;
-        const pn = document.getElementById('loginPin').value; // Variabel pn
-        const btn = document.getElementById('btnLogin');
+        // --- INIT ICONS ---
+        lucide.createIcons();
 
-        // PERBAIKAN DISINI: 'pn' bukan 'pin'
-        if(!em || !pn) return alert("Isi Email dan PIN");
-        
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat Data...'; 
-        btn.disabled = true;
+        // --- LOGIN LOGIC ---
+        function doLogin() {
+            const em = document.getElementById('loginEmail').value;
+            const pn = document.getElementById('loginPin').value;
+            const btn = document.getElementById('btnLogin');
 
-        let fd = new FormData();
-        // Kirim pn sebagai 'pin' ke server
-        fd.append('payload', JSON.stringify({ action: "login", email: em, pin: pn }));
+            if(!em || !pn) return showToast("error", "Error", "Email dan PIN wajib diisi!");
+            
+            btn.innerHTML = '<div class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div> Loading...';
+            btn.disabled = true;
 
-        fetch(SCRIPT_URL, { method: 'POST', body: fd })
-        .then(r => r.json())
-        .then(d => {
-            if(d.result === 'success') {
-                userSession = d.user;
-                
-                if(d.profil_lama) {
-                    localStorage.setItem("kgb_guruID", d.profil_lama.id); 
+            let fd = new FormData();
+            fd.append('payload', JSON.stringify({ action: "login", email: em, pin: pn }));
+
+            fetch(SCRIPT_URL, { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(d => {
+                if(d.result === 'success') {
+                    userSession = d.user;
                     
-                    document.getElementById('inpFoto').value = d.profil_lama.foto || "";
-                    document.getElementById('inpBio').value = d.profil_lama.bio || "";
-                    document.getElementById('inpWA').value = d.profil_lama.wa || "";
-                    document.getElementById('inpIG').value = d.profil_lama.ig || "";
-                    document.getElementById('inpLinked').value = d.profil_lama.linkedin || "";
+                    // SAVE ID
+                    if(d.profil_lama) {
+                        localStorage.setItem("kgb_guruID", d.profil_lama.id);
+                        fillForm(d.profil_lama);
+                        
+                        // Show Preview Button
+                        const link = `portfolio.html?id=${d.profil_lama.id}`;
+                        const btnPrev = document.getElementById('btnPreview');
+                        btnPrev.href = link;
+                        btnPrev.classList.remove('hidden');
+                        btnPrev.classList.add('flex');
+                    } else {
+                        localStorage.removeItem("kgb_guruID");
+                    }
 
-                    try {
-                        let resources = JSON.parse(d.profil_lama.resources);
-                        resources.forEach(r => tambahBaris(r.judul, r.url, r.tipe));
-                    } catch(e) { console.log("Gagal parse resource lama"); }
-
+                    // UI Switch
+                    document.getElementById('showNama').innerText = d.user.nama;
+                    document.getElementById('showSekolah').innerText = d.user.sekolah;
+                    document.getElementById('view-login').classList.add('hidden');
+                    document.getElementById('view-dashboard').classList.remove('hidden');
+                    document.getElementById('view-dashboard').classList.add('flex');
+                    
+                    showToast("success", "Berhasil Masuk", `Selamat datang, ${d.user.nama}!`);
                 } else {
-                    localStorage.removeItem("kgb_guruID"); 
+                    showToast("error", "Gagal Masuk", d.message);
                 }
-
-                document.getElementById('showNama').innerText = d.user.nama;
-                document.getElementById('showSekolah').innerText = d.user.sekolah;
-                document.getElementById('view-login').style.display = 'none';
-                document.getElementById('view-input').style.display = 'block';
-            } else { alert(d.message); }
-            
-            btn.innerHTML = "MASUK"; btn.disabled = false;
-        })
-        .catch(e => { alert("Error Koneksi: " + e); btn.disabled = false; btn.innerHTML = "MASUK"; });
-    }
-
-    function tambahBaris(judul="", url="", tipe="dokumen") {
-        const id = Date.now() + Math.random().toString(16).slice(2);
-        
-        let selDoc = tipe=="dokumen"?"selected":"";
-        let selVid = tipe=="video"?"selected":"";
-        let selDir = tipe=="folder"?"selected":"";
-        let selLnk = tipe=="link"?"selected":"";
-
-        const html = `
-        <div class="resource-item" id="row-${id}">
-            <div class="d-flex justify-content-between mb-2">
-                <span class="badge bg-secondary">Item</span>
-                <i class="fas fa-times text-danger" onclick="document.getElementById('row-${id}').remove()" style="cursor:pointer"></i>
-            </div>
-            <input class="form-control form-control-sm mb-2 inp-judul" placeholder="Judul" value="${judul}">
-            <div class="row g-2">
-                <div class="col-8"><input class="form-control form-control-sm inp-url" placeholder="URL" value="${url}"></div>
-                <div class="col-4">
-                    <select class="form-select form-select-sm inp-tipe">
-                        <option value="dokumen" ${selDoc}>Doc</option>
-                        <option value="video" ${selVid}>Vid</option>
-                        <option value="folder" ${selDir}>Dir</option>
-                        <option value="link" ${selLnk}>Link</option>
-                    </select>
-                </div>
-            </div>
-        </div>`;
-        document.getElementById('wadah-link').insertAdjacentHTML('beforeend', html);
-    }
-
-    function doSimpan() {
-        let btn1 = document.getElementById('btnSimpan');
-        let btn2 = document.getElementById('btnSimpanArsip');
-        let txtAsli = btn1.innerHTML;
-        
-        btn1.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...'; btn1.disabled = true;
-        btn2.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...'; btn2.disabled = true;
-
-        let res = [];
-        document.querySelectorAll('.resource-item').forEach(r => {
-            let j = r.querySelector('.inp-judul').value;
-            let u = r.querySelector('.inp-url').value;
-            let t = r.querySelector('.inp-tipe').value;
-            if(j && u) res.push({judul:j, url:u, tipe:t});
-        });
-
-        let idLama = localStorage.getItem("kgb_guruID");
-
-        let data = {
-            action: "simpan_profil",
-            id_lama: idLama,
-            nama: userSession.nama,
-            sekolah: userSession.sekolah,
-            jabatan: userSession.jabatan,
-            bio: document.getElementById('inpBio').value,
-            foto: document.getElementById('inpFoto').value,
-            wa: document.getElementById('inpWA').value,
-            ig: document.getElementById('inpIG').value,
-            linkedin: document.getElementById('inpLinked').value,
-            resources: JSON.stringify(res)
-        };
-
-        let fd = new FormData();
-        fd.append('payload', JSON.stringify(data));
-
-        fetch(SCRIPT_URL, { method: 'POST', body: fd })
-        .then(r => r.json())
-        .then(d => {
-            if(d.result === 'success') {
-                localStorage.setItem("kgb_guruID", d.id);
-                let link = location.href.replace('admin.html', 'portfolio.html') + "?id=" + d.id;
-                
-                document.getElementById('view-input').style.display = 'none';
-                document.getElementById('view-success').style.display = 'block';
-                document.getElementById('generatedLink').value = link;
-                document.getElementById('btnOpenLink').href = link;
-            } else { alert("Gagal: " + d.message); }
-            
-            btn1.innerHTML = txtAsli; btn1.disabled = false;
-            btn2.innerHTML = txtAsli; btn2.disabled = false;
-        })
-        .catch(e => {
-            alert("Error: " + e);
-            btn1.innerHTML = txtAsli; btn1.disabled = false;
-            btn2.innerHTML = txtAsli; btn2.disabled = false;
-        });
-    }
-
-    function kirimBlog() {
-        let savedID = localStorage.getItem("kgb_guruID");
-        if(!savedID) return alert("Simpan Profil dulu minimal sekali!");
-        
-        let btn = document.getElementById('btnBlog');
-        let txtAsli = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menerbitkan...'; btn.disabled = true;
-
-        let data = {
-            action: "simpan_blog",
-            id_guru: savedID,
-            judul: document.getElementById('blogJudul').value,
-            kategori: document.getElementById('blogKategori').value,
-            gambar: document.getElementById('blogGambar').value || "https://source.unsplash.com/random/800x400/?school",
-            konten: document.getElementById('blogKonten').value
-        };
-
-        if(!data.judul || !data.konten) {
-             alert("Judul & Isi wajib diisi");
-             btn.innerHTML = txtAsli; btn.disabled = false;
-             return;
+                btn.innerHTML = '<i data-lucide="log-in" class="w-5 h-5"></i> MASUK'; btn.disabled = false;
+                lucide.createIcons();
+            })
+            .catch(e => {
+                showToast("error", "Koneksi Error", "Cek internet Anda.");
+                btn.innerHTML = '<i data-lucide="log-in" class="w-5 h-5"></i> MASUK'; btn.disabled = false;
+                lucide.createIcons();
+            });
         }
 
-        let fd = new FormData();
-        fd.append('payload', JSON.stringify(data));
+        // --- PRE-FILL DATA ---
+        function fillForm(data) {
+            document.getElementById('inpFoto').value = data.foto || "";
+            document.getElementById('inpBio').value = data.bio || "";
+            document.getElementById('inpWA').value = data.wa || "";
+            document.getElementById('inpIG').value = data.ig || "";
+            document.getElementById('inpLinked').value = data.linkedin || "";
 
-        fetch(SCRIPT_URL, { method: 'POST', body: fd })
-        .then(r => r.json())
-        .then(d => {
-            if(d.result === 'success') {
-                alert("Artikel Terbit!");
-                document.getElementById('blogJudul').value = "";
-                document.getElementById('blogKonten').value = "";
-            } else { alert(d.message); }
-            btn.innerHTML = txtAsli; btn.disabled = false;
-        });
-    }
+            try {
+                let resources = JSON.parse(data.resources);
+                document.getElementById('wadah-link').innerHTML = ""; // Clear dulu
+                resources.forEach(r => tambahBaris(r.judul, r.url, r.tipe));
+            } catch(e) {}
+        }
 
-    function kembaliKeEdit() {
-        document.getElementById('view-success').style.display = 'none';
-        document.getElementById('view-input').style.display = 'block';
-    }
-</script>
+        // --- SAVE PROFILE & ARSIP ---
+        function doSimpanProfil() {
+            const btn1 = document.getElementById('btnSimpan');
+            const btn2 = document.getElementById('btnSimpanArsip');
+            const txtOriginal = btn1.innerHTML;
+
+            btn1.innerHTML = "Menyimpan..."; btn1.disabled = true;
+            btn2.innerHTML = "Menyimpan..."; btn2.disabled = true;
+
+            // Collect Resources
+            let res = [];
+            document.querySelectorAll('.resource-item').forEach(r => {
+                let j = r.querySelector('.inp-judul').value;
+                let u = r.querySelector('.inp-url').value;
+                let t = r.querySelector('.inp-tipe').value;
+                if(j && u) res.push({judul:j, url:u, tipe:t});
+            });
+
+            let idLama = localStorage.getItem("kgb_guruID");
+            
+            let data = {
+                action: "simpan_profil",
+                id_lama: idLama,
+                nama: userSession.nama,
+                sekolah: userSession.sekolah,
+                jabatan: userSession.jabatan,
+                bio: document.getElementById('inpBio').value,
+                foto: document.getElementById('inpFoto').value,
+                wa: document.getElementById('inpWA').value,
+                ig: document.getElementById('inpIG').value,
+                linkedin: document.getElementById('inpLinked').value,
+                resources: JSON.stringify(res)
+            };
+
+            let fd = new FormData();
+            fd.append('payload', JSON.stringify(data));
+
+            fetch(SCRIPT_URL, { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(d => {
+                if(d.result === 'success') {
+                    localStorage.setItem("kgb_guruID", d.id);
+                    // Update tombol preview
+                    const link = `portfolio.html?id=${d.id}`;
+                    const btnPrev = document.getElementById('btnPreview');
+                    btnPrev.href = link;
+                    btnPrev.classList.remove('hidden');
+                    btnPrev.classList.add('flex');
+
+                    showToast("success", "Sukses", "Profil & Arsip berhasil diperbarui!");
+                } else {
+                    showToast("error", "Gagal", d.message);
+                }
+                btn1.innerHTML = txtOriginal; btn1.disabled = false;
+                btn2.innerHTML = txtOriginal; btn2.disabled = false;
+            })
+            .catch(e => {
+                showToast("error", "Error", "Terjadi kesalahan jaringan.");
+                btn1.innerHTML = txtOriginal; btn1.disabled = false;
+                btn2.innerHTML = txtOriginal; btn2.disabled = false;
+            });
+        }
+
+        // --- SEND BLOG ---
+        function kirimBlog() {
+            let savedID = localStorage.getItem("kgb_guruID");
+            if(!savedID) return showToast("error", "Perhatian", "Simpan Profil minimal sekali dulu!");
+
+            let judul = document.getElementById('blogJudul').value;
+            let konten = document.getElementById('blogKonten').value;
+            let btn = document.getElementById('btnBlog');
+
+            if(!judul || !konten) return showToast("error", "Data Kurang", "Judul & Isi wajib diisi.");
+
+            btn.innerHTML = "Menerbitkan..."; btn.disabled = true;
+
+            let data = {
+                action: "simpan_blog",
+                id_guru: savedID,
+                judul: judul,
+                kategori: document.getElementById('blogKategori').value,
+                gambar: document.getElementById('blogGambar').value || "https://source.unsplash.com/random/800x400/?school",
+                konten: konten
+            };
+
+            let fd = new FormData();
+            fd.append('payload', JSON.stringify(data));
+
+            fetch(SCRIPT_URL, { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(d => {
+                if(d.result === 'success') {
+                    showToast("success", "Terbit!", "Artikel berhasil dipublikasikan.");
+                    document.getElementById('blogJudul').value = "";
+                    document.getElementById('blogKonten').value = "";
+                } else {
+                    showToast("error", "Gagal", d.message);
+                }
+                btn.innerHTML = '<i data-lucide="send"></i> TERBITKAN ARTIKEL'; btn.disabled = false;
+                lucide.createIcons();
+            });
+        }
+
+        // --- UI HELPERS ---
+        function switchTab(tab) {
+            ['profil', 'blog', 'arsip'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`nav-${t}`).className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl text-slate-500 hover:bg-white hover:shadow-sm transition";
+            });
+            
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            document.getElementById(`nav-${tab}`).className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition bg-white text-primary shadow-sm";
+        }
+
+        function tambahBaris(judul="", url="", tipe="dokumen") {
+            const id = Date.now() + Math.random().toString(16).slice(2);
+            const html = `
+            <div class="resource-item bg-slate-50 p-3 rounded-xl border border-slate-100 relative group" id="row-${id}">
+                <button onclick="document.getElementById('row-${id}').remove()" class="absolute top-2 right-2 text-slate-300 hover:text-red-500 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                <div class="mb-2 pr-8">
+                    <input class="inp-judul w-full bg-transparent text-sm font-bold placeholder-slate-400 focus:outline-none" placeholder="Judul Dokumen (Misal: RPP)" value="${judul}">
+                </div>
+                <div class="flex gap-2">
+                    <input class="inp-url w-2/3 bg-white p-2 rounded-lg text-xs border border-slate-200 focus:border-primary focus:outline-none" placeholder="URL (Google Drive/YouTube)" value="${url}">
+                    <select class="inp-tipe w-1/3 bg-white p-2 rounded-lg text-xs border border-slate-200 focus:border-primary focus:outline-none">
+                        <option value="dokumen" ${tipe=='dokumen'?'selected':''}>Dokumen</option>
+                        <option value="video" ${tipe=='video'?'selected':''}>Video</option>
+                        <option value="folder" ${tipe=='folder'?'selected':''}>Folder</option>
+                        <option value="link" ${tipe=='link'?'selected':''}>Link</option>
+                    </select>
+                </div>
+            </div>`;
+            document.getElementById('wadah-link').insertAdjacentHTML('beforeend', html);
+            lucide.createIcons();
+        }
+
+        function showToast(type, title, msg) {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-msg').innerText = msg;
+
+            if(type === 'success') icon.innerHTML = '<i data-lucide="check-circle" class="text-green-400"></i>';
+            else icon.innerHTML = '<i data-lucide="alert-circle" class="text-red-400"></i>';
+            
+            lucide.createIcons();
+            
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
