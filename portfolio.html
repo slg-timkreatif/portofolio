@@ -45,6 +45,11 @@
     <button onclick="location.reload()" class="btn btn-primary rounded-pill mt-3">Coba Lagi</button>
 </div>
 
+<div id="loading" class="position-fixed top-0 start-0 w-100 h-100 bg-white d-flex flex-column justify-content-center align-items-center" style="z-index:9990;">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-3 small text-muted">Sedang mengambil data terbaru...</p>
+</div>
+
 <div id="main-content" style="display:none;">
     <div class="hero-section">
         <div class="container pt-5">
@@ -87,89 +92,96 @@
     </footer>
 </div>
 
-<div id="loading" class="position-fixed top-0 start-0 w-100 h-100 bg-white d-flex flex-column justify-content-center align-items-center" style="z-index:9990;">
-    <div class="spinner-border text-primary" role="status"></div>
-    <p class="mt-3 small text-muted">Sedang mengambil data terbaru...</p>
-</div>
-
 <div class="modal fade" id="modalArtikel" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content border-0 rounded-4"><div class="modal-header border-0 pb-0"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body px-4 px-md-5 pb-5"><span class="badge bg-primary bg-opacity-10 text-primary mb-2" id="modKat">Kat</span><h2 class="fw-bold mb-2" id="modJudul">Judul</h2><p class="text-muted small mb-4" id="modWaktu">...</p><img id="modImg" src="" class="w-100 rounded-3 mb-4 shadow-sm object-fit-cover" style="max-height: 400px;"><div id="modIsi" class="lh-lg text-secondary" style="white-space: pre-wrap; text-align: justify;">...</div></div></div></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // ===============================================
-    // ⚠️ PASTIKAN URL INI BENAR ⚠️
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
+    // ⚠️ GANTI LINK DI BAWAH INI DENGAN BENAR ⚠️
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
     // ===============================================
 
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
 
-    // Cek Apakah URL Script Masih Default
-    if(SCRIPT_URL.includes("GANTI_DENGAN")) {
-        showError("Konfigurasi Belum Selesai", "Anda belum memasukkan URL Google Script ke dalam file portfolio.html (Baris 140).");
-    } 
-    else if(id) {
+    if(id) {
         fetch(SCRIPT_URL + "?id=" + id)
         .then(r => {
             if (!r.ok) throw new Error("HTTP error " + r.status);
             return r.json();
         })
         .then(d => {
-            if(d.status === "found") renderPage(d.data);
-            else { 
-                showError("Data Tidak Ditemukan", "ID Portfolio ini tidak terdaftar di database kami.");
+            // DIAGNOSA DATA (Agar tidak crash meski data lama/baru)
+            if(d.status === "found") {
+                // LOGIKA CERDAS: Cek apakah dibungkus 'data' atau tidak?
+                let finalData = d.data ? d.data : d; 
+                renderPage(finalData);
+            } else { 
+                showError("Data Tidak Ditemukan", "ID Portfolio ini tidak terdaftar.");
             }
         })
         .catch(err => {
             console.error(err);
-            showError("Gagal Terhubung", "Tidak dapat menghubungi server database. Cek koneksi internet Anda atau URL Script.");
+            showError("Gagal Terhubung", "Cek koneksi internet atau URL Script.");
         });
     } else { 
-        showError("Link Tidak Valid", "Alamat URL tidak memiliki ID Guru. Silakan akses melalui Dashboard Admin.");
+        showError("Link Tidak Valid", "Alamat URL tidak memiliki ID Guru.");
     }
 
     function renderPage(data) {
-        document.getElementById('pNama').innerText = data.nama;
-        document.getElementById('pSekolah').innerText = data.sekolah;
-        document.getElementById('pJabatan').innerText = data.jabatan;
-        document.getElementById('pBio').innerText = data.bio || "";
-        if(data.foto) document.getElementById('pFoto').src = data.foto;
-        document.getElementById('footerNama').innerText = data.nama;
-        document.getElementById('footerSekolah').innerText = data.sekolah;
-        document.getElementById('thn').innerText = new Date().getFullYear();
+        try {
+            document.getElementById('pNama').innerText = data.nama || "Tanpa Nama";
+            document.getElementById('pSekolah').innerText = data.sekolah || "-";
+            document.getElementById('pJabatan').innerText = data.jabatan || "Guru";
+            document.getElementById('pBio').innerText = data.bio || "";
+            if(data.foto) document.getElementById('pFoto').src = data.foto;
+            
+            // Footer
+            document.getElementById('footerNama').innerText = data.nama || "Guru";
+            document.getElementById('footerSekolah').innerText = data.sekolah || "Sekolah";
+            document.getElementById('thn').innerText = new Date().getFullYear();
 
-        let s = "";
-        if(data.wa) s += `<a href="https://wa.me/${data.wa}" class="btn btn-success btn-sm rounded-pill me-1"><i class="fab fa-whatsapp"></i> WA</a>`;
-        if(data.ig) s += `<a href="https://instagram.com/${data.ig}" class="btn btn-danger btn-sm rounded-pill me-1"><i class="fab fa-instagram"></i> IG</a>`;
-        if(data.linkedin) s += `<a href="${data.linkedin}" class="btn btn-primary btn-sm rounded-pill me-1"><i class="fab fa-linkedin"></i> In</a>`;
-        document.getElementById('pSosmed').innerHTML = s;
+            // Sosmed
+            let s = "";
+            if(data.wa) s += `<a href="https://wa.me/${data.wa}" class="btn btn-success btn-sm rounded-pill me-1"><i class="fab fa-whatsapp"></i> WA</a>`;
+            if(data.ig) s += `<a href="https://instagram.com/${data.ig}" class="btn btn-danger btn-sm rounded-pill me-1"><i class="fab fa-instagram"></i> IG</a>`;
+            if(data.linkedin) s += `<a href="${data.linkedin}" class="btn btn-primary btn-sm rounded-pill me-1"><i class="fab fa-linkedin"></i> In</a>`;
+            document.getElementById('pSosmed').innerHTML = s;
 
-        let blogs = data.blog || [];
-        if(blogs.length === 0) document.getElementById('empty-blog').classList.remove('d-none');
-        else {
-            let html = "";
-            blogs.forEach((b, idx) => {
-                let tgl = new Date(b.waktu).toLocaleDateString('id-ID');
-                html += `<div class="col-md-6 col-lg-4"><div class="blog-card position-relative" onclick="bukaModal(${idx})" style="cursor:pointer"><span class="blog-badge">${b.kategori}</span><img src="${b.gambar}" class="blog-img-top w-100"><div class="p-4"><small class="text-muted d-block mb-1">${tgl}</small><h5 class="fw-bold text-dark mb-2">${b.judul}</h5><span class="text-primary fw-bold small">Baca <i class="fas fa-arrow-right"></i></span></div></div></div>`;
+            // Blog
+            let blogs = data.blog || [];
+            if(blogs.length === 0) document.getElementById('empty-blog').classList.remove('d-none');
+            else {
+                let html = "";
+                blogs.forEach((b, idx) => {
+                    let tgl = new Date(b.waktu).toLocaleDateString('id-ID');
+                    html += `<div class="col-md-6 col-lg-4"><div class="blog-card position-relative" onclick="bukaModal(${idx})" style="cursor:pointer"><span class="blog-badge">${b.kategori}</span><img src="${b.gambar}" class="blog-img-top w-100"><div class="p-4"><small class="text-muted d-block mb-1">${tgl}</small><h5 class="fw-bold text-dark mb-2">${b.judul}</h5><span class="text-primary fw-bold small">Baca <i class="fas fa-arrow-right"></i></span></div></div></div>`;
+                });
+                document.getElementById('area-blog').innerHTML = html;
+                window.blogData = blogs;
+            }
+
+            // Arsip
+            let res = [];
+            try { res = JSON.parse(data.resources); } catch(e){}
+            let htmlRes = "";
+            res.forEach(r => {
+                let icon = "fa-link text-primary";
+                if(r.tipe == "dokumen") icon = "fa-file-pdf text-danger";
+                if(r.tipe == "video") icon = "fa-play-circle text-danger";
+                if(r.tipe == "folder") icon = "fa-folder text-warning";
+                htmlRes += `<a href="${r.url}" target="_blank" class="res-item"><div class="res-icon"><i class="fas ${icon}"></i></div><div class="flex-grow-1"><h6 class="fw-bold mb-0">${r.judul}</h6><small class="text-muted uppercase" style="font-size:11px;">${r.tipe}</small></div><i class="fas fa-chevron-right text-muted opacity-50"></i></a>`;
             });
-            document.getElementById('area-blog').innerHTML = html;
-            window.blogData = blogs;
-        }
+            document.getElementById('area-resource').innerHTML = htmlRes;
+            
+            // SUKSES -> HILANGKAN LOADING
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
 
-        let res = [];
-        try { res = JSON.parse(data.resources); } catch(e){}
-        let htmlRes = "";
-        res.forEach(r => {
-            let icon = "fa-link text-primary";
-            if(r.tipe == "dokumen") icon = "fa-file-pdf text-danger";
-            if(r.tipe == "video") icon = "fa-play-circle text-danger";
-            if(r.tipe == "folder") icon = "fa-folder text-warning";
-            htmlRes += `<a href="${r.url}" target="_blank" class="res-item"><div class="res-icon"><i class="fas ${icon}"></i></div><div class="flex-grow-1"><h6 class="fw-bold mb-0">${r.judul}</h6><small class="text-muted uppercase" style="font-size:11px;">${r.tipe}</small></div><i class="fas fa-chevron-right text-muted opacity-50"></i></a>`;
-        });
-        document.getElementById('area-resource').innerHTML = htmlRes;
-        
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
+        } catch(e) {
+            console.error(e);
+            showError("Gagal Render", "Terjadi kesalahan saat menampilkan data.");
+        }
     }
 
     function showError(judul, pesan) {
