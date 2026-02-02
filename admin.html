@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Komunitas Guru Berbagi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { background-color: #f4f7f6; font-family: 'Poppins', sans-serif; }
+        
+        /* Card Utama */
+        .main-card {
+            max-width: 850px; margin: 40px auto; border: none; 
+            border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); overflow: hidden;
+        }
+
+        /* Header Branding */
+        .header-brand {
+            background: #ffffff; padding: 30px; text-align: center;
+            border-bottom: 5px solid #0d6efd;
+        }
+        .brand-logo { max-height: 80px; margin-bottom: 15px; }
+
+        /* Login Area */
+        .login-box { padding: 40px; background: white; }
+        .form-control-lg { border-radius: 12px; font-size: 15px; background: #f8f9fa; border: 1px solid #eee; }
+        .form-control-lg:focus { background: white; border-color: #0d6efd; box-shadow: none; }
+
+        /* Tabs Navigasi */
+        .nav-pills .nav-link { 
+            border-radius: 50px; padding: 10px 25px; color: #555; font-weight: 600; 
+            background: #fff; border: 1px solid #eee; margin-right: 5px; margin-bottom: 5px;
+        }
+        .nav-pills .nav-link.active { background-color: #0d6efd; color: white; border-color: #0d6efd; box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); }
+
+        /* Resource Item */
+        .resource-item {
+            background: white; border: 1px solid #f0f0f0; border-radius: 12px;
+            padding: 15px; margin-bottom: 10px; position: relative;
+        }
+        .btn-action { border-radius: 50px; padding: 10px 20px; font-weight: bold; }
+        .display-none { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container pb-5">
+    <div class="main-card bg-white">
+        
+        <div class="header-brand">
+            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="brand-logo" alt="Logo Komunitas">
+            <h4 class="fw-bold text-dark mb-0">Komunitas Guru Berbagi</h4>
+            <p class="text-muted small mb-0">Kolaborasi, Inovasi, dan Berbagi Praktik Baik</p>
+        </div>
+
+        <div id="view-login" class="login-box text-center">
+            <h5 class="mb-4 fw-bold text-secondary">Masuk Area Anggota</h5>
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <div class="mb-3 text-start">
+                        <label class="small fw-bold text-muted ms-2">Email Terdaftar</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i class="fas fa-envelope text-muted"></i></span>
+                            <input type="email" id="loginEmail" class="form-control form-control-lg" placeholder="nama@sekolah.sch.id">
+                        </div>
+                    </div>
+                    <div class="mb-4 text-start">
+                        <label class="small fw-bold text-muted ms-2">PIN Keamanan</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i class="fas fa-lock text-muted"></i></span>
+                            <input type="password" id="loginPin" class="form-control form-control-lg" placeholder="******">
+                        </div>
+                    </div>
+                    <button onclick="doLogin()" id="btnLogin" class="btn btn-primary w-100 btn-action shadow">MASUK SEKARANG</button>
+                    <p class="mt-3 small text-muted">Belum punya akses? Hubungi Admin Komunitas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-input" class="p-4 display-none">
+            
+            <div class="d-flex align-items-center mb-4 p-3 bg-light rounded-4 border">
+                <div class="bg-white p-2 rounded-circle shadow-sm me-3 text-primary">
+                    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" width="40">
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold">Halo, <span id="showNama">Rekan Guru</span>!</h6>
+                    <small class="text-muted"><i class="fas fa-school me-1"></i> <span id="showSekolah">...</span></small>
+                </div>
+                <button onclick="location.reload()" class="btn btn-sm btn-outline-danger ms-auto rounded-pill px-3">Keluar</button>
+            </div>
+
+            <ul class="nav nav-pills mb-4 justify-content-center" id="pills-tab" role="tablist">
+                <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-profil"><i class="fas fa-user-edit me-1"></i> Profil</button></li>
+                <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-blog"><i class="fas fa-pen-nib me-1"></i> Tulis Blog</button></li>
+                <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-karya"><i class="fas fa-folder-open me-1"></i> Arsip Dokumen</button></li>
+            </ul>
+
+            <div class="tab-content">
+                
+                <div class="tab-pane fade show active" id="tab-profil">
+                    <h6 class="fw-bold text-primary mb-3">Identitas & Sosial Media</h6>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="small fw-bold">Link Foto Profil (URL)</label>
+                            <input type="url" id="inpFoto" class="form-control" placeholder="https://...">
+                        </div>
+                        <div class="col-12">
+                            <label class="small fw-bold">Bio / Motto Mengajar</label>
+                            <textarea id="inpBio" class="form-control" rows="3" placeholder="Ceritakan sedikit tentang filosofi mengajar Anda..."></textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small fw-bold">WhatsApp (628...)</label>
+                            <input type="number" id="inpWA" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small fw-bold">Username Instagram</label>
+                            <input type="text" id="inpIG" class="form-control" placeholder="tanpa @">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small fw-bold">Link LinkedIn</label>
+                            <input type="url" id="inpLinked" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mt-4 text-end">
+                        <button onclick="doSimpan()" class="btn btn-success btn-action"><i class="fas fa-save me-1"></i> Simpan Profil</button>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="tab-blog">
+                    <div class="alert alert-info border-0 d-flex align-items-center">
+                        <i class="fas fa-lightbulb fa-2x me-3 text-warning"></i>
+                        <div>
+                            <strong>Bagikan Inspirasi!</strong><br>
+                            <small>Tulis praktik baik, berita sekolah, atau opini edukatif Anda.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <input type="text" id="blogJudul" class="form-control form-control-lg fw-bold" placeholder="Judul Artikel...">
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-4">
+                            <select id="blogKategori" class="form-select bg-light">
+                                <option value="Praktik Baik">💡 Praktik Baik</option>
+                                <option value="Berita">📰 Berita Sekolah</option>
+                                <option value="Inovasi">🚀 Inovasi</option>
+                                <option value="Opini">📝 Opini</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="url" id="blogGambar" class="form-control bg-light" placeholder="Link Gambar Header (URL)...">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <textarea id="blogKonten" class="form-control" rows="10" placeholder="Mulai menulis cerita Anda disini..."></textarea>
+                    </div>
+                    <button onclick="kirimBlog()" id="btnBlog" class="btn btn-warning w-100 btn-action text-dark"><i class="fas fa-paper-plane me-2"></i> TERBITKAN ARTIKEL</button>
+                </div>
+
+                <div class="tab-pane fade" id="tab-karya">
+                    <h6 class="fw-bold text-primary mb-3">Lampiran Bukti Karya</h6>
+                    <div id="wadah-link"></div>
+                    <button onclick="tambahBaris()" class="btn btn-outline-primary w-100 border-dashed py-2 mb-3 rounded-3"><i class="fas fa-plus"></i> Tambah Item</button>
+                    <div class="mt-4 text-end">
+                        <button onclick="doSimpan()" class="btn btn-success btn-action"><i class="fas fa-save me-1"></i> Simpan Arsip</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="view-success" class="display-none text-center p-5">
+            <div class="mb-3"><i class="fas fa-check-circle text-success" style="font-size: 70px;"></i></div>
+            <h4 class="fw-bold">Profil Berhasil Diupdate!</h4>
+            <p class="text-muted">Halaman Anda sudah siap diakses oleh publik.</p>
+            
+            <div class="bg-light p-3 rounded-4 border d-inline-block w-100 mb-4" style="max-width: 500px;">
+                <label class="small fw-bold text-start w-100 mb-1 text-muted">Link Halaman Anda:</label>
+                <div class="input-group">
+                    <input type="text" id="generatedLink" class="form-control fw-bold text-primary bg-white" readonly>
+                    <button onclick="copyLink()" class="btn btn-dark"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+            <br>
+            <a href="#" id="btnOpenLink" target="_blank" class="btn btn-primary btn-action px-5">Lihat Halaman Saya <i class="fas fa-arrow-right ms-2"></i></a>
+            <button onclick="location.reload()" class="btn btn-link text-muted d-block mx-auto mt-3">Kembali ke Dashboard</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // ================= URL BACKEND =================
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
+    // ===============================================
+
+    let userSession = {};
+
+    function doLogin() {
+        const email = document.getElementById('loginEmail').value;
+        const pin = document.getElementById('loginPin').value;
+        const btn = document.getElementById('btnLogin');
+
+        if(!email || !pin) return alert("Mohon lengkapi Email dan PIN.");
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memeriksa...'; btn.disabled = true;
+
+        let fd = new FormData();
+        fd.append('payload', JSON.stringify({ action: "login", email: email, pin: pin }));
+
+        fetch(SCRIPT_URL, { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(d => {
+            if(d.result === 'success') {
+                userSession = d;
+                document.getElementById('showNama').innerText = d.nama;
+                document.getElementById('showSekolah').innerText = d.sekolah;
+                document.getElementById('view-login').style.display = 'none';
+                document.getElementById('view-input').style.display = 'block';
+                
+                // Simpan ID sesi agar bisa nge-blog
+                // Kita akan pakai logika sederhana: ID Guru = ID Unik Profil (jika sudah ada) atau temporary
+                // Untuk MVP ini, kita akan trigger 'simpan profil' otomatis nanti
+            } else { alert(d.message); }
+            btn.innerHTML = "MASUK SEKARANG"; btn.disabled = false;
+        })
+        .catch(e => { alert("Koneksi Error"); btn.disabled = false; });
+    }
+
+    function tambahBaris() {
+        const id = Date.now();
+        const html = `
+        <div class="resource-item" id="row-${id}">
+            <div class="row g-2 align-items-center">
+                <div class="col-12 d-flex justify-content-between">
+                    <span class="badge bg-secondary mb-1">Item Portfolio</span>
+                    <i class="fas fa-trash text-danger" style="cursor:pointer" onclick="document.getElementById('row-${id}').remove()"></i>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" class="form-control form-control-sm inp-judul" placeholder="Judul Karya (Misal: RPP)">
+                </div>
+                <div class="col-md-4">
+                    <input type="url" class="form-control form-control-sm inp-url" placeholder="Link URL (Drive/YouTube)">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select form-select-sm inp-tipe">
+                        <option value="dokumen">📄 Dokumen</option>
+                        <option value="video">🎥 Video</option>
+                        <option value="folder">📂 Folder</option>
+                        <option value="link">🔗 Link</option>
+                    </select>
+                </div>
+            </div>
+        </div>`;
+        document.getElementById('wadah-link').insertAdjacentHTML('beforeend', html);
+    }
+
+    function doSimpan() {
+        // Logika Simpan Profil & Arsip
+        let resources = [];
+        document.querySelectorAll('.resource-item').forEach(r => {
+            let j = r.querySelector('.inp-judul').value;
+            let u = r.querySelector('.inp-url').value;
+            let t = r.querySelector('.inp-tipe').value;
+            if(j && u) resources.push({judul:j, url:u, tipe:t});
+        });
+
+        let data = {
+            action: "simpan_profil",
+            nama: userSession.nama,
+            sekolah: userSession.sekolah,
+            jabatan: userSession.jabatan,
+            bio: document.getElementById('inpBio').value,
+            foto: document.getElementById('inpFoto').value,
+            wa: document.getElementById('inpWA').value,
+            ig: document.getElementById('inpIG').value,
+            linkedin: document.getElementById('inpLinked').value,
+            resources: JSON.stringify(resources)
+        };
+
+        let fd = new FormData();
+        fd.append('payload', JSON.stringify(data));
+
+        fetch(SCRIPT_URL, { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(d => {
+            if(d.result === 'success') {
+                localStorage.setItem("kgb_guruID", d.id); // Simpan ID di browser
+                let link = location.href.replace('admin.html', 'portfolio.html') + "?id=" + d.id;
+                
+                document.getElementById('view-input').style.display = 'none';
+                document.getElementById('view-success').style.display = 'block';
+                document.getElementById('generatedLink').value = link;
+                document.getElementById('btnOpenLink').href = link;
+            } else { alert("Gagal Simpan"); }
+        });
+    }
+
+    function kirimBlog() {
+        let savedID = localStorage.getItem("kgb_guruID");
+        if(!savedID) return alert("⚠️ Mohon SIMPAN PROFIL (Tab 1) terlebih dahulu minimal sekali, agar sistem mengenali akun Anda.");
+
+        let judul = document.getElementById('blogJudul').value;
+        let konten = document.getElementById('blogKonten').value;
+        let btn = document.getElementById('btnBlog');
+
+        if(!judul || !konten) return alert("Judul dan Isi wajib diisi.");
+        btn.innerHTML = "Mengirim..."; btn.disabled = true;
+
+        let data = {
+            action: "simpan_blog",
+            id_guru: savedID,
+            judul: judul,
+            kategori: document.getElementById('blogKategori').value,
+            gambar: document.getElementById('blogGambar').value || "https://source.unsplash.com/random/800x400/?school",
+            konten: konten
+        };
+
+        let fd = new FormData();
+        fd.append('payload', JSON.stringify(data));
+
+        fetch(SCRIPT_URL, { method: 'POST', body: fd })
+        .then(r => r.json())
+        .then(d => {
+            if(d.result === 'success') {
+                alert("Artikel Berhasil Diterbitkan! 🎉");
+                document.getElementById('blogJudul').value = "";
+                document.getElementById('blogKonten').value = "";
+            } else { alert("Gagal: " + d.msg); }
+            btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i> TERBITKAN ARTIKEL'; btn.disabled = false;
+        });
+    }
+
+    function copyLink() {
+        navigator.clipboard.writeText(document.getElementById('generatedLink').value);
+        alert("Link Tersalin!");
+    }
+</script>
+</body>
+</html>
