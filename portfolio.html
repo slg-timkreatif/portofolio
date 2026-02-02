@@ -1,220 +1,574 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Page - Komunitas Guru Berbagi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Guru Profile & Portfolio</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        primary: '#4f46e5', // Indigo
+                        primaryHover: '#4338ca',
+                        bgLight: '#f8fafc', // Slate 50
+                        bgDark: '#0f172a',  // Slate 900
+                        cardLight: '#ffffff',
+                        cardDark: '#1e293b' // Slate 800
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'bounce-short': 'bounce 0.5s 1'
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8f9fc; color: #2c3e50; }
-        .navbar-brand img { height: 40px; }
-        .bg-white-glass { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #eee; }
-        .hero-section { background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%); padding-top: 100px; padding-bottom: 80px; text-align: center; color: white; border-radius: 0 0 50px 50px; margin-bottom: 60px; }
-        .profile-img { width: 160px; height: 160px; border-radius: 50%; border: 6px solid #fff; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.15); background: white; margin-top: -50px; }
-        .nav-custom { justify-content: center; margin-bottom: 30px; }
-        .nav-custom .nav-link { color: #666; font-weight: 600; padding: 10px 30px; border-radius: 50px; background: white; border: 1px solid #eee; margin: 0 5px; cursor: pointer; }
-        .nav-custom .nav-link.active { background: #0d6efd; color: white; border-color: #0d6efd; box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3); }
-        .blog-card { border: none; border-radius: 20px; overflow: hidden; background: white; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: 0.3s; height: 100%; }
-        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .blog-img-top { height: 200px; object-fit: cover; }
-        .blog-badge { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.7); color: white; padding: 4px 12px; border-radius: 30px; font-size: 11px; font-weight: bold; }
-        .res-item { background: white; padding: 20px; border-radius: 15px; border: 1px solid #eee; display: flex; align-items: center; margin-bottom: 15px; text-decoration: none; color: #333; transition: 0.2s; }
-        .res-item:hover { border-color: #0d6efd; background: #f0f7ff; }
-        footer { background: white; border-top: 1px solid #eee; padding: 40px 0; margin-top: 80px; }
+        /* Scrollbar Cantik */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+        /* Animasi Like Heart */
+        @keyframes heartBeat { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        .like-anim { animation: heartBeat 0.3s ease-in-out; color: #ec4899 !important; fill: #ec4899; }
+        
+        /* Glass Effect */
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.3); }
+        .dark .glass { background: rgba(15, 23, 42, 0.8); border-bottom: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
-<body>
+<body class="bg-bgLight text-slate-800 dark:bg-bgDark dark:text-slate-200 transition-colors duration-300 antialiased selection:bg-primary selection:text-white">
 
-<nav class="navbar fixed-top bg-white-glass shadow-sm">
-    <div class="container d-flex justify-content-center justify-content-md-between">
-        <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3408/3408596.png'">
-            <span class="ms-2 fw-bold text-dark d-none d-md-block" style="font-size: 18px;">Komunitas Guru Berbagi</span>
-        </a>
-        <a href="admin.html" class="btn btn-sm btn-outline-primary rounded-pill px-3">Masuk Anggota</a>
-    </div>
-</nav>
-
-<div id="error-overlay" class="position-fixed top-0 start-0 w-100 h-100 bg-white d-flex flex-column justify-content-center align-items-center d-none" style="z-index:9999;">
-    <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
-    <h5 class="fw-bold" id="error-title">Terjadi Kesalahan</h5>
-    <p class="text-muted" id="error-desc">Gagal memuat data.</p>
-    <button onclick="location.reload()" class="btn btn-primary rounded-pill mt-3">Coba Lagi</button>
-</div>
-
-<div id="loading" class="position-fixed top-0 start-0 w-100 h-100 bg-white d-flex flex-column justify-content-center align-items-center" style="z-index:9990;">
-    <div class="spinner-border text-primary" role="status"></div>
-    <p class="mt-3 small text-muted">Sedang menghubungi server...</p>
-</div>
-
-<div id="main-content" style="display:none;">
-    <div class="hero-section">
-        <div class="container pt-5">
-            <h1 class="fw-bold mb-0" id="pNama">...</h1>
-            <p class="opacity-75 mb-0" style="font-size: 18px;"><span id="pJabatan">Guru</span> @ <span id="pSekolah">...</span></p>
+    <div id="loading" class="fixed inset-0 bg-white dark:bg-bgDark z-[9999] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="relative w-20 h-20">
+            <div class="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
+            <div class="absolute inset-0 border-4 border-primary rounded-full border-t-transparent animate-spin"></div>
         </div>
+        <p class="mt-5 font-bold text-primary animate-pulse tracking-wide">MEMUAT PROFIL...</p>
     </div>
 
-    <div class="container" style="max-width: 900px;">
-        <div class="text-center">
-            <img id="pFoto" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="profile-img">
-            <div class="mt-3 mx-auto text-secondary" style="max-width: 600px; line-height: 1.6;" id="pBio">...</div>
-            <div class="mt-3" id="pSosmed"></div>
-        </div>
-
-        <ul class="nav nav-pills nav-custom mt-5" id="pills-tab" role="tablist">
-            <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#view-blog">📰 Berita & Cerita</button></li>
-            <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#view-arsip">📂 Arsip Dokumen</button></li>
-        </ul>
-
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="view-blog">
-                <div class="row g-4" id="area-blog"></div>
-                <div id="empty-blog" class="text-center py-5 d-none"><p class="text-muted">Belum ada artikel.</p></div>
-            </div>
-            <div class="tab-pane fade" id="view-arsip">
-                <div id="area-resource"></div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="text-center">
-        <div class="container">
-            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" width="40" class="mb-3 opacity-50" onerror="this.style.display='none'">
-            <h6 class="fw-bold mb-1" id="footerNama">Guru</h6>
-            <p class="small text-muted mb-3" id="footerSekolah">Sekolah</p>
-            <hr class="w-25 mx-auto opacity-25">
-            <small class="text-secondary">&copy; <span id="thn"></span> Komunitas Guru Berbagi.</small>
-        </div>
-    </footer>
-</div>
-
-<div class="modal fade" id="modalArtikel" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content border-0 rounded-4"><div class="modal-header border-0 pb-0"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body px-4 px-md-5 pb-5"><span class="badge bg-primary bg-opacity-10 text-primary mb-2" id="modKat">Kat</span><h2 class="fw-bold mb-2" id="modJudul">Judul</h2><p class="text-muted small mb-4" id="modWaktu">...</p><img id="modImg" src="" class="w-100 rounded-3 mb-4 shadow-sm object-fit-cover" style="max-height: 400px;"><div id="modIsi" class="lh-lg text-secondary" style="white-space: pre-wrap; text-align: justify;">...</div></div></div></div></div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // ===============================================
-    // CCTV STARTED
-    console.log("1. Script dimulai...");
-    
-    // ⚠️ PASTIKAN URL INI BENAR (Sesuai Screenshot Anda) ⚠️
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
-    // ===============================================
-
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    console.log("2. ID yang ditemukan:", id);
-
-    if(id) {
-        console.log("3. Memulai Fetch ke:", SCRIPT_URL);
+    <div class="max-w-7xl mx-auto min-h-screen flex flex-col lg:flex-row gap-8 p-4 md:p-8 opacity-0" id="main-content">
         
-        fetch(SCRIPT_URL + "?id=" + id)
-        .then(r => {
-            console.log("4. Respon Server diterima. Status:", r.status);
-            if (!r.ok) throw new Error("HTTP error " + r.status);
-            return r.json();
-        })
-        .then(d => {
-            console.log("5. Data JSON diterima:", d);
+        <aside class="w-full lg:w-3/12 space-y-6 flex-shrink-0">
             
-            if(d.status === "found") {
-                console.log("6. Data Ditemukan. Render dimulai...");
+            <div class="bg-cardLight dark:bg-cardDark p-6 rounded-3xl shadow-lg shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 text-center relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-primary to-purple-600 opacity-10"></div>
                 
-                let finalData = d.data ? d.data : d; 
-                renderPage(finalData);
-            } else { 
-                console.warn("Server menjawab: Not Found");
-                showError("Data Tidak Ditemukan", "ID Portfolio ini tidak terdaftar.");
+                <div class="relative inline-block mt-4">
+                    <img id="pFoto" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-32 h-32 rounded-2xl object-cover mx-auto shadow-xl border-4 border-white dark:border-slate-700 transition transform group-hover:scale-105">
+                    <div class="absolute bottom-1 right-1 bg-green-500 w-5 h-5 rounded-full border-2 border-white dark:border-slate-700" title="Online"></div>
+                </div>
+                
+                <h2 id="pNama" class="mt-4 text-xl font-bold tracking-tight">Nama Guru</h2>
+                <p id="pJabatan" class="text-sm text-primary font-semibold uppercase tracking-wider">Jabatan</p>
+                <p id="pSekolah" class="text-xs text-slate-500 dark:text-slate-400 mt-1">Nama Sekolah</p>
+
+                <div class="flex justify-center gap-3 mt-6" id="pSosmed"></div>
+
+                <div class="grid grid-cols-2 gap-2 mt-6 py-4 border-t border-b border-slate-100 dark:border-slate-700">
+                    <div>
+                        <span class="block font-bold text-xl text-slate-800 dark:text-white" id="stat-visit">0</span>
+                        <span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Views</span>
+                    </div>
+                    <div>
+                        <span class="block font-bold text-xl text-yellow-500 flex items-center justify-center gap-1">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i> <span id="stat-rating">0.0</span>
+                        </span>
+                        <span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Rating</span>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-left">
+                    <h3 class="text-xs font-bold uppercase text-slate-400 mb-2 flex items-center gap-2">
+                        <i data-lucide="user" class="w-3 h-3"></i> Tentang Saya
+                    </h3>
+                    <p id="pBio" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">...</p>
+                </div>
+            </div>
+
+            <div class="bg-cardLight dark:bg-cardDark p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col h-96">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold flex items-center gap-2">
+                        <i data-lucide="message-square-heart" class="w-4 h-4 text-pink-500"></i> Kata Mereka
+                    </h3>
+                    <button onclick="bukaModalFeedback()" class="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-bold hover:bg-primary hover:text-white transition cursor-pointer">
+                        + Tulis
+                    </button>
+                </div>
+                
+                <div id="area-feedback" class="space-y-3 overflow-y-auto flex-1 pr-2 custom-scroll">
+                    <div class="flex flex-col items-center justify-center h-full text-slate-400">
+                        <i data-lucide="inbox" class="w-8 h-8 mb-2 opacity-50"></i>
+                        <p class="text-xs">Belum ada feedback</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="w-full lg:w-6/12 space-y-6">
+            
+            <div class="glass sticky top-4 z-40 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-8 h-8 rounded-full bg-white p-1" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3408/3408596.png'">
+                    <div>
+                        <h1 class="font-bold text-sm leading-tight">Komunitas Guru</h1>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400">Berbagi & Menginspirasi</p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="toggleTheme()" class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+                        <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400"></i>
+                    </button>
+                    <a href="admin.html" class="px-5 py-2 bg-primary text-white text-xs font-bold rounded-full hover:bg-primaryHover transition shadow-lg shadow-primary/30 flex items-center gap-2">
+                        <i data-lucide="log-in" class="w-3 h-3"></i> Login
+                    </a>
+                </div>
+            </div>
+
+            <div class="p-1.5 bg-slate-200 dark:bg-slate-800 rounded-2xl flex gap-1">
+                <button onclick="switchTab('blog')" id="tab-blog" class="flex-1 py-2.5 text-sm font-bold rounded-xl bg-white dark:bg-cardDark shadow-sm transition-all flex justify-center items-center gap-2 text-primary">
+                    <i data-lucide="newspaper" class="w-4 h-4"></i> Berita & Cerita
+                </button>
+                <button onclick="switchTab('arsip')" id="tab-arsip" class="flex-1 py-2.5 text-sm font-bold rounded-xl text-slate-500 hover:text-slate-700 hover:bg-slate-300/50 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-2">
+                    <i data-lucide="folder-open" class="w-4 h-4"></i> Arsip Dokumen
+                </button>
+            </div>
+
+            <div id="view-blog" class="space-y-6">
+                </div>
+            
+            <div id="empty-blog" class="hidden flex flex-col items-center justify-center py-16 text-slate-400 bg-white dark:bg-cardDark rounded-3xl border border-dashed border-slate-300 dark:border-slate-700">
+                <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                    <i data-lucide="pen-tool" class="w-8 h-8 opacity-50"></i>
+                </div>
+                <p class="font-medium">Belum ada postingan saat ini.</p>
+            </div>
+
+            <div id="view-arsip" class="hidden grid grid-cols-1 gap-3">
+                </div>
+
+        </main>
+
+        <aside class="w-full lg:w-3/12 space-y-6 hidden lg:block">
+            
+            <div class="bg-cardLight dark:bg-cardDark p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700">
+                <h3 class="text-sm font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="calendar-days" class="w-4 h-4 text-orange-500"></i> Agenda Pendidikan
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex gap-3 items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition cursor-pointer">
+                        <div class="bg-orange-100 text-orange-600 w-10 h-10 rounded-lg flex flex-col items-center justify-center leading-none">
+                            <span class="text-[10px] font-bold">MAR</span>
+                            <span class="text-sm font-bold">10</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold">PTS Genap</h4>
+                            <p class="text-[10px] text-slate-500">Ujian Tengah Semester</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition cursor-pointer">
+                        <div class="bg-purple-100 text-purple-600 w-10 h-10 rounded-lg flex flex-col items-center justify-center leading-none">
+                            <span class="text-[10px] font-bold">APR</span>
+                            <span class="text-sm font-bold">21</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold">Hari Kartini</h4>
+                            <p class="text-[10px] text-slate-500">Peringatan Nasional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative bg-gradient-to-br from-primary to-purple-600 p-6 rounded-3xl shadow-lg shadow-indigo-500/20 text-white overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-white opacity-10 rounded-full blur-2xl"></div>
+                <div class="absolute -left-6 -bottom-6 w-20 h-20 bg-white opacity-10 rounded-full blur-xl"></div>
+                
+                <div class="relative z-10">
+                    <i data-lucide="sparkles" class="w-8 h-8 mb-3 text-yellow-300"></i>
+                    <h3 class="font-bold text-lg leading-tight mb-2">Ingin Punya Halaman Seperti Ini?</h3>
+                    <p class="text-xs text-indigo-100 mb-4 leading-relaxed">Bergabunglah dengan Komunitas Guru Berbagi dan buat portofolio digitalmu.</p>
+                    <a href="admin.html" class="inline-block w-full text-center bg-white text-primary text-xs font-bold py-3 rounded-xl hover:bg-indigo-50 transition shadow-md">
+                        Mulai Sekarang
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center text-[10px] text-slate-400">
+                &copy; <span id="thn"></span> Komunitas Guru Berbagi.<br>All rights reserved.
+            </div>
+        </aside>
+
+    </div>
+
+    <div id="modalArtikel" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="tutupModal()"></div>
+        
+        <div class="bg-white dark:bg-cardDark w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] relative z-10 animate-fade">
+            <div class="relative h-56 md:h-72 flex-shrink-0 bg-slate-200 dark:bg-slate-700">
+                <img id="modImg" src="" class="w-full h-full object-cover">
+                
+                <button onclick="tutupModal()" class="absolute top-4 right-4 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur-md transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+
+                <span id="modKat" class="absolute bottom-4 left-4 bg-white/90 dark:bg-black/80 px-4 py-1.5 rounded-full text-xs font-bold text-primary backdrop-blur-md shadow-lg">
+                    Kategori
+                </span>
+            </div>
+
+            <div class="p-6 md:p-8 overflow-y-auto custom-scroll">
+                <h2 id="modJudul" class="text-2xl md:text-3xl font-bold mb-3 leading-tight">Judul Artikel</h2>
+                <div class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+                    <i data-lucide="clock" class="w-3 h-3"></i>
+                    <span id="modWaktu">...</span>
+                </div>
+                <div id="modIsi" class="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap text-justify text-sm md:text-base">
+                    Isi konten...
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 flex justify-end">
+                <button onclick="tutupModal()" class="px-6 py-2 bg-slate-200 dark:bg-slate-800 rounded-xl text-sm font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalFeedback" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="document.getElementById('modalFeedback').classList.add('hidden')"></div>
+        <div class="bg-white dark:bg-cardDark w-full max-w-sm rounded-3xl p-6 relative z-10 animate-fade shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="heart" class="w-6 h-6 fill-current"></i>
+                </div>
+                <h3 class="font-bold text-lg">Kirim Apresiasi</h3>
+                <p class="text-xs text-slate-500">Pesan Anda sangat berarti bagi Guru.</p>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="text-xs font-bold ml-1 mb-1 block">Nama Kamu</label>
+                    <input id="feedNama" class="w-full p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm border border-transparent focus:border-primary focus:outline-none transition" placeholder="Contoh: Budi (Siswa)">
+                </div>
+                <div>
+                    <label class="text-xs font-bold ml-1 mb-1 block">Pesan / Kesan</label>
+                    <textarea id="feedPesan" class="w-full p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm border border-transparent focus:border-primary focus:outline-none transition h-24 resize-none" placeholder="Tulis pesan penyemangat..."></textarea>
+                </div>
+                <div>
+                    <label class="text-xs font-bold ml-1 mb-1 block">Rating</label>
+                    <div class="flex gap-1 justify-center bg-slate-50 dark:bg-slate-800 p-2 rounded-xl">
+                        <select id="feedRating" class="bg-transparent text-sm font-bold w-full text-center focus:outline-none">
+                            <option value="5">⭐⭐⭐⭐⭐ (Sangat Puas)</option>
+                            <option value="4">⭐⭐⭐⭐ (Bagus)</option>
+                            <option value="3">⭐⭐⭐ (Cukup)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="kirimFeedback()" id="btnFeed" class="w-full mt-6 bg-primary text-white py-3 rounded-xl font-bold hover:bg-primaryHover transition flex justify-center items-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i> Kirim Sekarang
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURATION (GANTI LINK INI!) ---
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
+        
+        let globalID = "";
+
+        // --- 2. THEME & INIT ---
+        document.getElementById('thn').innerText = new Date().getFullYear();
+        
+        // Auto Dark Mode Logic
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
             }
-        })
-        .catch(err => {
-            console.error("ERROR FATAL:", err);
-            showError("Gagal Terhubung", "Error: " + err.message);
-        });
-    } else { 
-        console.error("ID Kosong di URL");
-        showError("Link Tidak Valid", "Alamat URL tidak memiliki ID Guru.");
-    }
+        }
 
-    function renderPage(data) {
-        try {
-            document.getElementById('pNama').innerText = data.nama || "Tanpa Nama";
-            document.getElementById('pSekolah').innerText = data.sekolah || "-";
+        // --- 3. FETCH DATA ---
+        const params = new URLSearchParams(window.location.search);
+        globalID = params.get('id');
+
+        if(globalID) {
+            fetch(SCRIPT_URL + "?id=" + globalID)
+            .then(r => r.json())
+            .then(d => {
+                if(d.status === "found") {
+                    let data = d.data ? d.data : d;
+                    renderApp(data);
+                } else {
+                    alert("Guru tidak ditemukan di Database.");
+                    document.getElementById('loading').classList.add('hidden');
+                }
+            })
+            .catch(e => {
+                console.error(e);
+                alert("Gagal terhubung ke server.");
+            });
+        } else {
+            alert("Link Error: ID Guru Kosong.");
+            document.getElementById('loading').classList.add('hidden');
+        }
+
+        // --- 4. RENDER APP ---
+        function renderApp(data) {
+            // Profil Info
+            document.getElementById('pNama').innerText = data.nama || "Guru";
+            document.getElementById('pSekolah').innerText = data.sekolah || "Sekolah";
             document.getElementById('pJabatan').innerText = data.jabatan || "Guru";
-            document.getElementById('pBio').innerText = data.bio || "";
+            document.getElementById('pBio').innerText = data.bio || "Belum ada bio.";
             if(data.foto) document.getElementById('pFoto').src = data.foto;
-            
-            document.getElementById('footerNama').innerText = data.nama || "Guru";
-            document.getElementById('footerSekolah').innerText = data.sekolah || "Sekolah";
-            document.getElementById('thn').innerText = new Date().getFullYear();
 
-            // Render Blog
+            // Stats Real
+            document.getElementById('stat-visit').innerText = data.views || 0;
+
+            // Sosmed Buttons
+            let s = "";
+            if(data.wa) s += `<a href="https://wa.me/${data.wa}" target="_blank" class="p-2.5 bg-green-100 text-green-600 rounded-xl hover:scale-110 hover:shadow-lg transition"><i data-lucide="phone" class="w-5 h-5"></i></a>`;
+            if(data.ig) s += `<a href="https://instagram.com/${data.ig}" target="_blank" class="p-2.5 bg-pink-100 text-pink-600 rounded-xl hover:scale-110 hover:shadow-lg transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>`;
+            if(data.linkedin) s += `<a href="${data.linkedin}" target="_blank" class="p-2.5 bg-blue-100 text-blue-600 rounded-xl hover:scale-110 hover:shadow-lg transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>`;
+            document.getElementById('pSosmed').innerHTML = s;
+
+            // Feedback / Testimoni Real
+            let feeds = data.feedback || [];
+            if(feeds.length > 0) {
+                let htmlFeed = "";
+                let totalRating = 0;
+                feeds.forEach(f => {
+                    totalRating += parseInt(f.rating);
+                    htmlFeed += `
+                    <div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-2xl text-xs border border-slate-100 dark:border-slate-700">
+                        <div class="flex justify-between font-bold mb-1 items-center">
+                            <span class="text-slate-700 dark:text-slate-200">${f.nama}</span> 
+                            <span class="text-yellow-500 text-[10px] bg-yellow-100 dark:bg-yellow-900/30 px-1.5 py-0.5 rounded">★ ${f.rating}</span>
+                        </div>
+                        <p class="text-slate-500 dark:text-slate-400 italic">"${f.pesan}"</p>
+                    </div>`;
+                });
+                document.getElementById('area-feedback').innerHTML = htmlFeed;
+                document.getElementById('stat-rating').innerText = (totalRating / feeds.length).toFixed(1);
+            } else {
+                document.getElementById('stat-rating').innerText = "0.0";
+            }
+
+            // Blog Posts & Likes Real
             let blogs = data.blog || [];
-            console.log("7. Jumlah Blog:", blogs.length);
             
-            if(blogs.length === 0) document.getElementById('empty-blog').classList.remove('d-none');
-            else {
+            if(blogs.length === 0) {
+                document.getElementById('empty-blog').classList.remove('hidden');
+                document.getElementById('empty-blog').classList.add('flex');
+            } else {
                 let html = "";
                 blogs.forEach((b, idx) => {
-                    let tgl = new Date(b.waktu).toLocaleDateString('id-ID');
-                    html += `<div class="col-md-6 col-lg-4"><div class="blog-card position-relative" onclick="bukaModal(${idx})" style="cursor:pointer"><span class="blog-badge">${b.kategori}</span><img src="${b.gambar}" class="blog-img-top w-100"><div class="p-4"><small class="text-muted d-block mb-1">${tgl}</small><h5 class="fw-bold text-dark mb-2">${b.judul}</h5><span class="text-primary fw-bold small">Baca <i class="fas fa-arrow-right"></i></span></div></div></div>`;
+                    let tgl = new Date(b.waktu).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+                    // Card Blog Modern
+                    html += `
+                    <div class="bg-cardLight dark:bg-cardDark rounded-3xl p-5 md:p-6 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition group animate-fade" style="animation-delay: ${idx*100}ms">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <img src="${data.foto || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" class="w-10 h-10 rounded-full object-cover border border-slate-200 dark:border-slate-600">
+                                <div>
+                                    <h4 class="text-sm font-bold leading-none text-slate-800 dark:text-white">${data.nama}</h4>
+                                    <p class="text-xs text-slate-400 mt-1">${tgl} • <span class="text-primary font-semibold">${b.kategori}</span></p>
+                                </div>
+                            </div>
+                            <button class="text-slate-300 hover:text-primary"><i data-lucide="more-horizontal"></i></button>
+                        </div>
+                        
+                        <h3 class="text-lg md:text-xl font-bold mb-3 leading-tight cursor-pointer hover:text-primary transition" onclick="bukaModal(${idx})">${b.judul}</h3>
+                        
+                        ${b.gambar ? `
+                        <div class="rounded-2xl overflow-hidden mb-4 cursor-pointer relative" onclick="bukaModal(${idx})">
+                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition z-10"></div>
+                            <img src="${b.gambar}" class="w-full h-56 object-cover transform group-hover:scale-105 transition duration-500">
+                        </div>
+                        ` : ''}
+                        
+                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-3 mb-5 leading-relaxed">${b.konten}</p>
+                        
+                        <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700 pt-4">
+                            <div class="flex gap-4">
+                                <button onclick="doLike(this, '${b.id_post}')" class="flex items-center gap-1.5 text-slate-400 hover:text-pink-500 text-sm font-medium transition group-like">
+                                    <i data-lucide="heart" class="w-4 h-4 transition group-like-hover:scale-110"></i> 
+                                    <span class="like-count">${b.likes}</span> Suka
+                                </button>
+                                <button class="flex items-center gap-1.5 text-slate-400 hover:text-blue-500 text-sm font-medium transition">
+                                    <i data-lucide="share-2" class="w-4 h-4"></i> Share
+                                </button>
+                            </div>
+                            <button class="text-primary text-xs font-bold hover:underline flex items-center gap-1" onclick="bukaModal(${idx})">
+                                Baca Selengkapnya <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                            </button>
+                        </div>
+                    </div>`;
                 });
-                document.getElementById('area-blog').innerHTML = html;
+                document.getElementById('view-blog').innerHTML = html;
                 window.blogData = blogs;
             }
 
-            // Render Arsip
+            // Arsip Render
             let res = [];
             try { res = JSON.parse(data.resources); } catch(e){}
             let htmlRes = "";
             res.forEach(r => {
-                let icon = "fa-link text-primary";
-                if(r.tipe == "dokumen") icon = "fa-file-pdf text-danger";
-                if(r.tipe == "video") icon = "fa-play-circle text-danger";
-                if(r.tipe == "folder") icon = "fa-folder text-warning";
-                htmlRes += `<a href="${r.url}" target="_blank" class="res-item"><div class="res-icon"><i class="fas ${icon}"></i></div><div class="flex-grow-1"><h6 class="fw-bold mb-0">${r.judul}</h6><small class="text-muted uppercase" style="font-size:11px;">${r.tipe}</small></div><i class="fas fa-chevron-right text-muted opacity-50"></i></a>`;
+                let icon = "file-text";
+                let color = "text-blue-600 bg-blue-50 dark:bg-blue-900/20";
+                
+                if(r.tipe == "video") { icon = "play-circle"; color = "text-red-600 bg-red-50 dark:bg-red-900/20"; }
+                if(r.tipe == "folder") { icon = "folder"; color = "text-yellow-600 bg-yellow-50 dark:bg-yellow-900/20"; }
+                if(r.tipe == "link") { icon = "link"; color = "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20"; }
+
+                htmlRes += `
+                <a href="${r.url}" target="_blank" class="flex items-center p-4 bg-white dark:bg-cardDark rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-primary hover:shadow-md transition group">
+                    <div class="w-10 h-10 rounded-xl ${color} flex items-center justify-center mr-4 group-hover:scale-110 transition">
+                        <i data-lucide="${icon}" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h5 class="font-bold text-sm mb-0.5 group-hover:text-primary truncate transition">${r.judul}</h5>
+                        <div class="flex items-center gap-2">
+                             <span class="text-[10px] uppercase font-bold text-slate-400 border border-slate-200 dark:border-slate-600 px-1.5 rounded">${r.tipe}</span>
+                             <span class="text-[10px] text-slate-400">Klik untuk buka</span>
+                        </div>
+                    </div>
+                    <i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-primary"></i>
+                </a>`;
             });
-            document.getElementById('area-resource').innerHTML = htmlRes;
+            document.getElementById('view-arsip').innerHTML = htmlRes;
+
+            // Selesai Loading
+            document.getElementById('loading').classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('main-content').classList.remove('opacity-0');
+            document.getElementById('main-content').classList.add('animate-fade');
             
-            console.log("8. Render Selesai. Menutup Loading...");
+            // Render Icons
+            lucide.createIcons();
+        }
+
+        // --- 5. INTERACTION LOGIC ---
+        function switchTab(tab) {
+            const btnBlog = document.getElementById('tab-blog');
+            const btnArsip = document.getElementById('tab-arsip');
+            const viewBlog = document.getElementById('view-blog');
+            const viewArsip = document.getElementById('view-arsip');
+            const emptyBlog = document.getElementById('empty-blog');
+
+            if(tab === 'blog') {
+                btnBlog.className = "flex-1 py-2.5 text-sm font-bold rounded-xl bg-white dark:bg-cardDark shadow-sm transition-all flex justify-center items-center gap-2 text-primary";
+                btnArsip.className = "flex-1 py-2.5 text-sm font-bold rounded-xl text-slate-500 hover:text-slate-700 hover:bg-slate-300/50 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-2";
+                viewBlog.classList.remove('hidden');
+                if(viewBlog.children.length === 0) emptyBlog.classList.remove('hidden');
+                viewArsip.classList.add('hidden');
+            } else {
+                btnArsip.className = "flex-1 py-2.5 text-sm font-bold rounded-xl bg-white dark:bg-cardDark shadow-sm transition-all flex justify-center items-center gap-2 text-primary";
+                btnBlog.className = "flex-1 py-2.5 text-sm font-bold rounded-xl text-slate-500 hover:text-slate-700 hover:bg-slate-300/50 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-2";
+                viewArsip.classList.remove('hidden');
+                viewBlog.classList.add('hidden');
+                emptyBlog.classList.add('hidden');
+            }
+        }
+
+        function bukaModal(idx) {
+            let b = window.blogData[idx];
+            document.getElementById('modKat').innerText = b.kategori;
+            document.getElementById('modJudul').innerText = b.judul;
+            document.getElementById('modWaktu').innerText = new Date(b.waktu).toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
             
-            // === PERBAIKAN FINAL ===
-            // Kita hapus class 'd-flex' dari Bootstrap agar bisa di-hide
-            let loader = document.getElementById('loading');
-            loader.classList.remove('d-flex'); 
-            loader.style.display = 'none';
-
-            document.getElementById('main-content').style.display = 'block';
-
-        } catch(e) {
-            console.error("ERROR SAAT RENDER:", e);
-            showError("Gagal Render", "Terjadi kesalahan saat menampilkan data.");
+            let img = document.getElementById('modImg');
+            if(b.gambar) {
+                img.src = b.gambar;
+                img.classList.remove('hidden');
+            } else {
+                img.classList.add('hidden');
+            }
+            
+            document.getElementById('modIsi').innerText = b.konten;
+            document.getElementById('modalArtikel').classList.remove('hidden');
+            lucide.createIcons();
         }
-    }
 
-    function showError(judul, pesan) {
-        let loader = document.getElementById('loading');
-        if(loader) {
-            loader.classList.remove('d-flex');
-            loader.style.display = 'none';
+        function tutupModal() {
+            document.getElementById('modalArtikel').classList.add('hidden');
         }
-        document.getElementById('error-overlay').classList.remove('d-none');
-        document.getElementById('error-title').innerText = judul;
-        document.getElementById('error-desc').innerText = pesan;
-    }
 
-    function bukaModal(idx) {
-        let b = window.blogData[idx];
-        document.getElementById('modKat').innerText = b.kategori;
-        document.getElementById('modJudul').innerText = b.judul;
-        document.getElementById('modWaktu').innerText = new Date(b.waktu).toLocaleDateString('id-ID');
-        document.getElementById('modImg').src = b.gambar;
-        document.getElementById('modIsi').innerText = b.konten;
-        new bootstrap.Modal(document.getElementById('modalArtikel')).show();
-    }
-</script>
+        function bukaModalFeedback() { document.getElementById('modalFeedback').classList.remove('hidden'); }
+
+        function kirimFeedback() {
+            let nama = document.getElementById('feedNama').value;
+            let pesan = document.getElementById('feedPesan').value;
+            let rating = document.getElementById('feedRating').value;
+            let btn = document.getElementById('btnFeed');
+
+            if(!nama || !pesan) return alert("Mohon isi Nama dan Pesan.");
+            
+            btn.innerHTML = '<div class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div> Mengirim...'; 
+            btn.disabled = true;
+
+            let fd = new FormData();
+            fd.append('payload', JSON.stringify({
+                action: "simpan_feedback",
+                id_guru: globalID,
+                nama: nama,
+                pesan: pesan,
+                rating: rating
+            }));
+
+            fetch(SCRIPT_URL, { method: 'POST', body: fd })
+            .then(r => r.json())
+            .then(d => {
+                alert("Feedback berhasil dikirim! Terima kasih.");
+                location.reload();
+            })
+            .catch(e => {
+                alert("Gagal kirim. Coba lagi.");
+                btn.innerHTML = 'Kirim Sekarang'; btn.disabled = false;
+            });
+        }
+
+        function doLike(btn, idPost) {
+            let span = btn.querySelector('.like-count');
+            let icon = btn.querySelector('i');
+            
+            // Animasi Instant (Optimistic UI)
+            let current = parseInt(span.innerText);
+            span.innerText = current + 1;
+            
+            btn.classList.remove('text-slate-400');
+            btn.classList.add('like-anim'); // Add Color & Animation
+            icon.classList.add('fill-current');
+
+            // Kirim ke Backend
+            let fd = new FormData();
+            fd.append('payload', JSON.stringify({ action: "like_post", id_post: idPost }));
+            fetch(SCRIPT_URL, { method: 'POST', body: fd });
+        }
+    </script>
 </body>
 </html>
