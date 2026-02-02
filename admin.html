@@ -17,8 +17,6 @@
         .nav-pills .nav-link.active { background-color: #0d6efd; color: white; border-color: #0d6efd; box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); }
         .resource-item { background: white; border: 1px solid #f0f0f0; border-radius: 12px; padding: 15px; margin-bottom: 10px; position: relative; }
         .display-none { display: none; }
-        
-        /* Loading Overlay agar user tidak klik sembarangan */
         .btn:disabled { cursor: not-allowed; opacity: 0.7; }
     </style>
 </head>
@@ -107,23 +105,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // ===============================================
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
+    // JANGAN LUPA GANTI LINK INI LAGI YA
+    const SCRIPT_URL = "GANTI_DENGAN_URL_DEPLOY_BARU_ANDA"; 
     // ===============================================
 
     let userSession = {};
 
     function doLogin() {
         const em = document.getElementById('loginEmail').value;
-        const pn = document.getElementById('loginPin').value;
+        const pn = document.getElementById('loginPin').value; // Variabel pn
         const btn = document.getElementById('btnLogin');
 
-        if(!em || !pin) return alert("Isi Email dan PIN");
+        // PERBAIKAN DISINI: 'pn' bukan 'pin'
+        if(!em || !pn) return alert("Isi Email dan PIN");
         
-        // UI LOADING
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat Data...'; 
         btn.disabled = true;
 
         let fd = new FormData();
+        // Kirim pn sebagai 'pin' ke server
         fd.append('payload', JSON.stringify({ action: "login", email: em, pin: pn }));
 
         fetch(SCRIPT_URL, { method: 'POST', body: fd })
@@ -132,25 +132,22 @@
             if(d.result === 'success') {
                 userSession = d.user;
                 
-                // ISI PROFIL OTOMATIS (JIKA ADA DATA LAMA)
                 if(d.profil_lama) {
-                    localStorage.setItem("kgb_guruID", d.profil_lama.id); // Simpan ID
+                    localStorage.setItem("kgb_guruID", d.profil_lama.id); 
                     
-                    // Isi Form Profil
                     document.getElementById('inpFoto').value = d.profil_lama.foto || "";
                     document.getElementById('inpBio').value = d.profil_lama.bio || "";
                     document.getElementById('inpWA').value = d.profil_lama.wa || "";
                     document.getElementById('inpIG').value = d.profil_lama.ig || "";
                     document.getElementById('inpLinked').value = d.profil_lama.linkedin || "";
 
-                    // Isi Arsip (Render Ulang)
                     try {
                         let resources = JSON.parse(d.profil_lama.resources);
                         resources.forEach(r => tambahBaris(r.judul, r.url, r.tipe));
                     } catch(e) { console.log("Gagal parse resource lama"); }
 
                 } else {
-                    localStorage.removeItem("kgb_guruID"); // User baru
+                    localStorage.removeItem("kgb_guruID"); 
                 }
 
                 document.getElementById('showNama').innerText = d.user.nama;
@@ -167,7 +164,6 @@
     function tambahBaris(judul="", url="", tipe="dokumen") {
         const id = Date.now() + Math.random().toString(16).slice(2);
         
-        // Select option logic
         let selDoc = tipe=="dokumen"?"selected":"";
         let selVid = tipe=="video"?"selected":"";
         let selDir = tipe=="folder"?"selected":"";
@@ -196,7 +192,6 @@
     }
 
     function doSimpan() {
-        // UI LOADING
         let btn1 = document.getElementById('btnSimpan');
         let btn2 = document.getElementById('btnSimpanArsip');
         let txtAsli = btn1.innerHTML;
@@ -244,7 +239,6 @@
                 document.getElementById('btnOpenLink').href = link;
             } else { alert("Gagal: " + d.message); }
             
-            // Restore buttons
             btn1.innerHTML = txtAsli; btn1.disabled = false;
             btn2.innerHTML = txtAsli; btn2.disabled = false;
         })
