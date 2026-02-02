@@ -1,53 +1,189 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Komunitas Guru Berbagi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Komunitas Guru Berbagi</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        primary: '#4f46e5',
+                        primaryHover: '#4338ca',
+                        bgLight: '#f8fafc',
+                        surface: '#ffffff'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f0f4f8; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .card-portal { border: none; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); background: white; overflow: hidden; max-width: 450px; width: 100%; text-align: center; }
-        .header-bg { background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%); padding: 40px 20px; color: white; }
-        .btn-menu { padding: 15px; border-radius: 12px; transition: 0.2s; border: 1px solid #eee; text-decoration: none; color: #333; display: flex; align-items: center; margin-bottom: 15px; background: #fff; }
-        .btn-menu:hover { background: #f8f9fa; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-color: #0d6efd; color: #0d6efd; }
-        .icon-box { width: 50px; height: 50px; background: #e7f1ff; color: #0d6efd; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 15px; }
+        /* Glass Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Text Gradient */
+        .text-gradient {
+            background: linear-gradient(to right, #4f46e5, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
-<body>
+<body class="bg-bgLight text-slate-800 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
 
-<div class="container p-3">
-    <div class="card-portal mx-auto">
-        <div class="header-bg">
-            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" width="60" class="mb-3 bg-white rounded-circle p-1">
-            <h4 class="fw-bold mb-1">Komunitas Guru Berbagi</h4>
-            <p class="opacity-75 mb-0 small">Portal Terpadu & Arsip Digital</p>
-        </div>
-        <div class="p-4 text-start">
-            <p class="text-muted small fw-bold mb-3 ms-1">PILIH AKSES:</p>
-            
-            <a href="admin.html" class="btn-menu">
-                <div class="icon-box"><i class="fas fa-user-shield"></i></div>
-                <div>
-                    <h6 class="fw-bold mb-0">Login Guru / Admin</h6>
-                    <small class="text-muted" style="font-size: 11px;">Kelola Profil, Blog & Arsip</small>
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" style="animation-delay: 2s"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" style="animation-delay: 4s"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 py-4 px-6">
+        <div class="max-w-7xl mx-auto glass rounded-full px-6 py-3 flex justify-between items-center shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <i data-lucide="layout-grid" class="w-5 h-5"></i>
                 </div>
-                <i class="fas fa-chevron-right ms-auto text-muted opacity-50"></i>
+                <span class="font-bold text-lg tracking-tight hidden sm:block">Guru Berbagi</span>
+            </div>
+            <a href="admin.html" class="group flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-full hover:bg-primary transition shadow-lg transform hover:-translate-y-0.5">
+                LOGIN GURU <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
             </a>
+        </div>
+    </nav>
 
-            <div class="alert alert-info border-0 small text-center mt-4">
-                <i class="fas fa-info-circle me-1"></i>
-                Untuk melihat portfolio, silakan Login terlebih dahulu lalu klik "Lihat Halaman Saya".
+    <main class="flex-1 flex flex-col justify-center items-center px-4 text-center mt-20 mb-10">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-100 shadow-sm mb-8 animate-float">
+            <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Platform Pendidikan Digital</span>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight max-w-4xl mx-auto">
+            Dokumentasikan Karya,<br>
+            <span class="text-gradient">Bagikan Inspirasi.</span>
+        </h1>
+        
+        <p class="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            Platform portofolio modern untuk guru Indonesia. Simpan artikel, agenda, dan inovasi pembelajaran dalam satu tautan profesional.
+        </p>
+
+        <div class="w-full max-w-xl relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <div class="relative flex items-center bg-white rounded-2xl shadow-xl p-2 border border-slate-100">
+                <div class="pl-4 text-slate-400">
+                    <i data-lucide="search" class="w-6 h-6"></i>
+                </div>
+                <input id="searchInput" type="text" class="w-full p-4 bg-transparent text-slate-800 font-medium placeholder-slate-400 focus:outline-none" placeholder="Masukkan ID Guru (Contoh: Guru-123)...">
+                <button onclick="cariGuru()" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-xl font-bold transition shadow-lg shadow-indigo-500/30 flex items-center gap-2">
+                    CARI
+                </button>
             </div>
         </div>
-        <div class="bg-light p-3 small text-muted border-top">
-            &copy; 2026 Tim Kreatif Sekolah
-        </div>
-    </div>
-</div>
+        <p class="text-xs text-slate-400 mt-4">Tekan Enter untuk mencari cepat</p>
 
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 max-w-5xl mx-auto w-full px-4">
+            <div class="glass p-8 rounded-3xl text-left hover:border-indigo-200 transition duration-300">
+                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-4">
+                    <i data-lucide="pen-tool" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2 text-slate-800">Artikel & Blog</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">Tulis praktik baik dan inovasi pembelajaran Anda dengan editor yang mudah digunakan.</p>
+            </div>
+            
+            <div class="glass p-8 rounded-3xl text-left hover:border-purple-200 transition duration-300">
+                <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-4">
+                    <i data-lucide="folder-open" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2 text-slate-800">Arsip Digital</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">Simpan dokumen penting, modul ajar, dan sertifikat dalam satu tempat yang aman.</p>
+            </div>
+
+            <div class="glass p-8 rounded-3xl text-left hover:border-pink-200 transition duration-300">
+                <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center mb-4">
+                    <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2 text-slate-800">Feedback & Sosmed</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">Terhubung dengan siswa dan rekan sejawat melalui integrasi sosial media lengkap.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="py-8 text-center border-t border-slate-200/60 bg-white/50 backdrop-blur-sm">
+        <div class="flex items-center justify-center gap-2 mb-2 opacity-50">
+            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-6 h-6 grayscale" onerror="this.style.display='none'">
+            <span class="font-bold text-sm">Komunitas Guru Berbagi</span>
+        </div>
+        <p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest">&copy; 2026 Seluruh Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Search Logic
+        function cariGuru() {
+            const input = document.getElementById('searchInput').value.trim();
+            if(input) {
+                // Animasi Loading Tombol
+                const btn = document.querySelector('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i>';
+                lucide.createIcons();
+                
+                setTimeout(() => {
+                    window.location.href = `portfolio.html?id=${input}`;
+                }, 500);
+            } else {
+                // Efek getar jika kosong
+                const bar = document.querySelector('.group');
+                bar.classList.add('translate-x-1');
+                setTimeout(() => bar.classList.remove('translate-x-1'), 100);
+                setTimeout(() => {
+                    bar.classList.add('-translate-x-1');
+                    setTimeout(() => bar.classList.remove('-translate-x-1'), 100);
+                }, 100);
+            }
+        }
+
+        // Enter Key Support
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                cariGuru();
+            }
+        });
+    </script>
 </body>
 </html>
