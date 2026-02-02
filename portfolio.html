@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guru Berbagi - Portofolio Digital</title>
+    <title>Portofolio Digital Guru</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -17,19 +17,27 @@
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        primary: '#4f46e5', // Indigo Modern
-                        primaryHover: '#4338ca',
+                        primary: '#6366f1', // Indigo 500
+                        primaryHover: '#4f46e5', // Indigo 600
                         bgLight: '#f8fafc', // Slate 50
-                        bgDark: '#0f172a',  // Slate 900
+                        bgDark: '#020617',  // Slate 950
                         cardLight: '#ffffff',
-                        cardDark: '#1e293b' // Slate 800
+                        cardDark: '#0f172a' // Slate 900
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.6s ease-out forwards',
-                        'bounce-short': 'bounce 0.5s 1'
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'bounce-soft': 'bounceSoft 2s infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
-                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        bounceSoft: {
+                            '0%, 100%': { transform: 'translateY(-3%)', animationTimingFunction: 'cubic-bezier(0.8,0,1,1)' },
+                            '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0,0,0.2,1)' }
+                        }
                     }
                 }
             }
@@ -37,94 +45,122 @@
     </script>
 
     <style>
-        /* Scrollbar Halus */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        /* Hide Scrollbar but keep functionality */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 20px; }
+        .dark .custom-scroll::-webkit-scrollbar-thumb { background: #334155; }
 
-        /* Animasi Like Heart */
-        @keyframes heartBeat { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
-        .like-anim { animation: heartBeat 0.3s ease-in-out; color: #ec4899 !important; fill: #ec4899; }
-        
-        /* Glass Effect Sticky Header */
-        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.3); }
-        .dark .glass { background: rgba(15, 23, 42, 0.85); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        
-        /* Dropdown Menu Animation */
-        .dropdown-content { display: none; transform-origin: top right; }
-        .dropdown-show { display: block; animation: fadeIn 0.2s ease-out; }
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.4);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Like Animation */
+        @keyframes heartBurst {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .like-active { 
+            animation: heartBurst 0.4s ease-out; 
+            fill: #ec4899; 
+            color: #ec4899; 
+            stroke: #ec4899;
+        }
+
+        /* Dropdown Animation */
+        .dropdown-content { 
+            display: none; 
+            transform-origin: top right; 
+            animation: scaleIn 0.2s ease-out;
+        }
+        .dropdown-show { display: block; }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
-<body class="bg-bgLight text-slate-800 dark:bg-bgDark dark:text-slate-200 transition-colors duration-300 antialiased selection:bg-primary selection:text-white">
+<body class="bg-bgLight text-slate-800 dark:bg-bgDark dark:text-slate-200 transition-colors duration-500 antialiased selection:bg-primary selection:text-white">
 
-    <div id="loading" class="fixed inset-0 bg-white dark:bg-bgDark z-[9999] flex flex-col items-center justify-center transition-opacity duration-500">
-        <div class="relative w-24 h-24">
-            <div class="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
-            <div class="absolute inset-0 border-4 border-primary rounded-full border-t-transparent animate-spin"></div>
+    <div id="loading" class="fixed inset-0 bg-white dark:bg-bgDark z-[9999] flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="relative w-20 h-20">
+            <div class="absolute inset-0 border-t-4 border-r-4 border-primary rounded-full animate-spin"></div>
+            <div class="absolute inset-2 border-l-4 border-b-4 border-purple-500 rounded-full animate-spin" style="animation-direction: reverse;"></div>
             <div class="absolute inset-0 flex items-center justify-center">
-                <i data-lucide="zap" class="w-8 h-8 text-primary fill-current animate-pulse"></i>
+                <i data-lucide="zap" class="w-6 h-6 text-primary fill-current animate-pulse"></i>
             </div>
         </div>
-        <p class="mt-6 font-bold text-primary tracking-widest text-sm">MEMUAT PROFIL...</p>
+        <p class="mt-8 font-bold text-xs tracking-[0.2em] text-slate-400 uppercase animate-pulse">Memuat Data...</p>
     </div>
 
     <div class="max-w-7xl mx-auto min-h-screen flex flex-col lg:flex-row gap-8 p-4 md:p-8 opacity-0" id="main-content">
         
         <aside class="w-full lg:w-3/12 space-y-6 flex-shrink-0">
             
-            <div class="bg-cardLight dark:bg-cardDark p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 text-center relative overflow-hidden group">
-                <div class="absolute top-0 left-0 w-full h-28 bg-gradient-to-br from-primary via-purple-500 to-pink-500 opacity-10"></div>
+            <div class="bg-cardLight dark:bg-cardDark rounded-[2.5rem] p-6 shadow-2xl shadow-indigo-500/5 dark:shadow-none border border-white dark:border-slate-800 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 opacity-15 transition duration-700 group-hover:opacity-25"></div>
                 
-                <div class="relative inline-block mt-6">
-                    <img id="pFoto" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-32 h-32 rounded-3xl object-cover mx-auto shadow-2xl border-4 border-white dark:border-slate-800 transition transform group-hover:scale-105 group-hover:rotate-2">
-                    <div class="absolute bottom-1 right-1 bg-green-500 w-6 h-6 rounded-full border-4 border-white dark:border-slate-800" title="Online"></div>
+                <div class="relative inline-block mt-8 mb-4">
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-[2rem] rotate-6 opacity-20 blur-lg group-hover:rotate-12 transition duration-700"></div>
+                    <img id="pFoto" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="relative w-36 h-36 rounded-[2rem] object-cover mx-auto border-4 border-white dark:border-slate-900 shadow-xl transition transform group-hover:scale-105">
+                    <div class="absolute bottom-2 right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white dark:border-slate-900 z-10" title="Online"></div>
                 </div>
                 
-                <h2 id="pNama" class="mt-5 text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">...</h2>
-                <div class="flex items-center justify-center gap-1 mt-1 text-primary font-bold text-xs uppercase tracking-wider bg-primary/5 dark:bg-primary/20 py-1 px-3 rounded-full mx-auto w-max">
-                    <i data-lucide="award" class="w-3 h-3"></i> <span id="pJabatan">Guru</span>
+                <div class="text-center relative z-10">
+                    <h2 id="pNama" class="text-2xl font-black text-slate-900 dark:text-white leading-tight mb-1">...</h2>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-bold text-primary mb-2">
+                        <i data-lucide="award" class="w-3 h-3"></i> <span id="pJabatan">Guru</span>
+                    </div>
+                    <p id="pSekolah" class="text-xs font-medium text-slate-500 dark:text-slate-400">...</p>
                 </div>
-                <p id="pSekolah" class="text-xs text-slate-500 dark:text-slate-400 mt-2 font-medium">...</p>
 
-                <div class="flex justify-center flex-wrap gap-2 mt-6" id="pSosmed">
+                <div class="flex justify-center gap-3 mt-6" id="pSosmed">
                     </div>
 
-                <div class="grid grid-cols-2 gap-3 mt-6 py-4 border-t border-b border-slate-100 dark:border-slate-700">
-                    <div class="p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                <div class="grid grid-cols-2 gap-3 mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <div class="text-center p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 transition shadow-sm border border-slate-100 dark:border-slate-700">
                         <span class="block font-black text-xl text-slate-800 dark:text-white" id="stat-visit">0</span>
-                        <span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Views</span>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Views</span>
                     </div>
-                    <div class="p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                    <div class="text-center p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 transition shadow-sm border border-slate-100 dark:border-slate-700">
                         <span class="block font-black text-xl text-yellow-500 flex items-center justify-center gap-1">
                             <i data-lucide="star" class="w-4 h-4 fill-current"></i> <span id="stat-rating">0.0</span>
                         </span>
-                        <span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Rating</span>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Rating</span>
                     </div>
                 </div>
 
-                <div class="mt-6 text-left">
-                    <h3 class="text-[10px] font-bold uppercase text-slate-400 mb-2 flex items-center gap-2">
-                        <i data-lucide="user" class="w-3 h-3"></i> Tentang Saya
-                    </h3>
-                    <p id="pBio" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-light">...</p>
+                <div class="mt-6 text-center">
+                    <p id="pBio" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-light italic">...</p>
                 </div>
             </div>
 
-            <div class="bg-cardLight dark:bg-cardDark p-5 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col h-[400px]">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-sm font-bold flex items-center gap-2 text-slate-800 dark:text-white">
-                        <i data-lucide="message-circle-heart" class="w-4 h-4 text-pink-500"></i> Kata Mereka
+            <div class="bg-cardLight dark:bg-cardDark p-6 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col h-[420px]">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-bold text-sm flex items-center gap-2 text-slate-800 dark:text-white">
+                        <div class="w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900/30 text-pink-500 flex items-center justify-center">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        Kata Mereka
                     </h3>
-                    <button onclick="bukaModalFeedback()" class="text-[10px] bg-primary text-white px-3 py-1.5 rounded-full font-bold hover:bg-primaryHover transition shadow-lg shadow-primary/30 flex items-center gap-1">
-                        <i data-lucide="plus" class="w-3 h-3"></i> Tulis
+                    <button onclick="bukaModalFeedback()" class="text-[10px] font-bold bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-3 py-1.5 rounded-full hover:opacity-80 transition shadow-lg">
+                        + Tulis
                     </button>
                 </div>
                 
-                <div id="area-feedback" class="space-y-3 overflow-y-auto flex-1 pr-2 custom-scroll">
+                <div id="area-feedback" class="space-y-4 overflow-y-auto flex-1 pr-2 custom-scroll">
                     <div class="flex flex-col items-center justify-center h-full text-slate-400">
-                        <i data-lucide="inbox" class="w-10 h-10 mb-2 opacity-30"></i>
-                        <p class="text-xs">Belum ada feedback</p>
+                        <i data-lucide="message-circle-off" class="w-10 h-10 mb-2 opacity-20"></i>
+                        <p class="text-xs">Belum ada ulasan.</p>
                     </div>
                 </div>
             </div>
@@ -132,81 +168,86 @@
 
         <main class="w-full lg:w-6/12 space-y-6">
             
-            <div class="glass sticky top-4 z-40 p-3 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 flex justify-between items-center transition-all duration-300">
-                <div class="flex items-center gap-3 pl-1">
-                    <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-9 h-9 rounded-full bg-white p-1 border border-slate-100">
+            <div class="glass sticky top-4 z-40 p-3 pl-4 rounded-full shadow-lg shadow-indigo-500/5 flex justify-between items-center transition-all duration-300">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-primary to-purple-500 rounded-full flex items-center justify-center text-white shadow-md">
+                        <i data-lucide="layout-grid" class="w-5 h-5"></i>
+                    </div>
                     <div>
                         <h1 class="font-bold text-sm leading-tight text-slate-900 dark:text-white">Guru Berbagi</h1>
-                        <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Inspirasi & Edukasi</p>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Portofolio Digital</p>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="toggleTheme()" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 transition text-slate-600 dark:text-slate-300">
+                <div class="flex gap-2 pr-1">
+                    <button onclick="toggleTheme()" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 transition text-slate-600 dark:text-slate-300">
                         <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
                         <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-yellow-400 fill-current"></i>
                     </button>
-                    <a href="admin.html" class="px-5 py-2 bg-slate-900 dark:bg-white dark:text-slate-900 text-white text-xs font-bold rounded-full hover:opacity-90 transition flex items-center gap-2">
-                        <i data-lucide="log-in" class="w-3 h-3"></i> Login
+                    <a href="admin.html" class="px-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold rounded-full hover:opacity-90 transition flex items-center gap-2 shadow-lg">
+                        Admin <i data-lucide="log-in" class="w-3 h-3"></i>
                     </a>
                 </div>
             </div>
 
-            <div class="p-1.5 bg-slate-200 dark:bg-slate-800 rounded-2xl flex gap-1 font-bold text-sm">
-                <button onclick="switchTab('blog')" id="tab-blog" class="flex-1 py-3 rounded-xl bg-white dark:bg-cardDark shadow-sm text-primary flex justify-center items-center gap-2 transition-all">
-                    <i data-lucide="newspaper" class="w-4 h-4"></i> Berita
+            <div class="p-1.5 bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 rounded-2xl flex gap-1 shadow-sm">
+                <button onclick="switchTab('blog')" id="tab-blog" class="flex-1 py-3 rounded-xl bg-slate-100 dark:bg-slate-700 font-bold text-sm text-primary flex justify-center items-center gap-2 transition-all">
+                    <i data-lucide="newspaper" class="w-4 h-4"></i> Artikel
                 </button>
-                <button onclick="switchTab('arsip')" id="tab-arsip" class="flex-1 py-3 rounded-xl text-slate-500 hover:bg-slate-300/50 hover:text-slate-700 dark:hover:text-slate-300 flex justify-center items-center gap-2 transition-all">
+                <button onclick="switchTab('arsip')" id="tab-arsip" class="flex-1 py-3 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-bold text-sm flex justify-center items-center gap-2 transition-all">
                     <i data-lucide="folder-open" class="w-4 h-4"></i> Arsip
                 </button>
             </div>
 
-            <div id="view-blog" class="space-y-6 pb-10">
+            <div id="view-blog" class="space-y-8 pb-12">
                 </div>
             
-            <div id="empty-blog" class="hidden flex flex-col items-center justify-center py-20 text-slate-400 bg-white dark:bg-cardDark rounded-[2rem] border border-dashed border-slate-300 dark:border-slate-700">
+            <div id="empty-blog" class="hidden flex flex-col items-center justify-center py-20 text-slate-400 bg-white dark:bg-cardDark rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800">
                 <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
-                    <i data-lucide="pen-tool" class="w-8 h-8 opacity-40"></i>
+                    <i data-lucide="pen-tool" class="w-8 h-8 opacity-30"></i>
                 </div>
-                <p class="font-medium">Belum ada postingan saat ini.</p>
+                <p class="font-medium text-sm">Belum ada artikel yang diterbitkan.</p>
             </div>
 
-            <div id="view-arsip" class="hidden grid grid-cols-1 gap-3 pb-10">
+            <div id="view-arsip" class="hidden grid grid-cols-1 gap-4 pb-12">
                 </div>
 
         </main>
 
         <aside class="w-full lg:w-3/12 space-y-6 hidden lg:block">
             
-            <div class="bg-cardLight dark:bg-cardDark p-6 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700">
-                <h3 class="text-sm font-bold mb-5 flex items-center gap-2 text-slate-800 dark:text-white">
-                    <i data-lucide="calendar-days" class="w-4 h-4 text-orange-500"></i> Agenda Sekolah
+            <div class="bg-cardLight dark:bg-cardDark p-6 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800">
+                <h3 class="text-sm font-bold mb-6 flex items-center gap-2 text-slate-800 dark:text-white">
+                    <div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-500 flex items-center justify-center">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                    </div>
+                    Agenda Sekolah
                 </h3>
-                <div id="area-agenda" class="space-y-3">
-                    <p class="text-xs text-slate-400 italic flex items-center gap-2">
-                        <div class="animate-spin w-3 h-3 border-2 border-slate-300 border-t-transparent rounded-full"></div> Memuat...
-                    </p>
+                <div id="area-agenda" class="space-y-4">
+                    <div class="flex items-center gap-2 text-xs text-slate-400 italic">
+                         <i data-lucide="loader" class="w-3 h-3 animate-spin"></i> Memuat agenda...
+                    </div>
                 </div>
             </div>
 
-            <div class="relative bg-gradient-to-br from-primary to-purple-600 p-8 rounded-[2rem] shadow-xl shadow-indigo-500/20 text-white overflow-hidden group">
-                <div class="absolute -right-6 -top-6 w-32 h-32 bg-white opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition duration-700"></div>
-                <div class="absolute -left-6 -bottom-6 w-24 h-24 bg-white opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition duration-700"></div>
-                
+            <div class="relative bg-gradient-to-br from-indigo-600 to-purple-700 p-8 rounded-[2.5rem] shadow-2xl shadow-indigo-500/30 text-white overflow-hidden group">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full blur-3xl group-hover:scale-110 transition duration-1000"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-pink-500 opacity-20 rounded-full blur-2xl"></div>
+
                 <div class="relative z-10">
-                    <i data-lucide="sparkles" class="w-8 h-8 mb-4 text-yellow-300 animate-pulse"></i>
-                    <h3 class="font-bold text-lg mb-2 leading-tight">Guru Berbagi</h3>
-                    <p class="text-xs text-indigo-100 mb-6 leading-relaxed opacity-90">
-                        Platform portofolio digital modern untuk mendokumentasikan karya dan inovasi guru.
+                    <i data-lucide="sparkles" class="w-8 h-8 mb-4 text-yellow-300 animate-pulse-slow"></i>
+                    <h3 class="font-bold text-xl mb-2 leading-tight">Mulai Berbagi!</h3>
+                    <p class="text-sm text-indigo-100 mb-6 leading-relaxed opacity-90">
+                        Dokumentasikan perjalanan karir dan inovasi Anda dalam satu tautan profesional.
                     </p>
-                    <a href="admin.html" class="inline-block w-full text-center bg-white text-primary text-xs font-bold py-3.5 rounded-xl hover:bg-indigo-50 hover:shadow-lg transition transform hover:-translate-y-0.5">
-                        Kelola Halaman
+                    <a href="admin.html" class="inline-flex w-full justify-center bg-white text-indigo-600 text-xs font-bold py-4 rounded-2xl hover:bg-indigo-50 hover:shadow-lg transition transform hover:-translate-y-1">
+                        Kelola Halaman Ini
                     </a>
                 </div>
             </div>
 
             <div class="text-center">
-                <p class="text-[10px] text-slate-400 font-medium">
-                    &copy; <span id="thn"></span> Komunitas Guru Berbagi.<br>All rights reserved.
+                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
+                    &copy; <span id="thn"></span> Guru Berbagi
                 </p>
             </div>
         </aside>
@@ -214,30 +255,31 @@
     </div>
 
     <div id="modalArtikel" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="tutupModal()"></div>
-        <div class="bg-white dark:bg-cardDark w-full max-w-3xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] relative z-10 animate-fade">
-            <div class="relative h-64 md:h-80 flex-shrink-0 bg-slate-200 dark:bg-slate-700 group">
-                <img id="modImg" src="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                
-                <button onclick="tutupModal()" class="absolute top-4 right-4 bg-black/30 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur-md transition">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity" onclick="tutupModal()"></div>
+        <div class="bg-white dark:bg-cardDark w-full max-w-3xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] relative z-10 animate-fade-in-up">
+            
+            <button onclick="tutupModal()" class="absolute top-4 right-4 z-20 bg-black/20 hover:bg-black/40 text-white p-2.5 rounded-full backdrop-blur-md transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
 
-                <div class="absolute bottom-0 left-0 p-6 md:p-8 w-full">
-                    <span id="modKat" class="inline-block bg-primary text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider mb-3 shadow-lg">
+            <div class="relative h-64 md:h-80 flex-shrink-0 bg-slate-200 dark:bg-slate-800 group overflow-hidden">
+                <img id="modImg" src="" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+                
+                <div class="absolute bottom-0 left-0 p-8 w-full">
+                    <span id="modKat" class="inline-block bg-primary/90 backdrop-blur-md text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider mb-3 shadow-lg">
                         Kategori
                     </span>
-                    <h2 id="modJudul" class="text-2xl md:text-3xl font-bold text-white leading-tight drop-shadow-sm">Judul Artikel</h2>
+                    <h2 id="modJudul" class="text-2xl md:text-4xl font-black text-white leading-tight drop-shadow-md">Judul</h2>
                 </div>
             </div>
 
-            <div class="p-6 md:p-10 overflow-y-auto custom-scroll bg-white dark:bg-cardDark">
-                <div class="flex items-center gap-2 text-xs text-slate-400 mb-6 font-medium border-b border-slate-100 dark:border-slate-700 pb-4">
-                    <i data-lucide="calendar" class="w-4 h-4"></i>
+            <div class="p-8 md:p-10 overflow-y-auto custom-scroll bg-white dark:bg-cardDark">
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-8 border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i>
                     <span id="modWaktu">...</span>
                 </div>
-                <div id="modIsi" class="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap text-justify text-base font-light">
+                <div id="modIsi" class="text-slate-600 dark:text-slate-300 leading-loose whitespace-pre-wrap text-justify text-base md:text-lg font-light">
                     Isi konten...
                 </div>
             </div>
@@ -245,39 +287,39 @@
     </div>
 
     <div id="modalFeedback" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="document.getElementById('modalFeedback').classList.add('hidden')"></div>
-        <div class="bg-white dark:bg-cardDark w-full max-w-sm rounded-[2.5rem] p-8 relative z-10 animate-fade shadow-2xl">
-            <div class="text-center mb-6">
-                <div class="w-14 h-14 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-                    <i data-lucide="heart" class="w-7 h-7 fill-current"></i>
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onclick="document.getElementById('modalFeedback').classList.add('hidden')"></div>
+        <div class="bg-white dark:bg-cardDark w-full max-w-sm rounded-[2.5rem] p-8 relative z-10 animate-fade-in-up shadow-2xl border border-slate-100 dark:border-slate-800">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-gradient-to-tr from-pink-400 to-rose-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-pink-500/30 animate-bounce-soft">
+                    <i data-lucide="heart-handshake" class="w-8 h-8"></i>
                 </div>
                 <h3 class="font-bold text-xl text-slate-800 dark:text-white">Kirim Apresiasi</h3>
-                <p class="text-xs text-slate-500 mt-1">Pesan Anda sangat berarti bagi Guru.</p>
+                <p class="text-xs text-slate-500 mt-2">Pesan Anda menyemangati guru.</p>
             </div>
 
             <div class="space-y-4">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-1 block">Nama Kamu</label>
-                    <input id="feedNama" class="w-full p-3.5 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm font-medium border border-transparent focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition" placeholder="Contoh: Budi (Siswa)">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-2 mb-1 block">Nama</label>
+                    <input id="feedNama" class="w-full p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl text-sm font-bold border-2 border-transparent focus:border-primary focus:bg-white dark:focus:bg-slate-800 focus:outline-none transition" placeholder="Budi (Siswa)">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-1 block">Pesan / Kesan</label>
-                    <textarea id="feedPesan" class="w-full p-3.5 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm border border-transparent focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition h-28 resize-none" placeholder="Tulis pesan penyemangat..."></textarea>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-2 mb-1 block">Pesan</label>
+                    <textarea id="feedPesan" class="w-full p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl text-sm border-2 border-transparent focus:border-primary focus:bg-white dark:focus:bg-slate-800 focus:outline-none transition h-28 resize-none" placeholder="Terima kasih Pak/Bu..."></textarea>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-1 mb-1 block">Berikan Bintang</label>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase ml-2 mb-1 block">Rating</label>
                     <div class="relative">
-                        <select id="feedRating" class="w-full p-3.5 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm font-bold appearance-none cursor-pointer focus:outline-none">
-                            <option value="5">⭐⭐⭐⭐⭐ (Sangat Puas)</option>
-                            <option value="4">⭐⭐⭐⭐ (Bagus)</option>
-                            <option value="3">⭐⭐⭐ (Cukup)</option>
+                        <select id="feedRating" class="w-full p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl text-sm font-bold appearance-none cursor-pointer focus:outline-none border-2 border-transparent focus:border-primary">
+                            <option value="5">⭐⭐⭐⭐⭐ Luar Biasa</option>
+                            <option value="4">⭐⭐⭐⭐ Bagus</option>
+                            <option value="3">⭐⭐⭐ Cukup</option>
                         </select>
                         <i data-lucide="chevron-down" class="absolute right-4 top-4 w-4 h-4 text-slate-400 pointer-events-none"></i>
                     </div>
                 </div>
             </div>
 
-            <button onclick="kirimFeedback()" id="btnFeed" class="w-full mt-8 bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-primaryHover transition flex justify-center items-center gap-2 shadow-lg shadow-primary/30 transform active:scale-95">
+            <button onclick="kirimFeedback()" id="btnFeed" class="w-full mt-8 bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-2xl font-bold hover:shadow-xl hover:scale-[1.02] transition flex justify-center items-center gap-2">
                 <i data-lucide="send" class="w-4 h-4"></i> Kirim Sekarang
             </button>
         </div>
@@ -285,13 +327,13 @@
 
     <script>
         // ===============================================
-        // ⚠️ GANTI LINK INI DENGAN LINK DEPLOY NEW VERSION ANDA ⚠️
+        // ⚠️ PASTE URL DEPLOY TERBARU ANDA DI SINI ⚠️
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
         // ===============================================
         
         let globalID = "";
 
-        // --- 1. SETUP & THEME ---
+        // --- INIT & THEME ---
         document.getElementById('thn').innerText = new Date().getFullYear();
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -308,7 +350,7 @@
             }
         }
 
-        // --- 2. FETCH DATA ---
+        // --- FETCH DATA ---
         const params = new URLSearchParams(window.location.search);
         globalID = params.get('id');
 
@@ -317,43 +359,50 @@
             .then(r => r.json())
             .then(d => {
                 if(d.status === "found") {
-                    let data = d.data ? d.data : d; // Handle structure
+                    let data = d.data ? d.data : d;
                     renderApp(data);
                 } else {
-                    alert("Maaf, data Guru tidak ditemukan di Database.");
+                    alert("Guru tidak ditemukan.");
                     document.getElementById('loading').classList.add('hidden');
                 }
             })
             .catch(e => {
                 console.error(e);
-                alert("Gagal terhubung ke server. Periksa koneksi internet.");
+                alert("Gagal koneksi server.");
             });
         } else {
-            alert("Link tidak valid (ID Kosong). Silakan login dari Admin.");
+            alert("ID Guru Kosong.");
             document.getElementById('loading').classList.add('hidden');
         }
 
-        // --- 3. RENDER APP ---
         function renderApp(data) {
-            // PROFIL
+            // 1. PROFIL
             document.getElementById('pNama').innerText = data.nama || "Tanpa Nama";
             document.getElementById('pSekolah').innerText = data.sekolah || "-";
             document.getElementById('pJabatan').innerText = data.jabatan || "Guru";
-            document.getElementById('pBio').innerText = data.bio || "Belum ada bio.";
+            document.getElementById('pBio').innerText = data.bio || "Tidak ada bio.";
             if(data.foto) document.getElementById('pFoto').src = data.foto;
-            
-            // STATS REAL
             document.getElementById('stat-visit').innerText = data.views || 0;
 
-            // SOSMED (Updated: FB & TikTok with Brand Colors)
+            // 2. SOSMED (LUCIDE UNIFIED STYLE)
             let s = "";
-            if(data.wa) s += `<a href="https://wa.me/${data.wa}" target="_blank" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-110 transition border border-slate-100"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" class="w-5" alt="WA"></a>`;
-            if(data.ig) s += `<a href="https://instagram.com/${data.ig}" target="_blank" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-110 transition border border-slate-100"><img src="https://cdn-icons-png.flaticon.com/512/3955/3955024.png" class="w-5" alt="IG"></a>`;
-            if(data.facebook) s += `<a href="${data.facebook}" target="_blank" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-110 transition border border-slate-100"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png" class="w-5" alt="FB"></a>`;
-            if(data.tiktok) s += `<a href="${data.tiktok}" target="_blank" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-110 transition border border-slate-100"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" class="w-5" alt="TikTok"></a>`;
+            const btnClass = "w-10 h-10 rounded-xl flex items-center justify-center shadow-sm border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 transition transform hover:scale-110 group";
+            
+            // WA (Phone Icon -> Green Hover)
+            if(data.wa) s += `<a href="https://wa.me/${data.wa}" target="_blank" class="${btnClass} hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-900/20"><i data-lucide="phone" class="w-5 h-5 text-slate-400 group-hover:text-green-500 group-hover:fill-current transition"></i></a>`;
+            
+            // IG (Instagram Icon -> Pink Hover)
+            if(data.ig) s += `<a href="https://instagram.com/${data.ig}" target="_blank" class="${btnClass} hover:border-pink-500 hover:bg-pink-50 dark:hover:bg-pink-900/20"><i data-lucide="instagram" class="w-5 h-5 text-slate-400 group-hover:text-pink-500 transition"></i></a>`;
+            
+            // FB (Facebook Icon -> Blue Hover)
+            if(data.facebook) s += `<a href="${data.facebook}" target="_blank" class="${btnClass} hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20"><i data-lucide="facebook" class="w-5 h-5 text-slate-400 group-hover:text-blue-600 group-hover:fill-current transition"></i></a>`;
+            
+            // TikTok (Video Icon -> Black/White Hover)
+            if(data.tiktok) s += `<a href="${data.tiktok}" target="_blank" class="${btnClass} hover:border-slate-900 hover:bg-slate-100 dark:hover:bg-slate-700"><i data-lucide="video" class="w-5 h-5 text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white group-hover:fill-current transition"></i></a>`;
+            
             document.getElementById('pSosmed').innerHTML = s;
 
-            // AGENDA (REAL DATA)
+            // 3. AGENDA (REAL)
             let ag = data.agenda || [];
             let htmlAg = "";
             if(ag.length > 0) {
@@ -362,23 +411,23 @@
                     let bln = d.toLocaleString('id-ID', { month: 'short' }).toUpperCase();
                     let tgl = d.getDate();
                     htmlAg += `
-                    <div class="flex gap-4 items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-700 transition cursor-default">
-                        <div class="bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300 w-12 h-12 rounded-xl flex flex-col items-center justify-center leading-none border border-blue-100 dark:border-blue-800">
-                            <span class="text-[10px] font-black tracking-tighter opacity-70">${bln}</span>
-                            <span class="text-base font-black">${tgl}</span>
+                    <div class="flex gap-4 items-center p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl hover:bg-white dark:hover:bg-slate-800 transition border border-transparent hover:border-slate-100 dark:hover:border-slate-700 group">
+                        <div class="w-12 h-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center shadow-sm group-hover:border-primary group-hover:text-primary transition">
+                            <span class="text-[10px] font-black opacity-60 leading-none mb-0.5">${bln}</span>
+                            <span class="text-lg font-black leading-none">${tgl}</span>
                         </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 line-clamp-1">${a.event}</h4>
-                            <p class="text-[10px] text-slate-500 line-clamp-1">${a.deskripsi}</p>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 truncate">${a.event}</h4>
+                            <p class="text-xs text-slate-500 truncate">${a.deskripsi}</p>
                         </div>
                     </div>`;
                 });
-            } else { 
-                htmlAg = `<div class="p-4 text-center border border-dashed border-slate-200 rounded-xl"><p class="text-xs text-slate-400 italic">Belum ada agenda bulan ini.</p></div>`; 
+            } else {
+                htmlAg = `<div class="p-6 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-2xl"><p class="text-xs text-slate-400 italic">Tidak ada agenda bulan ini.</p></div>`;
             }
             document.getElementById('area-agenda').innerHTML = htmlAg;
 
-            // FEEDBACK
+            // 4. FEEDBACK
             let feeds = data.feedback || [];
             if(feeds.length > 0) {
                 let htmlFeed = "";
@@ -386,80 +435,86 @@
                 feeds.forEach(f => {
                     totalRating += parseInt(f.rating);
                     htmlFeed += `
-                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl text-xs border border-slate-100 dark:border-slate-700">
-                        <div class="flex justify-between font-bold mb-1 items-center">
-                            <span class="text-slate-700 dark:text-slate-200">${f.nama}</span> 
-                            <span class="text-yellow-500 text-[10px] bg-yellow-100 dark:bg-yellow-900/30 px-1.5 py-0.5 rounded flex items-center gap-1">★ ${f.rating}</span>
+                    <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-[1.5rem] border border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1.5"><div class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px]">${f.nama.charAt(0)}</div> ${f.nama}</span>
+                            <span class="text-[10px] font-bold bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full flex items-center gap-1">★ ${f.rating}</span>
                         </div>
-                        <p class="text-slate-500 dark:text-slate-400 italic leading-relaxed">"${f.pesan}"</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 italic leading-relaxed">"${f.pesan}"</p>
                     </div>`;
                 });
                 document.getElementById('area-feedback').innerHTML = htmlFeed;
                 document.getElementById('stat-rating').innerText = (totalRating / feeds.length).toFixed(1);
-            } else {
-                document.getElementById('stat-rating').innerText = "0.0";
             }
 
-            // BLOG RENDER
+            // 5. BLOG CARDS (SULTAN STYLE)
             let blogs = data.blog || [];
-            
             if(blogs.length === 0) {
                 document.getElementById('empty-blog').classList.remove('hidden');
                 document.getElementById('empty-blog').classList.add('flex');
             } else {
                 let html = "";
                 blogs.forEach((b, idx) => {
-                    let tgl = new Date(b.waktu).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+                    let tgl = new Date(b.waktu).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
                     
                     html += `
-                    <div class="bg-cardLight dark:bg-cardDark rounded-[2rem] p-5 md:p-6 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition group animate-fade" style="animation-delay: ${idx*100}ms">
-                        <div class="flex items-center justify-between mb-4 relative">
+                    <div class="bg-cardLight dark:bg-cardDark rounded-[2.5rem] p-6 shadow-xl shadow-slate-200/40 dark:shadow-none border border-slate-100 dark:border-slate-800 animate-fade-in-up" style="animation-delay: ${idx*150}ms">
+                        
+                        <div class="flex items-center justify-between mb-5 relative z-20">
                             <div class="flex items-center gap-3">
-                                <img src="${data.foto || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" class="w-10 h-10 rounded-full object-cover border border-slate-100">
+                                <img src="${data.foto}" class="w-11 h-11 rounded-2xl object-cover shadow-sm border border-slate-100 dark:border-slate-700">
                                 <div>
-                                    <h4 class="text-sm font-bold text-slate-800 dark:text-white leading-tight">${data.nama}</h4>
-                                    <p class="text-[10px] text-slate-400 mt-0.5 font-medium">${tgl} • <span class="text-primary">${b.kategori}</span></p>
+                                    <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">${data.nama}</h4>
+                                    <p class="text-[10px] text-slate-500 font-medium">${tgl}</p>
                                 </div>
                             </div>
-                            
                             <div class="relative">
-                                <button onclick="toggleMenu('menu-${idx}')" class="text-slate-300 hover:text-primary p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition">
-                                    <i data-lucide="more-horizontal"></i>
+                                <button onclick="toggleMenu('menu-${idx}')" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition text-slate-400 hover:text-primary">
+                                    <i data-lucide="more-horizontal" class="w-5 h-5"></i>
                                 </button>
-                                <div id="menu-${idx}" class="dropdown-content absolute right-0 top-10 bg-white dark:bg-slate-800 shadow-xl rounded-xl p-1.5 border border-slate-100 dark:border-slate-700 z-20 w-40 transform scale-95 origin-top-right transition-all">
-                                    <button onclick="copyLink('${b.judul}')" class="w-full text-left text-xs p-2 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg flex items-center gap-2 font-bold text-slate-600 dark:text-slate-300">
+                                <div id="menu-${idx}" class="dropdown-content absolute right-0 top-10 bg-white dark:bg-slate-900 shadow-xl rounded-2xl p-2 border border-slate-100 dark:border-slate-700 w-40 z-30">
+                                    <button onclick="copyLink()" class="w-full text-left text-xs p-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl flex items-center gap-2 font-bold text-slate-600 dark:text-slate-300 transition">
                                         <i data-lucide="link" class="w-3 h-3"></i> Salin Link
                                     </button>
-                                    <button class="w-full text-left text-xs p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg flex items-center gap-2 font-bold text-red-500">
+                                    <button class="w-full text-left text-xs p-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl flex items-center gap-2 font-bold text-red-500 transition">
                                         <i data-lucide="flag" class="w-3 h-3"></i> Laporkan
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        
-                        <h3 class="text-lg md:text-xl font-bold mb-3 hover:text-primary cursor-pointer transition leading-snug text-slate-800 dark:text-white" onclick="bukaModal(${idx})">${b.judul}</h3>
-                        
-                        ${b.gambar ? `
-                        <div class="rounded-2xl overflow-hidden mb-5 cursor-pointer relative" onclick="bukaModal(${idx})">
-                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition z-10"></div>
-                            <img src="${b.gambar}" class="w-full h-56 object-cover transform group-hover:scale-105 transition duration-700">
+
+                        <div class="group cursor-pointer" onclick="bukaModal(${idx})">
+                            <h3 class="text-xl font-bold mb-3 text-slate-800 dark:text-white leading-tight group-hover:text-primary transition duration-300">${b.judul}</h3>
+                            
+                            ${b.gambar ? `
+                            <div class="rounded-[1.5rem] overflow-hidden mb-5 relative aspect-video shadow-md">
+                                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition z-10"></div>
+                                <img src="${b.gambar}" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
+                                <div class="absolute bottom-3 left-3 z-20">
+                                    <span class="bg-white/90 dark:bg-black/80 backdrop-blur text-xs font-bold px-3 py-1 rounded-lg shadow-sm text-slate-800 dark:text-white">
+                                        ${b.kategori}
+                                    </span>
+                                </div>
+                            </div>
+                            ` : ''}
+
+                            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-3 mb-6 leading-relaxed font-light">
+                                ${b.konten}
+                            </p>
                         </div>
-                        ` : ''}
-                        
-                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-3 mb-6 leading-relaxed font-light">${b.konten}</p>
-                        
-                        <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700 pt-4">
+
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
                             <div class="flex gap-2">
-                                <button onclick="doLike(this, '${b.id_post}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-pink-50 dark:hover:bg-pink-900/20 text-slate-400 hover:text-pink-500 text-xs font-bold transition group-like">
+                                <button onclick="doLike(this, '${b.id_post}')" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-50 dark:bg-slate-800 hover:bg-pink-50 dark:hover:bg-pink-900/20 text-slate-400 hover:text-pink-500 text-xs font-bold transition group-like">
                                     <i data-lucide="heart" class="w-4 h-4 transition group-like-hover:scale-110"></i> 
                                     <span class="like-count">${b.likes}</span>
                                 </button>
-                                <button onclick="sharePost('${b.judul}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20 text-slate-400 hover:text-blue-500 text-xs font-bold transition">
+                                <button onclick="sharePost('${b.judul}')" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-slate-400 hover:text-blue-500 text-xs font-bold transition">
                                     <i data-lucide="share-2" class="w-4 h-4"></i> Share
                                 </button>
                             </div>
-                            <button class="text-primary text-xs font-bold hover:underline flex items-center gap-1" onclick="bukaModal(${idx})">
-                                Baca <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                            <button onclick="bukaModal(${idx})" class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition">
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>`;
@@ -468,7 +523,7 @@
                 window.blogData = blogs;
             }
 
-            // ARSIP RENDER
+            // 6. ARSIP (CLEAN LIST)
             let res = [];
             try { res = JSON.parse(data.resources); } catch(e){}
             let htmlRes = "";
@@ -479,164 +534,117 @@
                 if(r.tipe == "link") { icon = "link"; color = "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20"; }
 
                 htmlRes += `
-                <a href="${r.url}" target="_blank" class="flex items-center p-4 bg-white dark:bg-cardDark rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-primary hover:shadow-md transition group">
-                    <div class="w-10 h-10 rounded-xl ${color} flex items-center justify-center mr-4 group-hover:scale-110 transition">
-                        <i data-lucide="${icon}" class="w-5 h-5"></i>
+                <a href="${r.url}" target="_blank" class="flex items-center p-4 bg-white dark:bg-cardDark rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-primary hover:shadow-lg transition group">
+                    <div class="w-12 h-12 rounded-xl ${color} flex items-center justify-center mr-4 group-hover:scale-110 transition shadow-sm">
+                        <i data-lucide="${icon}" class="w-6 h-6"></i>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <h5 class="font-bold text-sm mb-0.5 group-hover:text-primary truncate transition text-slate-800 dark:text-slate-200">${r.judul}</h5>
+                        <h5 class="font-bold text-sm mb-1 group-hover:text-primary transition text-slate-800 dark:text-slate-200 truncate">${r.judul}</h5>
                         <div class="flex items-center gap-2">
-                             <span class="text-[10px] uppercase font-bold text-slate-400 border border-slate-200 dark:border-slate-600 px-1.5 rounded">${r.tipe}</span>
-                             <span class="text-[10px] text-slate-400">Buka Link</span>
+                             <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">${r.tipe}</span>
+                             <span class="text-[10px] text-slate-400 group-hover:text-primary transition flex items-center gap-0.5">Buka <i data-lucide="external-link" class="w-3 h-3"></i></span>
                         </div>
                     </div>
-                    <i data-lucide="external-link" class="w-4 h-4 text-slate-300 group-hover:text-primary"></i>
                 </a>`;
             });
             document.getElementById('view-arsip').innerHTML = htmlRes;
 
-            // CLOSE LOADING
+            // DONE
             document.getElementById('loading').classList.add('opacity-0', 'pointer-events-none');
             document.getElementById('main-content').classList.remove('opacity-0');
-            document.getElementById('main-content').classList.add('animate-fade');
-            
+            document.getElementById('main-content').classList.add('animate-fade-in-up');
             lucide.createIcons();
         }
 
-        // --- 4. INTERACTIONS ---
-        function switchTab(tab) {
+        // --- INTERACTIONS ---
+        function switchTab(t) {
             const btnBlog = document.getElementById('tab-blog');
             const btnArsip = document.getElementById('tab-arsip');
             const viewBlog = document.getElementById('view-blog');
             const viewArsip = document.getElementById('view-arsip');
             const emptyBlog = document.getElementById('empty-blog');
 
+            // Reset Classes
+            const activeClass = "bg-slate-100 dark:bg-slate-700 text-primary";
+            const inactiveClass = "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200";
+
             if(tab === 'blog') {
-                btnBlog.className = "flex-1 py-3 rounded-xl bg-white dark:bg-cardDark shadow-sm text-primary flex justify-center items-center gap-2 transition-all";
-                btnArsip.className = "flex-1 py-3 rounded-xl text-slate-500 hover:bg-slate-300/50 hover:text-slate-700 dark:hover:text-slate-300 flex justify-center items-center gap-2 transition-all";
+                btnBlog.className = `flex-1 py-3 rounded-xl font-bold text-sm flex justify-center items-center gap-2 transition-all ${activeClass}`;
+                btnArsip.className = `flex-1 py-3 rounded-xl font-bold text-sm flex justify-center items-center gap-2 transition-all ${inactiveClass}`;
                 viewBlog.classList.remove('hidden');
                 if(viewBlog.children.length === 0) emptyBlog.classList.remove('hidden');
                 viewArsip.classList.add('hidden');
             } else {
-                btnArsip.className = "flex-1 py-3 rounded-xl bg-white dark:bg-cardDark shadow-sm text-primary flex justify-center items-center gap-2 transition-all";
-                btnBlog.className = "flex-1 py-3 rounded-xl text-slate-500 hover:bg-slate-300/50 hover:text-slate-700 dark:hover:text-slate-300 flex justify-center items-center gap-2 transition-all";
+                btnArsip.className = `flex-1 py-3 rounded-xl font-bold text-sm flex justify-center items-center gap-2 transition-all ${activeClass}`;
+                btnBlog.className = `flex-1 py-3 rounded-xl font-bold text-sm flex justify-center items-center gap-2 transition-all ${inactiveClass}`;
                 viewArsip.classList.remove('hidden');
                 viewBlog.classList.add('hidden');
                 emptyBlog.classList.add('hidden');
             }
         }
-
+        
+        // Modal Logic
         function bukaModal(idx) {
             let b = window.blogData[idx];
             document.getElementById('modKat').innerText = b.kategori;
             document.getElementById('modJudul').innerText = b.judul;
             document.getElementById('modWaktu').innerText = new Date(b.waktu).toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-            
             let img = document.getElementById('modImg');
-            if(b.gambar) {
-                img.src = b.gambar;
-                img.parentElement.classList.remove('hidden'); // Show header if img exists
-            } else {
-                img.parentElement.classList.add('hidden'); // Hide header if no img
-            }
-            
+            if(b.gambar) { img.src = b.gambar; img.parentElement.classList.remove('hidden'); } 
+            else { img.parentElement.classList.add('hidden'); }
             document.getElementById('modIsi').innerText = b.konten;
             document.getElementById('modalArtikel').classList.remove('hidden');
         }
-
         function tutupModal() { document.getElementById('modalArtikel').classList.add('hidden'); }
         function bukaModalFeedback() { document.getElementById('modalFeedback').classList.remove('hidden'); }
-        
-        // --- 5. MENU & SHARE LOGIC ---
-        function toggleMenu(id) {
-            // Close others
-            document.querySelectorAll('.dropdown-content').forEach(el => { if(el.id !== id) el.classList.remove('dropdown-show'); });
-            // Toggle current
-            const menu = document.getElementById(id);
-            if(menu.classList.contains('dropdown-show')) menu.classList.remove('dropdown-show');
-            else menu.classList.add('dropdown-show');
-        }
 
-        function copyLink(judul) {
+        // Menu & Share
+        function toggleMenu(id) {
+            document.querySelectorAll('.dropdown-content').forEach(el => { if(el.id !== id) el.classList.remove('dropdown-show'); });
+            document.getElementById(id).classList.toggle('dropdown-show');
+        }
+        function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert("Link portofolio berhasil disalin!");
+            alert("Tautan berhasil disalin!");
             document.querySelectorAll('.dropdown-content').forEach(el => el.classList.remove('dropdown-show'));
         }
-
         function sharePost(judul) {
-            if (navigator.share) {
-                navigator.share({
-                    title: judul,
-                    text: `Baca artikel "${judul}" di Guru Berbagi!`,
-                    url: window.location.href
-                }).catch(console.error);
-            } else {
-                copyLink(judul);
-            }
+            if (navigator.share) { navigator.share({ title: judul, text: `Baca artikel: ${judul}`, url: window.location.href }).catch(console.error); }
+            else { copyLink(); }
         }
 
-        // Kirim Feedback
+        // Like & Feedback
+        function doLike(btn, idPost) {
+            let span = btn.querySelector('.like-count');
+            let icon = btn.querySelector('i');
+            let current = parseInt(span.innerText);
+            span.innerText = current + 1;
+            btn.classList.add('text-pink-500'); // Keep color
+            icon.classList.add('like-active');  // Trigger animation
+            
+            let fd = new FormData(); fd.append('payload', JSON.stringify({ action: "like_post", id_post: idPost }));
+            fetch(SCRIPT_URL, { method: 'POST', body: fd });
+        }
+
         function kirimFeedback() {
             let nama = document.getElementById('feedNama').value;
             let pesan = document.getElementById('feedPesan').value;
             let rating = document.getElementById('feedRating').value;
             let btn = document.getElementById('btnFeed');
-
-            if(!nama || !pesan) return alert("Mohon isi Nama dan Pesan.");
+            if(!nama || !pesan) return alert("Isi nama dan pesan!");
             
-            btn.innerHTML = '<div class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div> Mengirim...'; 
-            btn.disabled = true;
-
-            let fd = new FormData();
-            fd.append('payload', JSON.stringify({
-                action: "simpan_feedback",
-                id_guru: globalID,
-                nama: nama,
-                pesan: pesan,
-                rating: rating
-            }));
-
-            fetch(SCRIPT_URL, { method: 'POST', body: fd })
-            .then(r => r.json())
-            .then(d => {
-                alert("Feedback terkirim! Terima kasih atas apresiasinya.");
-                location.reload();
-            })
-            .catch(e => {
-                alert("Gagal kirim. Coba lagi.");
-                btn.innerHTML = 'Kirim Sekarang'; btn.disabled = false;
-            });
+            btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Mengirim...`; btn.disabled = true;
+            let fd = new FormData(); fd.append('payload', JSON.stringify({ action: "simpan_feedback", id_guru: globalID, nama: nama, pesan: pesan, rating: rating }));
+            fetch(SCRIPT_URL, { method: 'POST', body: fd }).then(r=>r.json()).then(d=>{
+                alert("Terima kasih! Feedback Anda terkirim."); location.reload();
+            }).catch(e=>{ alert("Gagal kirim."); btn.innerHTML="Kirim Sekarang"; btn.disabled=false; });
         }
 
-        // Fitur Like (Optimistic UI)
-        function doLike(btn, idPost) {
-            let span = btn.querySelector('.like-count');
-            let icon = btn.querySelector('i');
-            
-            // Animasi Instant
-            let current = parseInt(span.innerText);
-            span.innerText = current + 1;
-            
-            btn.classList.remove('text-slate-400');
-            btn.classList.add('text-pink-500');
-            icon.classList.add('like-anim', 'fill-current');
-
-            // Kirim ke Backend (Silent)
-            let fd = new FormData();
-            fd.append('payload', JSON.stringify({ action: "like_post", id_post: idPost }));
-            fetch(SCRIPT_URL, { method: 'POST', body: fd });
-        }
-        
-        // Close dropdown when clicking outside
-        window.onclick = function(event) {
-            if (!event.target.closest('button')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('dropdown-show')) {
-                        openDropdown.classList.remove('dropdown-show');
-                    }
-                }
+        // Close dropdown click outside
+        window.onclick = function(e) {
+            if (!e.target.closest('button')) {
+                let dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) { if (dropdowns[i].classList.contains('dropdown-show')) dropdowns[i].classList.remove('dropdown-show'); }
             }
         }
     </script>
