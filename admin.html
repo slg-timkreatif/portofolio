@@ -2,9 +2,13 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin Dashboard - Guru Berbagi</title>
+    
+    <link rel="icon" href="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" type="image/png">
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -19,8 +23,10 @@
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         #sidebar { transition: transform 0.3s ease-in-out; }
         .glass-overlay { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-        /* Transisi Warna Tombol */
-        .btn-transition { transition: all 0.3s ease; }
+        .btn-transition { transition: all 0.2s ease; }
+        /* Logo Spin Animation */
+        .logo-spin { animation: spin 10s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-bgLight text-slate-800 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
@@ -29,7 +35,7 @@
         <div class="w-full md:w-1/2 bg-gradient-to-br from-primary to-violet-600 p-10 text-white flex flex-col justify-center relative overflow-hidden">
             <div class="relative z-10 text-center md:text-left">
                 <div class="inline-flex items-center gap-3 mb-6 bg-white/20 p-2 pr-4 rounded-xl backdrop-blur-sm">
-                    <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-primary"><i data-lucide="layout-grid" class="w-5 h-5"></i></div>
+                    <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-8 h-8 bg-white rounded-lg p-1">
                     <span class="font-bold tracking-wide text-sm">GURU BERBAGI</span>
                 </div>
                 <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">Admin Portal</h1>
@@ -37,7 +43,7 @@
             </div>
         </div>
         <div class="w-full md:w-1/2 p-8 md:p-14 flex flex-col justify-center bg-white h-full">
-            <div class="mb-8"><h2 class="text-2xl font-bold text-slate-800">Selamat Datang 👋</h2><p class="text-slate-500 text-sm mt-1">Masuk untuk mengelola.</p></div>
+            <div class="mb-8"><h2 class="text-2xl font-bold text-slate-800">Selamat Datang 👋</h2><p class="text-slate-500 text-sm mt-1">Masuk untuk mengelola konten.</p></div>
             <div class="space-y-5">
                 <div><label class="lbl">Email Sekolah</label><input type="email" id="loginEmail" class="inp" placeholder="nama@sekolah.sch.id"></div>
                 <div><label class="lbl">PIN Keamanan</label><input type="password" id="loginPin" class="inp" placeholder="••••••"></div>
@@ -47,14 +53,24 @@
     </div>
 
     <div id="view-dashboard" class="hidden w-full max-w-7xl bg-surface md:rounded-[2.5rem] shadow-none md:shadow-2xl overflow-hidden flex flex-col md:flex-row h-screen md:h-[800px] border-0 md:border border-slate-200 relative">
+        
         <div class="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100 z-30 sticky top-0">
-            <div class="flex items-center gap-2"><div class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center"><i data-lucide="layout-grid" class="w-4 h-4"></i></div><span class="font-bold text-slate-800">Admin Panel</span></div>
+            <div class="flex items-center gap-2">
+                <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-8 h-8 p-0.5 rounded-full bg-slate-100 border border-slate-200">
+                <span class="font-bold text-slate-800">Admin Panel</span>
+            </div>
             <button onclick="toggleSidebar()" class="p-2 bg-slate-50 rounded-xl text-slate-600 hover:bg-slate-100"><i data-lucide="menu" class="w-6 h-6"></i></button>
         </div>
         <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 z-40 hidden md:hidden glass-overlay transition-opacity"></div>
 
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white md:bg-slate-50 border-r border-slate-200 p-6 flex flex-col transform -translate-x-full md:relative md:translate-x-0 md:w-64 h-full shadow-2xl md:shadow-none transition-transform duration-300">
-            <div class="flex items-center justify-between mb-8"><div class="flex items-center gap-2 px-2 text-slate-800"><div class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center"><i data-lucide="layout-grid" class="w-4 h-4"></i></div><span class="font-bold text-sm">Guru Berbagi</span></div><button onclick="toggleSidebar()" class="md:hidden p-2 text-slate-400 hover:text-red-500 bg-slate-50 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-2 px-2 text-slate-800">
+                    <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-8 h-8 logo-spin">
+                    <span class="font-bold text-sm">Guru Berbagi</span>
+                </div>
+                <button onclick="toggleSidebar()" class="md:hidden p-2 text-slate-400 hover:text-red-500 bg-slate-50 rounded-full"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
             <nav class="space-y-1 flex-1 overflow-y-auto custom-scroll pr-1">
                 <button onclick="switchTab('profil')" id="nav-profil" class="nav-btn active"><i data-lucide="user"></i> Profil Saya</button>
                 <button onclick="switchTab('blog')" id="nav-blog" class="nav-btn"><i data-lucide="pen-tool"></i> Artikel Blog</button>
@@ -62,16 +78,31 @@
                 <button onclick="switchTab('feedback')" id="nav-feedback" class="nav-btn"><i data-lucide="message-circle"></i> Feedback</button>
                 <button onclick="switchTab('arsip')" id="nav-arsip" class="nav-btn"><i data-lucide="folder-open"></i> Arsip Dokumen</button>
             </nav>
-            <div class="mt-auto pt-6 border-t border-slate-200"><div class="bg-slate-50 md:bg-white p-3 rounded-xl border border-slate-100 mb-3 shadow-sm"><p class="text-[10px] text-slate-400 uppercase font-bold">Login Sebagai</p><p class="text-xs font-bold truncate text-slate-800" id="showNama">User</p></div><button onclick="location.reload()" class="w-full py-2.5 text-red-500 text-xs font-bold bg-red-50 hover:bg-red-100 rounded-xl transition flex items-center justify-center gap-2"><i data-lucide="log-out" class="w-3 h-3"></i> Keluar</button></div>
+            <div class="mt-auto pt-6 border-t border-slate-200">
+                <div class="bg-slate-50 md:bg-white p-3 rounded-xl border border-slate-100 mb-3 shadow-sm">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold">Login Sebagai</p>
+                    <p class="text-xs font-bold truncate text-slate-800" id="showNama">User</p>
+                </div>
+                <button onclick="doLogout()" class="w-full py-2.5 text-red-500 text-xs font-bold bg-red-50 hover:bg-red-100 rounded-xl transition flex items-center justify-center gap-2">
+                    <i data-lucide="log-out" class="w-3 h-3"></i> Keluar
+                </button>
+            </div>
         </aside>
 
         <main class="flex-1 p-6 md:p-10 overflow-y-auto bg-white custom-scroll relative w-full">
             
             <div id="tab-profil" class="space-y-8 animate-slide-up">
-                <div class="flex justify-between items-end border-b border-slate-100 pb-6"><div><h2 class="text-2xl font-bold text-slate-800">Edit Profil</h2><p class="text-sm text-slate-500">Informasi pribadi dan sosial media.</p></div><a href="#" id="btnPreview" target="_blank" class="hidden text-xs bg-slate-900 text-white px-4 py-2.5 rounded-xl font-bold hover:bg-slate-700 transition items-center gap-2 shadow-lg"><i data-lucide="external-link" class="w-3 h-3"></i> Lihat Web</a></div>
+                <div class="flex justify-between items-end border-b border-slate-100 pb-6">
+                    <div><h2 class="text-2xl font-bold text-slate-800">Edit Profil</h2><p class="text-sm text-slate-500">Informasi pribadi dan jabatan.</p></div>
+                    <a href="#" id="btnPreview" target="_blank" class="hidden text-xs bg-slate-900 text-white px-4 py-2.5 rounded-xl font-bold hover:bg-slate-700 transition items-center gap-2 shadow-lg"><i data-lucide="external-link" class="w-3 h-3"></i> Lihat Web</a>
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div><label class="lbl">Nama Lengkap</label><input id="inpNama" class="inp bg-slate-100" readonly></div>
+                    <div><label class="lbl">Jabatan</label><input id="inpJabatan" class="inp" placeholder="Contoh: Guru Kelas 1"></div>
+                    
                     <div class="col-span-2"><label class="lbl">Foto Profil (URL Gambar)</label><input id="inpFoto" class="inp" placeholder="https://..."></div>
                     <div class="col-span-2"><label class="lbl">Bio Singkat</label><textarea id="inpBio" class="inp h-24 resize-none"></textarea></div>
+                    
                     <div><label class="lbl">WhatsApp</label><input id="inpWA" class="inp"></div>
                     <div><label class="lbl">Instagram</label><input id="inpIG" class="inp"></div>
                     <div><label class="lbl">Facebook (Link)</label><input id="inpFB" class="inp"></div>
@@ -110,6 +141,7 @@
     </div>
 
     <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl translate-y-32 opacity-0 transition-all duration-500 z-[60] flex items-center gap-4 border border-slate-700"><div id="toast-icon"></div><div><h4 class="font-bold text-sm" id="toast-title">Info</h4><p class="text-xs text-slate-400" id="toast-msg">...</p></div></div>
+    
     <style>
         .nav-btn { width: 100%; text-align: left; padding: 14px 18px; border-radius: 16px; font-size: 14px; font-weight: 600; display: flex; gap: 12px; align-items: center; color: #64748b; transition: all 0.2s; border: 1px solid transparent; }
         .nav-btn:hover { background: #f8fafc; color: #1e293b; border-color: #e2e8f0; }
@@ -134,126 +166,144 @@
         let globalAgendas = [];
         lucide.createIcons();
 
-        // 1. UI LOGIC (SLIDE, TAB, BUTTON ANIMATION)
+        // --- 0. INIT & AUTO LOGIN (PERSISTENT) ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedSession = localStorage.getItem('kgb_session');
+            if(savedSession) {
+                try {
+                    const d = JSON.parse(savedSession);
+                    console.log("Memuat dari Cache...");
+                    loadApp(d); // Render Instantly from Cache
+                    // Sync Background
+                    refreshData(d.user.email, d.user.pin);
+                } catch(e) { console.log("Session invalid"); }
+            }
+            
+            // HISTORY HANDLING (ANTI BACK BUTTON)
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                if(!document.getElementById('view-dashboard').classList.contains('hidden')) {
+                    history.pushState(null, null, location.href);
+                    // Opsional: showToast("info", "Info", "Gunakan tombol Keluar untuk logout.");
+                }
+            };
+        });
+
+        function loadApp(d) {
+            userSession = d.user;
+            if(d.profil_lama) {
+                localStorage.setItem("kgb_guruID", d.profil_lama.id);
+                fillForm(d.profil_lama);
+                document.getElementById('btnPreview').href = `portfolio.html?id=${d.profil_lama.id}`;
+                document.getElementById('btnPreview').classList.remove('hidden'); 
+                document.getElementById('btnPreview').classList.add('flex');
+            }
+            if(d.dashboard) {
+                globalBlogs = d.dashboard.blogs; 
+                globalAgendas = d.dashboard.agendas;
+                renderBlogList(globalBlogs); 
+                renderAgendaList(globalAgendas); 
+                renderFeedbackList(d.dashboard.feeds);
+            }
+            document.getElementById('showNama').innerText = d.user.nama;
+            document.getElementById('view-login').classList.add('hidden'); 
+            document.getElementById('view-dashboard').classList.remove('hidden'); 
+            document.getElementById('view-dashboard').classList.add('flex');
+        }
+
+        // --- 1. UI LOGIC ---
         function toggleSidebar() { const sb = document.getElementById('sidebar'); const ov = document.getElementById('mobile-overlay'); if(sb.classList.contains('-translate-x-full')) { sb.classList.remove('-translate-x-full'); ov.classList.remove('hidden'); } else { sb.classList.add('-translate-x-full'); ov.classList.add('hidden'); } }
         function switchTab(t) { ['profil','blog','agenda','feedback','arsip'].forEach(x => { document.getElementById(`tab-${x}`).classList.add('hidden'); document.getElementById(`nav-${x}`).classList.remove('active'); }); document.getElementById(`tab-${t}`).classList.remove('hidden'); document.getElementById(`nav-${t}`).classList.add('active'); if(window.innerWidth < 768) toggleSidebar(); }
-
-        // BUTTON ANIMATION HELPER (NEW)
+        
         function animateBtn(btn, state, textOriginal="") {
-            if(state === 'loading') {
-                btn.dataset.original = textOriginal || btn.innerText;
-                btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Memproses...`;
-                btn.disabled = true;
-            } else if(state === 'success') {
-                btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Berhasil!`;
-                btn.classList.remove('bg-primary', 'bg-orange-500', 'bg-green-600', 'bg-blue-600');
-                btn.classList.add('bg-green-500'); // Success color
-                setTimeout(() => {
-                    btn.innerHTML = btn.dataset.original; // Restore text
-                    btn.disabled = false;
-                    btn.classList.remove('bg-green-500');
-                    // Restore original color based on button ID
-                    if(btn.id == 'btnBlog') btn.classList.add(document.getElementById('blogId').value ? 'bg-blue-600' : 'bg-orange-500');
-                    else if(btn.id == 'btnAgenda') btn.classList.add(document.getElementById('agId').value ? 'bg-blue-600' : 'bg-green-600');
-                    else btn.classList.add('bg-primary');
-                    lucide.createIcons();
-                }, 2000);
-            }
-            lucide.createIcons();
+            if(state === 'loading') { btn.dataset.original = textOriginal || btn.innerText; btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Memproses...`; btn.disabled = true; } 
+            else if(state === 'success') {
+                btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Berhasil!`; btn.classList.remove('bg-primary','bg-orange-500','bg-green-600','bg-blue-600'); btn.classList.add('bg-green-500');
+                setTimeout(() => { btn.innerHTML = btn.dataset.original; btn.disabled = false; btn.classList.remove('bg-green-500'); if(btn.id == 'btnBlog') btn.classList.add(document.getElementById('blogId').value ? 'bg-blue-600' : 'bg-orange-500'); else if(btn.id == 'btnAgenda') btn.classList.add(document.getElementById('agId').value ? 'bg-blue-600' : 'bg-green-600'); else btn.classList.add('bg-primary'); lucide.createIcons(); }, 2000);
+            } lucide.createIcons();
         }
 
-        // 2. DATA LOAD & REFRESH
-        function loadDashboardData() {
-            let guruID = localStorage.getItem("kgb_guruID"); if(!guruID) return;
-            let fd = new FormData(); fd.append('payload', JSON.stringify({ action: "get_data", id_guru: guruID }));
-            fetch(SCRIPT_URL, { method: 'POST', body: fd }).then(r=>r.json()).then(d=>{ if(d.result === 'success') { globalBlogs = d.dashboard.blogs; globalAgendas = d.dashboard.agendas; renderBlogList(globalBlogs); renderAgendaList(globalAgendas); renderFeedbackList(d.dashboard.feeds); }});
-        }
-
-        // 3. LOGIN
+        // --- 2. DATA OPS ---
         function doLogin() {
             const em = document.getElementById('loginEmail').value; const pn = document.getElementById('loginPin').value; const btn = document.getElementById('btnLogin');
             if(!em || !pn) return showToast("error", "Error", "Isi Email & PIN");
             btn.innerHTML = `<div class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div> Loading...`; btn.disabled = true;
+            
+            // Simpan credential sementara untuk refresh
             let fd = new FormData(); fd.append('payload', JSON.stringify({ action: "login", email: em, pin: pn }));
             fetch(SCRIPT_URL, { method: 'POST', body: fd }).then(r => r.json()).then(d => {
                 if(d.result === 'success') {
-                    userSession = d.user;
-                    if(d.profil_lama) { localStorage.setItem("kgb_guruID", d.profil_lama.id); fillForm(d.profil_lama); document.getElementById('btnPreview').href = `portfolio.html?id=${d.profil_lama.id}`; document.getElementById('btnPreview').classList.remove('hidden'); document.getElementById('btnPreview').classList.add('flex'); }
-                    globalBlogs = d.dashboard.blogs; globalAgendas = d.dashboard.agendas; renderBlogList(globalBlogs); renderAgendaList(globalAgendas); renderFeedbackList(d.dashboard.feeds);
-                    document.getElementById('showNama').innerText = d.user.nama; document.getElementById('view-login').classList.add('hidden'); document.getElementById('view-dashboard').classList.remove('hidden'); document.getElementById('view-dashboard').classList.add('flex');
-                    showToast("success", "Berhasil", "Selamat datang kembali!");
+                    // SAVE SESSION
+                    d.user.email = em; d.user.pin = pn; // Attach creds
+                    localStorage.setItem('kgb_session', JSON.stringify(d)); 
+                    loadApp(d);
+                    showToast("success", "Berhasil", "Selamat datang!");
                 } else { showToast("error", "Gagal", d.message); }
                 btn.innerHTML = `MASUK <i data-lucide="arrow-right" class="w-4 h-4"></i>`; btn.disabled = false; lucide.createIcons();
             });
         }
 
-        // 4. RENDER & CRUD
-        function fillForm(data) { document.getElementById('inpFoto').value = data.foto || ""; document.getElementById('inpBio').value = data.bio || ""; document.getElementById('inpWA').value = data.wa || ""; document.getElementById('inpIG').value = data.ig || ""; document.getElementById('inpFB').value = data.facebook || ""; document.getElementById('inpTikTok').value = data.tiktok || ""; try { let resources = JSON.parse(data.resources); document.getElementById('wadah-link').innerHTML = ""; resources.forEach(r => tambahBaris(r.judul, r.url, r.tipe)); } catch(e) {} }
-        
-        function renderBlogList(blogs) {
-            let html = ""; if(blogs.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada artikel.</p>`; else { blogs.forEach(b => { html += `<div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition"><div><h4 class="font-bold text-sm text-slate-800 truncate w-40 md:w-64">${b.judul}</h4><p class="text-[10px] text-slate-400 font-mono">ID: ${b.id}</p></div><div class="flex gap-2"><button onclick="startEditBlog('${b.id}')" class="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded-lg font-bold hover:bg-blue-100"><i data-lucide="edit-2" class="w-3 h-3"></i></button><button onclick="hapusBlog('${b.id}')" class="text-xs bg-red-50 text-red-500 px-3 py-2 rounded-lg font-bold hover:bg-red-100"><i data-lucide="trash-2" class="w-3 h-3"></i></button></div></div>`; }); } document.getElementById('list-blog').innerHTML = html; lucide.createIcons();
-        }
-        function renderAgendaList(agendas) {
-            let html = ""; if(agendas.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada agenda.</p>`; else { agendas.forEach(a => { let tgl = new Date(a.tanggal).toLocaleDateString('id-ID'); html += `<div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm"><div><div class="flex items-center gap-2 mb-1"><span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded">${tgl}</span><h4 class="font-bold text-sm text-slate-800">${a.event}</h4></div><p class="text-xs text-slate-500 truncate w-48">${a.deskripsi}</p></div><div class="flex gap-2"><button onclick="startEditAgenda('${a.id}')" class="text-blue-300 hover:text-blue-500 p-2"><i data-lucide="edit-2" class="w-4 h-4"></i></button><button onclick="hapusAgenda('${a.id}')" class="text-slate-300 hover:text-red-500 p-2"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></div>`; }); } document.getElementById('list-agenda').innerHTML = html; lucide.createIcons();
-        }
-        function renderFeedbackList(feeds) {
-            let html = ""; if(feeds.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada feedback.</p>`; else { feeds.forEach(f => { html += `<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm"><div class="flex justify-between items-start mb-2"><span class="font-bold text-sm text-primary flex items-center gap-2"><i data-lucide="user" class="w-3 h-3"></i> ${f.nama}</span><button onclick="hapusFeedback('${f.id}')" class="text-xs text-red-400 hover:text-red-600 font-bold border border-red-100 px-2 py-1 rounded hover:bg-red-50 transition">Hapus</button></div><p class="text-xs text-slate-600 italic bg-slate-50 p-2 rounded-lg">"${f.pesan}"</p></div>`; }); } document.getElementById('list-feedback').innerHTML = html; lucide.createIcons();
-        }
-
-        // Edit Functions
-        function startEditBlog(id) {
-            let b = globalBlogs.find(x => x.id == id); if(!b) return;
-            document.getElementById('blogId').value = id; document.getElementById('blogJudul').value = b.judul; document.getElementById('blogKategori').value = b.kategori; document.getElementById('blogGambar').value = b.gambar; document.getElementById('blogKonten').value = b.konten;
-            document.getElementById('blogFormTitle').innerHTML = `<i data-lucide="edit" class="w-4 h-4 text-orange-500"></i> Edit Artikel`; document.getElementById('btnBlog').innerText = "UPDATE ARTIKEL"; document.getElementById('btnBlog').classList.add('bg-blue-600', 'hover:bg-blue-700'); document.getElementById('btnCancelBlog').classList.remove('hidden'); document.getElementById('tab-blog').scrollIntoView({ behavior: 'smooth' }); lucide.createIcons();
-        }
-        function resetBlogForm() {
-            document.getElementById('blogId').value = ""; document.getElementById('blogJudul').value = ""; document.getElementById('blogGambar').value = ""; document.getElementById('blogKonten').value = "";
-            document.getElementById('blogFormTitle').innerHTML = `<i data-lucide="edit-3" class="w-4 h-4 text-primary"></i> Tulis Artikel Baru`; document.getElementById('btnBlog').innerText = "TERBITKAN ARTIKEL"; document.getElementById('btnBlog').classList.remove('bg-blue-600', 'hover:bg-blue-700'); document.getElementById('btnCancelBlog').classList.add('hidden'); lucide.createIcons();
-        }
-        function startEditAgenda(id) {
-            let a = globalAgendas.find(x => x.id == id); if(!a) return;
-            document.getElementById('agId').value = id; document.getElementById('agEvent').value = a.event;
-            let d = new Date(a.tanggal); let day = ("0" + d.getDate()).slice(-2); let month = ("0" + (d.getMonth() + 1)).slice(-2); document.getElementById('agTanggal').value = d.getFullYear()+"-"+(month)+"-"+(day); document.getElementById('agDesk').value = a.deskripsi;
-            document.getElementById('agendaFormTitle').innerHTML = `<i data-lucide="edit" class="w-4 h-4 text-orange-500"></i> Edit Agenda`; document.getElementById('btnAgenda').innerText = "UPDATE AGENDA"; document.getElementById('btnCancelAgenda').classList.remove('hidden'); lucide.createIcons();
-        }
-        function resetAgendaForm() {
-            document.getElementById('agId').value = ""; document.getElementById('agEvent').value = ""; document.getElementById('agTanggal').value = ""; document.getElementById('agDesk').value = "";
-            document.getElementById('agendaFormTitle').innerHTML = `<i data-lucide="calendar-plus" class="w-4 h-4"></i> Tambah Agenda Sekolah`; document.getElementById('btnAgenda').innerText = "SIMPAN AGENDA"; document.getElementById('btnCancelAgenda').classList.add('hidden'); lucide.createIcons();
-        }
-
-        // Actions (WITH ANIMATION)
-        function apiCall(data, btn, callback) {
-            let fd = new FormData(); fd.append('payload', JSON.stringify(data));
+        function refreshData(email, pin) {
+            let fd = new FormData(); fd.append('payload', JSON.stringify({ action: "login", email: email, pin: pin }));
             fetch(SCRIPT_URL, { method: 'POST', body: fd }).then(r=>r.json()).then(d=>{
-                if(d.result=='success') { if(btn) animateBtn(btn, 'success'); callback(); } 
-                else { alert("Gagal: " + d.message); if(btn) btn.disabled=false; }
+                if(d.result === 'success') { 
+                    localStorage.setItem('kgb_session', JSON.stringify(d)); // Update Cache
+                    loadApp(d); // Silent Update
+                }
             });
         }
 
-        function kirimBlog() {
-            let id = document.getElementById('blogId').value; let btn = document.getElementById('btnBlog'); animateBtn(btn, 'loading');
-            let data = { action: id ? "edit_blog" : "simpan_blog", id_post: id, id_guru: localStorage.getItem("kgb_guruID"), judul: document.getElementById('blogJudul').value, kategori: document.getElementById('blogKategori').value, gambar: document.getElementById('blogGambar').value, konten: document.getElementById('blogKonten').value };
-            if(!data.judul) { btn.disabled=false; btn.innerText=id?"UPDATE ARTIKEL":"TERBITKAN ARTIKEL"; return alert("Isi judul!"); }
-            apiCall(data, btn, () => { showToast("success", "Sukses", id?"Artikel Diupdate":"Artikel Terbit"); resetBlogForm(); loadDashboardData(); });
+        function doLogout() {
+            if(confirm("Keluar dari aplikasi?")) {
+                localStorage.removeItem('kgb_session');
+                location.reload();
+            }
         }
-        function kirimAgenda() {
-            let id = document.getElementById('agId').value; let btn = document.getElementById('btnAgenda'); animateBtn(btn, 'loading');
-            let data = { action: id ? "edit_agenda" : "simpan_agenda", id_agenda: id, event: document.getElementById('agEvent').value, tanggal: document.getElementById('agTanggal').value, deskripsi: document.getElementById('agDesk').value };
-            if(!data.event) return alert("Isi Data!"); 
-            apiCall(data, btn, () => { showToast("success", "Sukses", "Agenda Tersimpan"); resetAgendaForm(); loadDashboardData(); });
+
+        // --- 3. CRUD & RENDER ---
+        function fillForm(data) { 
+            document.getElementById('inpNama').value = userSession.nama || ""; // Auto Name
+            document.getElementById('inpJabatan').value = data.jabatan || ""; // Auto Jabatan
+            document.getElementById('inpFoto').value = data.foto || ""; 
+            document.getElementById('inpBio').value = data.bio || ""; 
+            document.getElementById('inpWA').value = data.wa || ""; 
+            document.getElementById('inpIG').value = data.ig || ""; 
+            document.getElementById('inpFB').value = data.facebook || ""; 
+            document.getElementById('inpTikTok').value = data.tiktok || ""; 
+            try { let resources = JSON.parse(data.resources); document.getElementById('wadah-link').innerHTML = ""; resources.forEach(r => tambahBaris(r.judul, r.url, r.tipe)); } catch(e) {} 
         }
+        
+        function renderBlogList(blogs) { let html = ""; if(blogs.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada artikel.</p>`; else { blogs.forEach(b => { html += `<div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition"><div><h4 class="font-bold text-sm text-slate-800 truncate w-40 md:w-64">${b.judul}</h4><p class="text-[10px] text-slate-400 font-mono">ID: ${b.id}</p></div><div class="flex gap-2"><button onclick="startEditBlog('${b.id}')" class="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded-lg font-bold hover:bg-blue-100"><i data-lucide="edit-2" class="w-3 h-3"></i></button><button onclick="hapusBlog('${b.id}')" class="text-xs bg-red-50 text-red-500 px-3 py-2 rounded-lg font-bold hover:bg-red-100"><i data-lucide="trash-2" class="w-3 h-3"></i></button></div></div>`; }); } document.getElementById('list-blog').innerHTML = html; lucide.createIcons(); }
+        function renderAgendaList(agendas) { let html = ""; if(agendas.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada agenda.</p>`; else { agendas.forEach(a => { let tgl = new Date(a.tanggal).toLocaleDateString('id-ID'); html += `<div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm"><div><div class="flex items-center gap-2 mb-1"><span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded">${tgl}</span><h4 class="font-bold text-sm text-slate-800">${a.event}</h4></div><p class="text-xs text-slate-500 truncate w-48">${a.deskripsi}</p></div><div class="flex gap-2"><button onclick="startEditAgenda('${a.id}')" class="text-blue-300 hover:text-blue-500 p-2"><i data-lucide="edit-2" class="w-4 h-4"></i></button><button onclick="hapusAgenda('${a.id}')" class="text-slate-300 hover:text-red-500 p-2"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></div>`; }); } document.getElementById('list-agenda').innerHTML = html; lucide.createIcons(); }
+        function renderFeedbackList(feeds) { let html = ""; if(feeds.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada feedback.</p>`; else { feeds.forEach(f => { html += `<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm"><div class="flex justify-between items-start mb-2"><span class="font-bold text-sm text-primary flex items-center gap-2"><i data-lucide="user" class="w-3 h-3"></i> ${f.nama}</span><button onclick="hapusFeedback('${f.id}')" class="text-xs text-red-400 hover:text-red-600 font-bold border border-red-100 px-2 py-1 rounded hover:bg-red-50 transition">Hapus</button></div><p class="text-xs text-slate-600 italic bg-slate-50 p-2 rounded-lg">"${f.pesan}"</p></div>`; }); } document.getElementById('list-feedback').innerHTML = html; lucide.createIcons(); }
+
+        function startEditBlog(id) { let b = globalBlogs.find(x => x.id == id); if(!b) return; document.getElementById('blogId').value = id; document.getElementById('blogJudul').value = b.judul; document.getElementById('blogKategori').value = b.kategori; document.getElementById('blogGambar').value = b.gambar; document.getElementById('blogKonten').value = b.konten; document.getElementById('blogFormTitle').innerHTML = `<i data-lucide="edit" class="w-4 h-4 text-orange-500"></i> Edit Artikel`; document.getElementById('btnBlog').innerText = "UPDATE ARTIKEL"; document.getElementById('btnBlog').classList.add('bg-blue-600', 'hover:bg-blue-700'); document.getElementById('btnCancelBlog').classList.remove('hidden'); document.getElementById('tab-blog').scrollIntoView({ behavior: 'smooth' }); lucide.createIcons(); }
+        function resetBlogForm() { document.getElementById('blogId').value = ""; document.getElementById('blogJudul').value = ""; document.getElementById('blogGambar').value = ""; document.getElementById('blogKonten').value = ""; document.getElementById('blogFormTitle').innerHTML = `<i data-lucide="edit-3" class="w-4 h-4 text-primary"></i> Tulis Artikel Baru`; document.getElementById('btnBlog').innerText = "TERBITKAN ARTIKEL"; document.getElementById('btnBlog').classList.remove('bg-blue-600', 'hover:bg-blue-700'); document.getElementById('btnCancelBlog').classList.add('hidden'); lucide.createIcons(); }
+        function startEditAgenda(id) { let a = globalAgendas.find(x => x.id == id); if(!a) return; document.getElementById('agId').value = id; document.getElementById('agEvent').value = a.event; let d = new Date(a.tanggal); let day = ("0" + d.getDate()).slice(-2); let month = ("0" + (d.getMonth() + 1)).slice(-2); document.getElementById('agTanggal').value = d.getFullYear()+"-"+(month)+"-"+(day); document.getElementById('agDesk').value = a.deskripsi; document.getElementById('agendaFormTitle').innerHTML = `<i data-lucide="edit" class="w-4 h-4 text-orange-500"></i> Edit Agenda`; document.getElementById('btnAgenda').innerText = "UPDATE AGENDA"; document.getElementById('btnCancelAgenda').classList.remove('hidden'); lucide.createIcons(); }
+        function resetAgendaForm() { document.getElementById('agId').value = ""; document.getElementById('agEvent').value = ""; document.getElementById('agTanggal').value = ""; document.getElementById('agDesk').value = ""; document.getElementById('agendaFormTitle').innerHTML = `<i data-lucide="calendar-plus" class="w-4 h-4"></i> Tambah Agenda Sekolah`; document.getElementById('btnAgenda').innerText = "SIMPAN AGENDA"; document.getElementById('btnCancelAgenda').classList.add('hidden'); lucide.createIcons(); }
+
+        function apiCall(data, btn, callback) { let fd = new FormData(); fd.append('payload', JSON.stringify(data)); fetch(SCRIPT_URL, { method: 'POST', body: fd }).then(r=>r.json()).then(d=>{ if(d.result=='success') { if(btn) animateBtn(btn, 'success'); callback(); } else { alert("Gagal: " + d.message); if(btn) btn.disabled=false; } }); }
+        
+        function kirimBlog() { let id = document.getElementById('blogId').value; let btn = document.getElementById('btnBlog'); animateBtn(btn, 'loading'); let data = { action: id ? "edit_blog" : "simpan_blog", id_post: id, id_guru: localStorage.getItem("kgb_guruID"), judul: document.getElementById('blogJudul').value, kategori: document.getElementById('blogKategori').value, gambar: document.getElementById('blogGambar').value, konten: document.getElementById('blogKonten').value }; if(!data.judul) { btn.disabled=false; btn.innerText=id?"UPDATE ARTIKEL":"TERBITKAN ARTIKEL"; return alert("Isi judul!"); } apiCall(data, btn, () => { showToast("success", "Sukses", id?"Artikel Diupdate":"Artikel Terbit"); resetBlogForm(); refreshData(userSession.email, userSession.pin); }); }
+        function kirimAgenda() { let id = document.getElementById('agId').value; let btn = document.getElementById('btnAgenda'); animateBtn(btn, 'loading'); let data = { action: id ? "edit_agenda" : "simpan_agenda", id_agenda: id, event: document.getElementById('agEvent').value, tanggal: document.getElementById('agTanggal').value, deskripsi: document.getElementById('agDesk').value }; if(!data.event) return alert("Isi Data!"); apiCall(data, btn, () => { showToast("success", "Sukses", "Agenda Tersimpan"); resetAgendaForm(); refreshData(userSession.email, userSession.pin); }); }
+        function hapusBlog(id) { if(confirm("Hapus?")) apiCall({action:"hapus_blog", id_post:id}, null, () => { showToast("success", "Dihapus", "Artikel hilang"); refreshData(userSession.email, userSession.pin); }); }
+        function hapusAgenda(id) { if(confirm("Hapus?")) apiCall({action:"hapus_agenda", id_agenda:id}, null, () => { showToast("success", "Dihapus", "Agenda hilang"); refreshData(userSession.email, userSession.pin); }); }
+        function hapusFeedback(id) { if(confirm("Hapus?")) apiCall({action:"hapus_feedback", id_feed:id}, null, () => { showToast("success", "Dihapus", "Feedback hilang"); refreshData(userSession.email, userSession.pin); }); }
+        
         function doSimpanProfil() {
             let btn = document.getElementById('btnSimpan'); animateBtn(btn, 'loading', '<i data-lucide="save" class="w-4 h-4"></i> SIMPAN PERUBAHAN');
             let btnArsip = document.getElementById('btnSimpanArsip'); if(btnArsip) btnArsip.innerText="Menyimpan...";
             let res = []; document.querySelectorAll('.resource-item').forEach(r => { let j = r.querySelector('.inp-judul').value; let u = r.querySelector('.inp-url').value; let t = r.querySelector('.inp-tipe').value; if(j && u) res.push({judul:j, url:u, tipe:t}); });
-            let data = { action: "simpan_profil", id_lama: localStorage.getItem("kgb_guruID"), nama: userSession.nama, sekolah: userSession.sekolah, jabatan: userSession.jabatan, bio: document.getElementById('inpBio').value, foto: document.getElementById('inpFoto').value, wa: document.getElementById('inpWA').value, ig: document.getElementById('inpIG').value, facebook: document.getElementById('inpFB').value, tiktok: document.getElementById('inpTikTok').value, resources: JSON.stringify(res) };
+            let data = { action: "simpan_profil", id_lama: localStorage.getItem("kgb_guruID"), nama: userSession.nama, sekolah: userSession.sekolah, jabatan: document.getElementById('inpJabatan').value, bio: document.getElementById('inpBio').value, foto: document.getElementById('inpFoto').value, wa: document.getElementById('inpWA').value, ig: document.getElementById('inpIG').value, facebook: document.getElementById('inpFB').value, tiktok: document.getElementById('inpTikTok').value, resources: JSON.stringify(res) };
+            
+            // Optimistic Save (Cache First)
+            let currentSession = JSON.parse(localStorage.getItem('kgb_session') || "{}");
+            currentSession.profil_lama = { id: data.id_lama, bio: data.bio, foto: data.foto, wa: data.wa, ig: data.ig, facebook: data.facebook, tiktok: data.tiktok, jabatan: data.jabatan, resources: data.resources };
+            localStorage.setItem('kgb_session', JSON.stringify(currentSession));
+
             apiCall(data, btn, () => { if(data.id) localStorage.setItem("kgb_guruID", data.id); showToast("success", "Sukses", "Profil Tersimpan"); if(btnArsip) btnArsip.innerText="SIMPAN SEMUA ARSIP"; });
         }
 
-        function hapusBlog(id) { if(confirm("Hapus?")) apiCall({action:"hapus_blog", id_post:id}, null, () => { showToast("success", "Dihapus", "Artikel hilang"); loadDashboardData(); }); }
-        function hapusAgenda(id) { if(confirm("Hapus?")) apiCall({action:"hapus_agenda", id_agenda:id}, null, () => { showToast("success", "Dihapus", "Agenda hilang"); loadDashboardData(); }); }
-        function hapusFeedback(id) { if(confirm("Hapus?")) apiCall({action:"hapus_feedback", id_feed:id}, null, () => { showToast("success", "Dihapus", "Feedback hilang"); loadDashboardData(); }); }
-        
         function tambahBaris(j="", u="", t="dokumen") { let html = `<div class="resource-item bg-white p-4 rounded-xl border border-slate-200 mb-3 relative group shadow-sm"><button onclick="this.parentElement.remove()" class="absolute top-3 right-3 text-slate-300 hover:text-red-500 bg-slate-50 p-1 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button><div class="mb-3 pr-8"><label class="lbl">Judul</label><input class="inp-judul inp font-bold" value="${j}"></div><div class="flex gap-3"><div class="w-2/3"><label class="lbl">URL</label><input class="inp-url inp" value="${u}"></div><div class="w-1/3"><label class="lbl">Tipe</label><select class="inp-tipe inp"><option value="dokumen" ${t=='dokumen'?'selected':''}>Dokumen</option><option value="link" ${t=='link'?'selected':''}>Link</option><option value="video" ${t=='video'?'selected':''}>Video</option></select></div></div></div>`; document.getElementById('wadah-link').insertAdjacentHTML('beforeend', html); lucide.createIcons(); }
         function showToast(type, title, msg) { const t = document.getElementById('toast'); document.getElementById('toast-title').innerText = title; document.getElementById('toast-msg').innerText = msg; document.getElementById('toast-icon').innerHTML = type=='success' ? '<div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="check" class="w-5 h-5"></i></div>' : '<div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white"><i data-lucide="alert-triangle" class="w-5 h-5"></i></div>'; lucide.createIcons(); t.classList.remove('translate-y-32', 'opacity-0'); setTimeout(() => t.classList.add('translate-y-32', 'opacity-0'), 4000); }
     </script>
