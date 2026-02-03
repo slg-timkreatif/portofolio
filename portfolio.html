@@ -2,7 +2,7 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Portofolio Digital Guru</title>
     
     <meta property="og:title" content="Portofolio Digital Guru Berbagi">
@@ -10,9 +10,20 @@
     <meta property="og:image" content="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png">
     
     <link rel="icon" href="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)">
+
+    <link rel="manifest" href="manifest.json">
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,14 +38,17 @@
             }
         }
     </script>
+
     <style>
+        /* CSS Fixes for PWA */
+        body { -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
         ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 20px; } .dark ::-webkit-scrollbar-thumb { background: #334155; }
         .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.3); } .dark .glass { background: rgba(15, 23, 42, 0.85); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .like-anim { animation: heartBurst 0.4s ease-out; fill: #ec4899; color: #ec4899; } @keyframes heartBurst { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
         .dropdown-content { display: none; transform-origin: top right; animation: scaleIn 0.2s ease-out; } .dropdown-show { display: block; } @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
-<body class="bg-bgLight text-slate-800 dark:bg-bgDark dark:text-slate-200 transition-colors duration-300 antialiased">
+<body class="bg-bgLight text-slate-800 dark:bg-bgDark dark:text-slate-200 transition-colors duration-300 antialiased selection:bg-primary selection:text-white">
 
     <div id="loading" class="fixed inset-0 bg-white dark:bg-bgDark z-[9999] flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="relative w-20 h-20"><div class="absolute inset-0 border-4 border-primary/20 rounded-full"></div><div class="absolute inset-0 border-4 border-primary rounded-full border-t-transparent animate-spin"></div><div class="absolute inset-0 flex items-center justify-center text-primary"><i data-lucide="zap" class="w-6 h-6 fill-current"></i></div></div>
