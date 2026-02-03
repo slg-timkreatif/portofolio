@@ -24,48 +24,86 @@
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .toast-show { animation: slideUp 0.3s ease-out forwards; }
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        /* Smooth Transition for Sidebar */
+        #sidebar { transition: transform 0.3s ease-in-out; }
     </style>
 </head>
-<body class="bg-bgLight text-slate-800 antialiased min-h-screen flex items-center justify-center p-4">
+<body class="bg-bgLight text-slate-800 antialiased min-h-screen flex items-center justify-center p-0 md:p-4">
 
-    <div id="view-login" class="w-full max-w-5xl bg-surface rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px] border border-slate-200">
-        <div class="w-full md:w-1/2 bg-gradient-to-br from-primary to-violet-600 p-12 text-white flex flex-col justify-between relative overflow-hidden">
-            <div class="relative z-10">
-                <div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center"><i data-lucide="layout-grid" class="w-6 h-6"></i></div><span class="font-bold tracking-wide">GURU BERBAGI</span></div>
-                <h1 class="text-5xl font-bold leading-tight mb-4">Kelola Portofolio Digital Anda.</h1>
-                <p class="text-indigo-100 leading-relaxed opacity-90">Dokumentasikan praktik baik, agenda sekolah, dan inovasi pembelajaran.</p>
+    <div id="view-login" class="w-full max-w-5xl bg-surface md:rounded-[2.5rem] shadow-none md:shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-screen md:min-h-[600px] border-0 md:border border-slate-200">
+        <div class="w-full md:w-1/2 bg-gradient-to-br from-primary to-violet-600 p-10 text-white flex flex-col justify-center relative overflow-hidden">
+            <div class="relative z-10 text-center md:text-left">
+                <div class="inline-flex items-center gap-3 mb-6 bg-white/20 p-2 pr-4 rounded-xl backdrop-blur-sm">
+                    <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-primary"><i data-lucide="layout-grid" class="w-5 h-5"></i></div>
+                    <span class="font-bold tracking-wide text-sm">GURU BERBAGI</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">Admin Portal</h1>
+                <p class="text-indigo-100 opacity-90">Kelola portofolio digital Anda dengan mudah dan profesional.</p>
             </div>
         </div>
-        <div class="w-full md:w-1/2 p-14 flex flex-col justify-center bg-white">
-            <div class="mb-8"><h2 class="text-2xl font-bold text-slate-800">Selamat Datang 👋</h2><p class="text-slate-500 text-sm mt-2">Masukkan Email Sekolah dan PIN.</p></div>
-            <div class="space-y-6">
-                <div><label class="block text-xs font-bold text-slate-500 mb-1.5 ml-1 uppercase">Email Sekolah</label><input type="email" id="loginEmail" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition" placeholder="nama@sekolah.sch.id"></div>
-                <div><label class="block text-xs font-bold text-slate-500 mb-1.5 ml-1 uppercase">PIN Keamanan</label><input type="password" id="loginPin" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition" placeholder="••••••"></div>
-                <button onclick="doLogin()" id="btnLogin" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-sm hover:bg-primary transition shadow-xl flex justify-center items-center gap-2">MASUK DASHBOARD <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        <div class="w-full md:w-1/2 p-8 md:p-14 flex flex-col justify-center bg-white h-full">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-slate-800">Selamat Datang 👋</h2>
+                <p class="text-slate-500 text-sm mt-1">Masuk untuk mulai mengelola.</p>
+            </div>
+            <div class="space-y-5">
+                <div><label class="lbl">Email Sekolah</label><input type="email" id="loginEmail" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" placeholder="nama@sekolah.sch.id"></div>
+                <div><label class="lbl">PIN Keamanan</label><input type="password" id="loginPin" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition" placeholder="••••••"></div>
+                <button onclick="doLogin()" id="btnLogin" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-sm hover:bg-primary transition shadow-xl flex justify-center items-center gap-2">MASUK <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
             </div>
         </div>
     </div>
 
-    <div id="view-dashboard" class="hidden w-full max-w-7xl bg-surface rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[800px] border border-slate-200">
-        <aside class="w-full md:w-64 bg-slate-50 border-r border-slate-200 p-6 flex flex-col flex-shrink-0">
-            <h2 class="font-bold text-sm mb-8 flex items-center gap-2 px-2 text-slate-800"><div class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center"><i data-lucide="layout-grid" class="w-4 h-4"></i></div> Admin Panel</h2>
-            <nav class="space-y-1 flex-1">
+    <div id="view-dashboard" class="hidden w-full max-w-7xl bg-surface md:rounded-[2.5rem] shadow-none md:shadow-2xl overflow-hidden flex flex-col md:flex-row h-screen md:h-[800px] border-0 md:border border-slate-200 relative">
+        
+        <div class="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100 z-30 sticky top-0">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center"><i data-lucide="layout-grid" class="w-4 h-4"></i></div>
+                <span class="font-bold text-slate-800">Admin Panel</span>
+            </div>
+            <button onclick="toggleSidebar()" class="p-2 bg-slate-50 rounded-xl text-slate-600 hover:bg-slate-100">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden glass-overlay transition-opacity"></div>
+
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white md:bg-slate-50 border-r border-slate-200 p-6 flex flex-col transform -translate-x-full md:relative md:translate-x-0 md:w-64 h-full shadow-2xl md:shadow-none">
+            
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-2 px-2 text-slate-800">
+                    <div class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center"><i data-lucide="layout-grid" class="w-4 h-4"></i></div>
+                    <span class="font-bold text-sm">Guru Berbagi</span>
+                </div>
+                <button onclick="toggleSidebar()" class="md:hidden p-2 text-slate-400 hover:text-red-500 bg-slate-50 rounded-full">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <nav class="space-y-1 flex-1 overflow-y-auto custom-scroll pr-1">
                 <button onclick="switchTab('profil')" id="nav-profil" class="nav-btn active"><i data-lucide="user"></i> Profil Saya</button>
                 <button onclick="switchTab('blog')" id="nav-blog" class="nav-btn"><i data-lucide="pen-tool"></i> Artikel Blog</button>
                 <button onclick="switchTab('agenda')" id="nav-agenda" class="nav-btn"><i data-lucide="calendar"></i> Agenda Sekolah</button>
                 <button onclick="switchTab('feedback')" id="nav-feedback" class="nav-btn"><i data-lucide="message-circle"></i> Feedback</button>
                 <button onclick="switchTab('arsip')" id="nav-arsip" class="nav-btn"><i data-lucide="folder-open"></i> Arsip Dokumen</button>
             </nav>
+
             <div class="mt-auto pt-6 border-t border-slate-200">
-                <div class="bg-white p-3 rounded-xl border border-slate-200 mb-3 shadow-sm"><p class="text-[10px] text-slate-400 uppercase font-bold">Login Sebagai</p><p class="text-xs font-bold truncate text-slate-800" id="showNama">User</p></div>
-                <button onclick="location.reload()" class="w-full py-2.5 text-red-500 text-xs font-bold bg-red-50 hover:bg-red-100 rounded-xl transition flex items-center justify-center gap-2"><i data-lucide="log-out" class="w-3 h-3"></i> Keluar</button>
+                <div class="bg-slate-50 md:bg-white p-3 rounded-xl border border-slate-100 mb-3 shadow-sm">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold">Login Sebagai</p>
+                    <p class="text-xs font-bold truncate text-slate-800" id="showNama">User</p>
+                </div>
+                <button onclick="location.reload()" class="w-full py-2.5 text-red-500 text-xs font-bold bg-red-50 hover:bg-red-100 rounded-xl transition flex items-center justify-center gap-2">
+                    <i data-lucide="log-out" class="w-3 h-3"></i> Keluar
+                </button>
             </div>
         </aside>
 
-        <main class="flex-1 p-10 overflow-y-auto bg-white custom-scroll relative">
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto bg-white custom-scroll relative w-full">
             
             <div id="tab-profil" class="space-y-8 animate-slide-up">
-                <div class="flex justify-between items-end border-b border-slate-100 pb-6"><div><h2 class="text-2xl font-bold text-slate-800">Edit Profil</h2><p class="text-sm text-slate-500">Informasi pribadi dan sosial media.</p></div><a href="#" id="btnPreview" target="_blank" class="hidden text-xs bg-slate-900 text-white px-4 py-2.5 rounded-xl font-bold hover:bg-slate-700 transition items-center gap-2"><i data-lucide="external-link" class="w-3 h-3"></i> Lihat Website</a></div>
+                <div class="flex justify-between items-end border-b border-slate-100 pb-6"><div><h2 class="text-2xl font-bold text-slate-800">Edit Profil</h2><p class="text-sm text-slate-500">Informasi pribadi dan sosial media.</p></div><a href="#" id="btnPreview" target="_blank" class="hidden text-xs bg-slate-900 text-white px-4 py-2.5 rounded-xl font-bold hover:bg-slate-700 transition items-center gap-2 shadow-lg"><i data-lucide="external-link" class="w-3 h-3"></i> Lihat Web</a></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="col-span-2"><label class="lbl">Foto Profil (URL Gambar)</label><input id="inpFoto" class="inp" placeholder="https://..."></div>
                     <div class="col-span-2"><label class="lbl">Bio Singkat</label><textarea id="inpBio" class="inp h-24 resize-none"></textarea></div>
@@ -78,12 +116,12 @@
             </div>
 
             <div id="tab-blog" class="hidden space-y-8 animate-slide-up">
-                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100"><h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="edit-3" class="w-4 h-4 text-primary"></i> Tulis Artikel Baru</h3><div class="space-y-4"><input id="blogJudul" class="inp font-bold text-lg" placeholder="Judul Artikel"><div class="grid grid-cols-3 gap-4"><select id="blogKategori" class="inp"><option>Berita Sekolah</option><option>Praktik Baik</option><option>Inovasi</option></select><input id="blogGambar" class="inp col-span-2" placeholder="URL Gambar Header"></div><textarea id="blogKonten" class="inp h-48 leading-relaxed" placeholder="Isi konten..."></textarea><button onclick="kirimBlog()" id="btnBlog" class="btn-primary w-full bg-orange-500 hover:bg-orange-600">TERBITKAN ARTIKEL</button></div></div>
+                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100"><h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-lucide="edit-3" class="w-4 h-4 text-primary"></i> Tulis Artikel Baru</h3><div class="space-y-4"><input id="blogJudul" class="inp font-bold text-lg" placeholder="Judul Artikel"><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><select id="blogKategori" class="inp"><option>Berita Sekolah</option><option>Praktik Baik</option><option>Inovasi</option></select><input id="blogGambar" class="inp md:col-span-2" placeholder="URL Gambar Header"></div><textarea id="blogKonten" class="inp h-48 leading-relaxed" placeholder="Isi konten..."></textarea><button onclick="kirimBlog()" id="btnBlog" class="btn-primary w-full bg-orange-500 hover:bg-orange-600">TERBITKAN ARTIKEL</button></div></div>
                 <div><h3 class="font-bold text-lg mb-4 text-slate-800">Daftar Artikel Saya</h3><div id="list-blog" class="space-y-3"><p class="text-xs text-slate-400 italic">Memuat...</p></div></div>
             </div>
 
             <div id="tab-agenda" class="hidden space-y-8 animate-slide-up">
-                <div class="bg-green-50 p-6 rounded-3xl border border-green-100"><h3 class="font-bold text-green-800 mb-4 flex items-center gap-2"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Tambah Agenda Sekolah</h3><div class="space-y-4"><div class="grid grid-cols-2 gap-4"><input id="agEvent" class="inp border-green-200" placeholder="Nama Event"><input id="agTanggal" type="date" class="inp border-green-200"></div><input id="agDesk" class="inp border-green-200" placeholder="Deskripsi"><button onclick="kirimAgenda()" id="btnAgenda" class="btn-primary w-full bg-green-600 hover:bg-green-700">SIMPAN AGENDA</button></div></div>
+                <div class="bg-green-50 p-6 rounded-3xl border border-green-100"><h3 class="font-bold text-green-800 mb-4 flex items-center gap-2"><i data-lucide="calendar-plus" class="w-4 h-4"></i> Tambah Agenda Sekolah</h3><div class="space-y-4"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><input id="agEvent" class="inp border-green-200" placeholder="Nama Event"><input id="agTanggal" type="date" class="inp border-green-200"></div><input id="agDesk" class="inp border-green-200" placeholder="Deskripsi"><button onclick="kirimAgenda()" id="btnAgenda" class="btn-primary w-full bg-green-600 hover:bg-green-700">SIMPAN AGENDA</button></div></div>
                 <div><h3 class="font-bold text-lg mb-4 text-slate-800">Agenda Aktif</h3><div id="list-agenda" class="space-y-3"><p class="text-xs text-slate-400 italic">Memuat...</p></div></div>
             </div>
 
@@ -100,13 +138,13 @@
         </main>
     </div>
 
-    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl translate-y-32 opacity-0 transition-all duration-500 z-50 flex items-center gap-4"><div id="toast-icon"></div><div><h4 class="font-bold text-sm" id="toast-title">Info</h4><p class="text-xs text-slate-400" id="toast-msg">...</p></div></div>
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl translate-y-32 opacity-0 transition-all duration-500 z-[60] flex items-center gap-4 border border-slate-700"><div id="toast-icon"></div><div><h4 class="font-bold text-sm" id="toast-title">Info</h4><p class="text-xs text-slate-400" id="toast-msg">...</p></div></div>
 
     <style>
         .nav-btn { width: 100%; text-align: left; padding: 14px 18px; border-radius: 16px; font-size: 14px; font-weight: 600; display: flex; gap: 12px; align-items: center; color: #64748b; transition: all 0.2s; border: 1px solid transparent; }
-        .nav-btn:hover { background: #ffffff; color: #1e293b; border-color: #e2e8f0; }
+        .nav-btn:hover { background: #f8fafc; color: #1e293b; border-color: #e2e8f0; }
         .nav-btn.active { background: #4f46e5; color: white; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); border-color: transparent; }
-        .inp { width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none; transition: 0.2s; }
+        .inp { width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none; transition: 0.2s; color: #334155; }
         .inp:focus { border-color: #4f46e5; background: #fff; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
         .lbl { font-size: 11px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; display: block; letter-spacing: 0.5px; }
         .btn-primary { padding: 14px; border-radius: 14px; font-weight: 700; color: white; background: #4f46e5; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); }
@@ -117,13 +155,39 @@
 
     <script>
         // ===============================================
-        // ⚠️ PASTE URL DEPLOY ANDA DI SINI ⚠️
+        // ⚠️ PASTE LINK DEPLOY TERBARU DI SINI ⚠️
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFrBj17fxpQMn44Y4LRORn2yc3HPqvhcLmQfsmmRbhZI471KHGK2UKFjEXIlC7Gv_jTA/exec"; 
         // ===============================================
 
         let userSession = {};
         lucide.createIcons();
 
+        // 1. UI LOGIC (SLIDE SIDEBAR)
+        function toggleSidebar() {
+            const sb = document.getElementById('sidebar');
+            const ov = document.getElementById('mobile-overlay');
+            if(sb.classList.contains('-translate-x-full')) {
+                sb.classList.remove('-translate-x-full');
+                ov.classList.remove('hidden');
+            } else {
+                sb.classList.add('-translate-x-full');
+                ov.classList.add('hidden');
+            }
+        }
+
+        // 2. SWITCH TAB
+        function switchTab(t) {
+            ['profil','blog','agenda','feedback','arsip'].forEach(x => {
+                document.getElementById(`tab-${x}`).classList.add('hidden');
+                document.getElementById(`nav-${x}`).classList.remove('active');
+            });
+            document.getElementById(`tab-${t}`).classList.remove('hidden');
+            document.getElementById(`nav-${t}`).classList.add('active');
+            // Auto close sidebar on mobile
+            if(window.innerWidth < 768) toggleSidebar();
+        }
+
+        // 3. LOGIN & LOAD
         function doLogin() {
             const em = document.getElementById('loginEmail').value;
             const pn = document.getElementById('loginPin').value;
@@ -148,8 +212,8 @@
                     document.getElementById('view-login').classList.add('hidden');
                     document.getElementById('view-dashboard').classList.remove('hidden');
                     document.getElementById('view-dashboard').classList.add('flex');
-                    showToast("success", "Login Berhasil", "Selamat datang kembali!");
-                } else { showToast("error", "Gagal Masuk", d.message); }
+                    showToast("success", "Berhasil", "Selamat datang kembali!");
+                } else { showToast("error", "Gagal", d.message); }
                 btn.innerHTML = `MASUK DASHBOARD <i data-lucide="arrow-right" class="w-4 h-4"></i>`; btn.disabled = false; lucide.createIcons();
             });
         }
@@ -168,12 +232,13 @@
             } catch(e) {}
         }
 
+        // 4. RENDERING LISTS
         function renderBlogList(blogs) {
-            let html = ""; if(blogs.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada artikel.</p>`; else { blogs.forEach(b => { html += `<div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition"><div><h4 class="font-bold text-sm text-slate-800 truncate w-64">${b.judul}</h4><p class="text-[10px] text-slate-400 font-mono">ID: ${b.id}</p></div><button onclick="hapusBlog('${b.id}')" class="text-xs bg-red-50 text-red-500 px-3 py-2 rounded-lg font-bold hover:bg-red-100 transition flex items-center gap-1"><i data-lucide="trash-2" class="w-3 h-3"></i> Hapus</button></div>`; }); }
+            let html = ""; if(blogs.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada artikel.</p>`; else { blogs.forEach(b => { html += `<div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition"><div><h4 class="font-bold text-sm text-slate-800 truncate w-48 md:w-64">${b.judul}</h4><p class="text-[10px] text-slate-400 font-mono">ID: ${b.id}</p></div><button onclick="hapusBlog('${b.id}')" class="text-xs bg-red-50 text-red-500 px-3 py-2 rounded-lg font-bold hover:bg-red-100 transition flex items-center gap-1"><i data-lucide="trash-2" class="w-3 h-3"></i> Hapus</button></div>`; }); }
             document.getElementById('list-blog').innerHTML = html; lucide.createIcons();
         }
         function renderAgendaList(agendas) {
-            let html = ""; if(agendas.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada agenda sekolah.</p>`; else { agendas.forEach(a => { let tgl = new Date(a.tanggal).toLocaleDateString('id-ID'); html += `<div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm"><div><div class="flex items-center gap-2 mb-1"><span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded">${tgl}</span><h4 class="font-bold text-sm text-slate-800">${a.event}</h4></div><p class="text-xs text-slate-500">${a.deskripsi}</p></div><button onclick="hapusAgenda('${a.id}')" class="text-slate-300 hover:text-red-500 p-2"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`; }); }
+            let html = ""; if(agendas.length === 0) html = `<p class="text-sm text-slate-400 italic bg-slate-50 p-4 rounded-xl text-center">Belum ada agenda sekolah.</p>`; else { agendas.forEach(a => { let tgl = new Date(a.tanggal).toLocaleDateString('id-ID'); html += `<div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm"><div><div class="flex items-center gap-2 mb-1"><span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded">${tgl}</span><h4 class="font-bold text-sm text-slate-800">${a.event}</h4></div><p class="text-xs text-slate-500 truncate w-48">${a.deskripsi}</p></div><button onclick="hapusAgenda('${a.id}')" class="text-slate-300 hover:text-red-500 p-2"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>`; }); }
             document.getElementById('list-agenda').innerHTML = html; lucide.createIcons();
         }
         function renderFeedbackList(feeds) {
@@ -181,10 +246,11 @@
             document.getElementById('list-feedback').innerHTML = html; lucide.createIcons();
         }
 
+        // 5. ACTIONS
         function hapusBlog(id) { if(confirm("Yakin hapus artikel ini?")) apiCall({action:"hapus_blog", id_post:id}, "Artikel Dihapus"); }
         function hapusFeedback(id) { if(confirm("Hapus feedback ini?")) apiCall({action:"hapus_feedback", id_feed:id}, "Feedback Dihapus"); }
         function hapusAgenda(id) { if(confirm("Hapus agenda sekolah ini?")) apiCall({action:"hapus_agenda", id_agenda:id}, "Agenda Dihapus"); }
-        function kirimAgenda() { let data = { action: "simpan_agenda", event: document.getElementById('agEvent').value, tanggal: document.getElementById('agTanggal').value, deskripsi: document.getElementById('agDesk').value }; if(!data.event) return alert("Isi data!"); apiCall(data, "Agenda Disimpan"); }
+        function kirimAgenda() { let data = { action: "simpan_agenda", event: document.getElementById('agEvent').value, tanggal: document.getElementById('agTanggal').value, deskripsi: document.getElementById('agDesk').value }; if(!data.event || !data.tanggal) return alert("Isi data!"); apiCall(data, "Agenda Disimpan"); }
         function apiCall(data, msg) { let fd = new FormData(); fd.append('payload', JSON.stringify(data)); fetch(SCRIPT_URL, { method: 'POST', body: fd }).then(r=>r.json()).then(d=>{ if(d.result=='success') { alert(msg + ". Login ulang untuk refresh."); } }); }
 
         function doSimpanProfil() {
@@ -201,13 +267,8 @@
             let fd = new FormData(); fd.append('payload', JSON.stringify(data)); fetch(SCRIPT_URL, { method: 'POST', body: fd }).then(r=>r.json()).then(d=>{ if(d.result === 'success') { showToast("success", "Sukses", "Artikel Terbit"); document.getElementById('blogJudul').value = ""; document.getElementById('blogKonten').value = ""; } else showToast("error", "Gagal", d.message); btn.innerText = "TERBITKAN ARTIKEL"; btn.disabled = false; });
         }
 
-        function switchTab(t) {
-            ['profil','blog','agenda','feedback','arsip'].forEach(x => { document.getElementById(`tab-${x}`).classList.add('hidden'); document.getElementById(`nav-${x}`).classList.remove('active'); });
-            document.getElementById(`tab-${t}`).classList.remove('hidden'); document.getElementById(`nav-${t}`).classList.add('active');
-        }
-
         function tambahBaris(j="", u="", t="dokumen") {
-            let html = `<div class="resource-item bg-white p-4 rounded-xl border border-slate-200 mb-3 relative group shadow-sm"><button onclick="this.parentElement.remove()" class="absolute top-3 right-3 text-slate-300 hover:text-red-500 bg-slate-50 p-1 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button><div class="mb-3 pr-8"><label class="lbl">Judul Dokumen</label><input class="inp-judul inp font-bold" value="${j}" placeholder="Contoh: Modul Ajar"></div><div class="flex gap-3"><div class="w-2/3"><label class="lbl">URL</label><input class="inp-url inp" value="${u}" placeholder="https://..."></div><div class="w-1/3"><label class="lbl">Tipe</label><select class="inp-tipe inp"><option value="dokumen" ${t=='dokumen'?'selected':''}>Dokumen</option><option value="link" ${t=='link'?'selected':''}>Link</option><option value="video" ${t=='video'?'selected':''}>Video</option></select></div></div></div>`;
+            let html = `<div class="resource-item bg-white p-4 rounded-xl border border-slate-200 mb-3 relative group shadow-sm"><button onclick="this.parentElement.remove()" class="absolute top-3 right-3 text-slate-300 hover:text-red-500 bg-slate-50 p-1 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button><div class="mb-3 pr-8"><label class="lbl">Judul</label><input class="inp-judul inp font-bold" value="${j}"></div><div class="flex gap-3"><div class="w-2/3"><label class="lbl">URL</label><input class="inp-url inp" value="${u}"></div><div class="w-1/3"><label class="lbl">Tipe</label><select class="inp-tipe inp"><option value="dokumen" ${t=='dokumen'?'selected':''}>Dokumen</option><option value="link" ${t=='link'?'selected':''}>Link</option><option value="video" ${t=='video'?'selected':''}>Video</option></select></div></div></div>`;
             document.getElementById('wadah-link').insertAdjacentHTML('beforeend', html); lucide.createIcons();
         }
 
