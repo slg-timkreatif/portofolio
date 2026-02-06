@@ -2,188 +2,261 @@
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Komunitas Guru Berbagi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Komunitas Guru Berbagi - Selogiri</title>
     
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="icon" href="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
     <script src="https://unpkg.com/lucide@latest"></script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
-                    colors: {
-                        primary: '#4f46e5',
-                        primaryHover: '#4338ca',
-                        bgLight: '#f8fafc',
-                        surface: '#ffffff'
-                    },
+                    colors: { primary: '#4f46e5', bgLight: '#f8fafc', bgDark: '#020617', surface: '#ffffff' },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'blob': 'blob 7s infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        blob: { '0%': { transform: 'scale(1)' }, '33%': { transform: 'scale(1.1)' }, '66%': { transform: 'scale(0.9)' }, '100%': { transform: 'scale(1)' } },
+                        shimmer: { '0%': { backgroundPosition: '-1000px 0' }, '100%': { backgroundPosition: '1000px 0' } }
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Glass Effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        body { -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .dark .glass { background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .text-gradient { background: linear-gradient(to right, #4f46e5, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .skeleton {
+            background: #f6f7f8;
+            background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-repeat: no-repeat;
+            background-size: 1000px 100%; 
+            animation: shimmer 1.5s infinite linear forwards;
         }
-        
-        /* Text Gradient */
-        .text-gradient {
-            background: linear-gradient(to right, #4f46e5, #9333ea);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .dark .skeleton {
+            background: #1e293b;
+            background-image: linear-gradient(to right, #1e293b 0%, #334155 20%, #1e293b 40%, #1e293b 100%);
         }
     </style>
 </head>
-<body class="bg-bgLight text-slate-800 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="bg-bgLight text-slate-800 dark:bg-bgDark dark:text-slate-200 transition-colors duration-300 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
 
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" style="animation-delay: 2s"></div>
-        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" style="animation-delay: 4s"></div>
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-300 dark:bg-indigo-900 rounded-full mix-blend-multiply dark:mix-blend-normal filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-normal filter blur-3xl opacity-20 animate-blob" style="animation-delay: 2s"></div>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 py-4 px-6">
-        <div class="max-w-7xl mx-auto glass rounded-full px-6 py-3 flex justify-between items-center shadow-sm">
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 py-3 px-4 md:py-4">
+        <div class="max-w-7xl mx-auto glass rounded-full px-4 py-2.5 flex justify-between items-center shadow-sm">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                    <i data-lucide="layout-grid" class="w-5 h-5"></i>
-                </div>
-                <span class="font-bold text-lg tracking-tight hidden sm:block">Guru Berbagi</span>
+                <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white p-1 shadow-sm">
+                <span class="font-bold text-sm md:text-lg tracking-tight hidden min-[350px]:block text-slate-800 dark:text-white">Guru Berbagi</span>
             </div>
-            <a href="admin.html" class="group flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-full hover:bg-primary transition shadow-lg transform hover:-translate-y-0.5">
-                LOGIN GURU <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-            </a>
+            
+            <div class="flex items-center gap-2">
+                <button onclick="toggleTheme()" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-slate-600 dark:text-yellow-400">
+                    <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block fill-current"></i>
+                </button>
+                
+                <a href="admin.html" class="px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] md:text-xs font-bold rounded-full hover:opacity-90 transition shadow-lg flex items-center gap-1.5">
+                    LOGIN <i data-lucide="log-in" class="w-3 h-3"></i>
+                </a>
+            </div>
         </div>
     </nav>
 
-    <main class="flex-1 flex flex-col justify-center items-center px-4 text-center mt-20 mb-10">
-        
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-100 shadow-sm mb-8 animate-float">
+    <header class="pt-32 pb-10 text-center px-4">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-indigo-100 dark:border-slate-700 shadow-sm mb-6 animate-float">
             <span class="flex h-2 w-2 relative">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
             </span>
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Platform Pendidikan Digital</span>
+            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-300 uppercase tracking-widest">Katalog Portofolio Pendidik</span>
         </div>
-
-        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight max-w-4xl mx-auto">
-            Dokumentasikan Karya,<br>
-            <span class="text-gradient">Bagikan Inspirasi.</span>
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 leading-tight text-slate-900 dark:text-white">
+            Temukan Inspirator <br> <span class="text-gradient">Pendidikan Selogiri</span>
         </h1>
-        
-        <p class="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Platform portofolio modern untuk guru Indonesia. Simpan artikel, agenda, dan inovasi pembelajaran dalam satu tautan profesional.
+        <p class="text-slate-500 dark:text-slate-400 text-sm md:text-base max-w-xl mx-auto mb-8">
+            Jelajahi profil, inovasi, dan praktik baik dari guru-guru terbaik di Kecamatan Selogiri.
         </p>
 
-        <div class="w-full max-w-xl relative group">
-            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <div class="relative flex items-center bg-white rounded-2xl shadow-xl p-2 border border-slate-100">
-                <div class="pl-4 text-slate-400">
-                    <i data-lucide="search" class="w-6 h-6"></i>
-                </div>
-                <input id="searchInput" type="text" class="w-full p-4 bg-transparent text-slate-800 font-medium placeholder-slate-400 focus:outline-none" placeholder="Masukkan ID Guru (Contoh: Guru-123)...">
-                <button onclick="cariGuru()" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-xl font-bold transition shadow-lg shadow-indigo-500/30 flex items-center gap-2">
-                    CARI
-                </button>
+        <div class="max-w-lg mx-auto relative group z-20">
+            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
+            <div class="relative flex items-center bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-2 border border-slate-100 dark:border-slate-700">
+                <div class="pl-4 text-slate-400"><i data-lucide="search" class="w-5 h-5"></i></div>
+                <input id="searchInput" type="text" class="w-full p-3 bg-transparent text-slate-800 dark:text-white font-bold placeholder-slate-400 focus:outline-none" placeholder="Cari nama guru, sekolah, atau ID..." onkeyup="filterGuru()">
             </div>
         </div>
-        <p class="text-xs text-slate-400 mt-4">Tekan Enter untuk mencari cepat</p>
+        <p class="text-xs text-slate-400 mt-4">Tekan Enter atau ketik untuk mencari</p>
+    </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 max-w-5xl mx-auto w-full px-4">
-            <div class="glass p-8 rounded-3xl text-left hover:border-indigo-200 transition duration-300">
-                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-4">
-                    <i data-lucide="pen-tool" class="w-6 h-6"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2 text-slate-800">Artikel & Blog</h3>
-                <p class="text-sm text-slate-500 leading-relaxed">Tulis praktik baik dan inovasi pembelajaran Anda dengan editor yang mudah digunakan.</p>
+    <div class="max-w-5xl mx-auto px-4 mb-12">
+        <div class="glass rounded-3xl p-6 flex justify-around items-center text-center">
+            <div>
+                <span class="block text-2xl md:text-3xl font-black text-slate-800 dark:text-white" id="stat-guru">0</span>
+                <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Guru</span>
             </div>
-            
-            <div class="glass p-8 rounded-3xl text-left hover:border-purple-200 transition duration-300">
-                <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-4">
-                    <i data-lucide="folder-open" class="w-6 h-6"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2 text-slate-800">Arsip Digital</h3>
-                <p class="text-sm text-slate-500 leading-relaxed">Simpan dokumen penting, modul ajar, dan sertifikat dalam satu tempat yang aman.</p>
-            </div>
-
-            <div class="glass p-8 rounded-3xl text-left hover:border-pink-200 transition duration-300">
-                <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center mb-4">
-                    <i data-lucide="heart-handshake" class="w-6 h-6"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2 text-slate-800">Feedback & Sosmed</h3>
-                <p class="text-sm text-slate-500 leading-relaxed">Terhubung dengan siswa dan rekan sejawat melalui integrasi sosial media lengkap.</p>
+            <div class="w-px h-10 bg-slate-200 dark:bg-slate-700"></div>
+            <div>
+                <span class="block text-2xl md:text-3xl font-black text-primary" id="stat-views">0</span>
+                <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Total Views</span>
             </div>
         </div>
+    </div>
 
+    <main class="max-w-7xl mx-auto px-4 pb-20">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-white"><i data-lucide="users" class="w-5 h-5 text-primary"></i> Direktori Guru</h2>
+            <div class="text-xs font-bold text-slate-400" id="result-count">Memuat data...</div>
+        </div>
+
+        <div id="guruGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white dark:bg-slate-800 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-700 shadow-sm h-72 flex flex-col items-center justify-center space-y-4"><div class="w-20 h-20 rounded-full skeleton"></div><div class="w-32 h-4 rounded-full skeleton"></div><div class="w-24 h-3 rounded-full skeleton"></div></div>
+            <div class="bg-white dark:bg-slate-800 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-700 shadow-sm h-72 flex flex-col items-center justify-center space-y-4"><div class="w-20 h-20 rounded-full skeleton"></div><div class="w-32 h-4 rounded-full skeleton"></div><div class="w-24 h-3 rounded-full skeleton"></div></div>
+            <div class="bg-white dark:bg-slate-800 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-700 shadow-sm h-72 flex flex-col items-center justify-center space-y-4"><div class="w-20 h-20 rounded-full skeleton"></div><div class="w-32 h-4 rounded-full skeleton"></div><div class="w-24 h-3 rounded-full skeleton"></div></div>
+            <div class="bg-white dark:bg-slate-800 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-700 shadow-sm h-72 flex flex-col items-center justify-center space-y-4"><div class="w-20 h-20 rounded-full skeleton"></div><div class="w-32 h-4 rounded-full skeleton"></div><div class="w-24 h-3 rounded-full skeleton"></div></div>
+        </div>
+        
+        <div id="noResult" class="hidden text-center py-20 text-slate-400">
+            <i data-lucide="search-x" class="w-12 h-12 mx-auto mb-2 opacity-50"></i>
+            <p>Guru tidak ditemukan.</p>
+        </div>
     </main>
 
-    <footer class="py-8 text-center border-t border-slate-200/60 bg-white/50 backdrop-blur-sm">
-        <div class="flex items-center justify-center gap-2 mb-2 opacity-50">
-            <img src="https://raw.githubusercontent.com/slg-timkreatif/app/refs/heads/main/1768315347206.png" class="w-6 h-6 grayscale" onerror="this.style.display='none'">
-            <span class="font-bold text-sm">Komunitas Guru Berbagi</span>
-        </div>
-        <p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest">&copy; 2026 Seluruh Hak Cipta Dilindungi.</p>
+    <footer class="py-8 text-center border-t border-slate-200/60 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+        <p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest px-4 leading-relaxed">&copy; 2026 Komunitas Guru Berbagi | Korwilcambidik Kecamatan Selogiri</p>
     </footer>
 
     <script>
-        lucide.createIcons();
+        // ===============================================
+        // URL GAS PUBLIK (SUDAH TERPASANG)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxEtW6-knXx9OUJs1WM8FQw-zRMcibb74SlINOHehrrt_Auc5pKurofNlOZxxCQVadunQ/exec"; 
+        // ===============================================
 
-        // Search Logic
-        function cariGuru() {
-            const input = document.getElementById('searchInput').value.trim();
-            if(input) {
-                // Animasi Loading Tombol
-                const btn = document.querySelector('button');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i>';
-                lucide.createIcons();
-                
-                setTimeout(() => {
-                    window.location.href = `portfolio.html?id=${input}`;
-                }, 500);
+        // DARK MODE INIT
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
             } else {
-                // Efek getar jika kosong
-                const bar = document.querySelector('.group');
-                bar.classList.add('translate-x-1');
-                setTimeout(() => bar.classList.remove('translate-x-1'), 100);
-                setTimeout(() => {
-                    bar.classList.add('-translate-x-1');
-                    setTimeout(() => bar.classList.remove('-translate-x-1'), 100);
-                }, 100);
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
             }
         }
 
-        // Enter Key Support
-        document.getElementById('searchInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                cariGuru();
-            }
+        let allGurus = [];
+        lucide.createIcons();
+
+        // 1. FETCH DATA ON LOAD (SAT SET)
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch(SCRIPT_URL + "?action=get_all_gurus")
+            .then(r => r.json())
+            .then(d => {
+                if(d.status === "success") {
+                    allGurus = d.data;
+                    renderGrid(allGurus);
+                    updateStats(allGurus);
+                }
+            })
+            .catch(e => console.error("Error loading data:", e));
         });
+
+        // 2. RENDER GRID
+        function renderGrid(data) {
+            const grid = document.getElementById('guruGrid');
+            grid.innerHTML = ""; 
+
+            if(data.length === 0) {
+                document.getElementById('noResult').classList.remove('hidden');
+                document.getElementById('result-count').innerText = "0 Guru";
+                return;
+            }
+
+            document.getElementById('noResult').classList.add('hidden');
+            document.getElementById('result-count').innerText = `${data.length} Guru Terdaftar`;
+
+            data.forEach((guru, index) => {
+                let badge = "";
+                if(index === 0) badge = `<div class="absolute top-0 right-0 bg-yellow-400 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-[2rem] shadow-sm">👑 #1 Top Creator</div>`;
+                else if(index === 1) badge = `<div class="absolute top-0 right-0 bg-slate-300 text-slate-600 text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-[2rem] shadow-sm">🥈 #2</div>`;
+                else if(index === 2) badge = `<div class="absolute top-0 right-0 bg-orange-300 text-orange-700 text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-[2rem] shadow-sm">🥉 #3</div>`;
+
+                const html = `
+                <div class="bg-white dark:bg-slate-800 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 relative group overflow-hidden">
+                    ${badge}
+                    <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900 dark:to-purple-900 opacity-50 -z-10"></div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="relative mb-4">
+                            <img src="${guru.foto || 'https://cdn-icons-png.flaticon.com/512/847/847969.png'}" class="w-20 h-20 rounded-full object-cover border-4 border-white dark:border-slate-700 shadow-md group-hover:scale-110 transition duration-500" onerror="this.src='https://cdn-icons-png.flaticon.com/512/847/847969.png'">
+                            <div class="absolute bottom-0 right-0 w-5 h-5 bg-green-500 rounded-full border-2 border-white dark:border-slate-800" title="Terverifikasi"></div>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 dark:text-white leading-tight mb-1 line-clamp-1">${guru.nama}</h3>
+                        <p class="text-xs text-primary font-bold bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-md mb-2">${guru.jabatan || 'Guru'}</p>
+                        <p class="text-xs text-slate-400 mb-4 line-clamp-1 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${guru.sekolah}</p>
+                        <div class="w-full pt-4 border-t border-slate-50 dark:border-slate-700 flex items-center justify-between">
+                            <span class="text-[10px] font-bold text-slate-400 flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i> ${guru.views}</span>
+                            <a href="portfolio.html?id=${guru.id}" class="text-xs font-bold text-white bg-slate-900 dark:bg-slate-700 px-4 py-2 rounded-xl hover:bg-primary transition shadow-lg flex items-center gap-1">Lihat Profil <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        </div>
+                    </div>
+                </div>`;
+                grid.innerHTML += html;
+            });
+            lucide.createIcons();
+        }
+
+        // 3. SEARCH FILTER
+        function filterGuru() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allGurus.filter(g => g.nama.toLowerCase().includes(term) || g.sekolah.toLowerCase().includes(term) || g.id.toLowerCase().includes(term));
+            renderGrid(filtered);
+        }
+
+        // 4. STATS ANIMATION
+        function updateStats(data) {
+            const totalGuru = data.length;
+            const totalViews = data.reduce((acc, curr) => acc + (curr.views || 0), 0);
+            animateValue("stat-guru", 0, totalGuru, 1000);
+            animateValue("stat-views", 0, totalViews, 1500);
+        }
+
+        function animateValue(id, start, end, duration) {
+            if (start === end) return;
+            const range = end - start;
+            let current = start;
+            const increment = end > start ? 1 : -1;
+            const stepTime = Math.abs(Math.floor(duration / range));
+            const obj = document.getElementById(id);
+            const timer = setInterval(function() {
+                current += increment;
+                obj.innerHTML = current;
+                if (current == end) { clearInterval(timer); }
+            }, Math.max(stepTime, 10));
+        }
     </script>
 </body>
 </html>
